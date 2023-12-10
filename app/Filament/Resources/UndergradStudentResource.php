@@ -21,6 +21,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Forms\Components\CheckboxList;
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UndergradStudentResource\Pages;
 use App\Filament\Resources\UndergradStudentResource\RelationManagers;
 use App\Filament\Resources\UndergradStudentResource\RelationManagers\SubjectsRelationManager;
+use Filament\Tables\Columns\TextColumn;
 
 class UndergradStudentResource extends Resource
 {
@@ -57,7 +59,7 @@ class UndergradStudentResource extends Resource
                 ->searchable()
                     ->dehydrated(fn ($state) => filled($state))
                     ->required(fn (Page $livewire) => ($livewire instanceof CreateRecord))
-
+                
                 ->preload(),
                 // ->unique(),
                 
@@ -65,11 +67,13 @@ class UndergradStudentResource extends Resource
                 ->required()
                 ->maxLength(9),
                 TextInput::make('first_name')
-                ->required(),
-                TextInput::make('middle_name')
-                ,
+                ->required()
+                ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
+                TextInput::make('middle_name'),
+                //->formatStateUsing(fn (string $state): string => strtoupper($state)),
                 TextInput::make('last_name')
-                ->required(),
+                ->required()
+                ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
 
                 Forms\Components\Select::make('college_id')
                     ->relationship(name:'college', titleAttribute:'Title')
@@ -88,6 +92,8 @@ class UndergradStudentResource extends Resource
                     ->preload()
                     ->live()
                     ->required(),
+                Forms\Components\Select::make('block')
+                ->options(['1'=>'1', '2'=>'2', '3'=>'3']),
                     
                 Select::make('reg_status')
                 ->options(['Regular'=> "Regular", "Irregular"=> "Irregular"])
@@ -95,6 +101,8 @@ class UndergradStudentResource extends Resource
                 Select::make('enrollment_status')
                     ->options(['Enrolled'=> "Enrolled", "Not Enrolled"=> "Not Enrolled"])
                     ->required(),
+                TextInput::make('GWA')
+                ->label('GWA'),
                 Section::make('Subjects')->schema([
                     CheckboxList::make('Subjects')
                     ->options(fn(Get $get): Collection => Subject::query()
@@ -105,6 +113,7 @@ class UndergradStudentResource extends Resource
                     // ->multiple()
                     // ->preload()
                 ])
+
             ]);
     }
 
@@ -126,7 +135,8 @@ class UndergradStudentResource extends Resource
                     ->sortable(),
                     Tables\Columns\TextColumn::make('college.Title')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('department.title')
                     ->numeric()
                     ->sortable(),
@@ -142,18 +152,31 @@ class UndergradStudentResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('enrollment_status')
                     ->searchable(),
-                
+                TextColumn::make('GWA')
+                    ->numeric()
+                    ->label('GWA')
+                    ->badge()
+                    
             ])
             ->filters([
                 Filter::make('Enrolled')
-                    ->query(fn (Builder $query): Builder => $query->where('enrollment_status', 'Enrolled'))
+                    ->query(fn (Builder $query): Builder => $query->where('enrollment_status', 'Enrolled')),
+                SelectFilter::make('department')
+                    ->relationship('department', 'title')
+                    ->searchable()
+                    ->preload(),
+                Filter::make('Below Retention Grade')
+                    ->query(fn (Builder $query): Builder => $query->where('GWA','>', '2.75')),
+                Filter::make('Dean Lister')
+                    ->query(fn (Builder $query): Builder => $query->where('GWA','<=', '1.75')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->headerActions([
-                Action::make('Grades')
-                ->icon('heroicon-o-calculator')
+                Action::make('Blocks')
+                ->icon('heroicon-o-users')
+                ->url('/ams/undergrad-students/blocks')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -175,6 +198,7 @@ class UndergradStudentResource extends Resource
             'index' => Pages\ListUndergradStudents::route('/'),
             'create' => Pages\CreateUndergradStudent::route('/create'),
             'edit' => Pages\EditUndergradStudent::route('/{record}/edit'),
+            'view_blocks'=>Pages\FilterBlocks::route('/blocks'),
         ];
     }
 

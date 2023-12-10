@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Department;
+use App\Models\GradStudent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,6 +15,7 @@ class Subject extends Model
         'department_id',
         'subject_code',
         'subject_title',
+        'units', 
     ] ;
     
     public function college(){
@@ -31,5 +33,8 @@ class Subject extends Model
     }
     public function undergradStudents(){
         return $this->belongsToMany(UndergradStudent::class, 'subject_undergrad_student')->withPivot(['grade']);
+    }
+    public function gradStudents(){
+        return $this->belongsToMany(GradStudent::class, 'subject_grad_student')->withPivot(['grade']);
     }
 }

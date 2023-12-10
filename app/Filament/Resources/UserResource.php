@@ -105,7 +105,7 @@ class UserResource extends Resource
             ])
             ->filters([
                 Filter::make('Dean')
-                    ->query(fn (Builder $query): Builder => $query->where('account_type', 'Student')),
+                    ->query(fn (Builder $query): Builder => $query->where('account_type', 'Dean')),
                 Filter::make('Student')
                     ->query(fn (Builder $query): Builder => $query->where('account_type', 'Student')),
                 Filter::make('Admin')

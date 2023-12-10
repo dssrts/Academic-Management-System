@@ -52,10 +52,14 @@ class SubjectResource extends Resource
                     
                 Forms\Components\TextInput::make('subject_code')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\TextInput::make('subject_title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
+                Forms\Components\Select::make('units')
+                    ->options(['1'=>'1', '2'=>'2', '3'=>'3']),
                 Section::make('Faculties')->schema([
                     Select::make('faculties')
                     ->relationship('faculties', 'last_name')
@@ -75,16 +79,19 @@ class SubjectResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject_code')
                     ->searchable(),
+                    
                 Tables\Columns\TextColumn::make('subject_title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    
+                Tables\Columns\TextColumn::make('units'),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

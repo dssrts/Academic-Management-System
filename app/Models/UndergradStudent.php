@@ -22,8 +22,9 @@ class UndergradStudent extends Model
         'department_id',
         'account_id',
         'college_id',
-        'student_number'
-        ,
+        'student_number',
+        'block',
+        'GWA'
     ];
     
     public function user(){

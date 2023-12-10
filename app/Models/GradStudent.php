@@ -20,6 +20,7 @@ class GradStudent extends Model
         'department_id',
         'college_id',
         'student_num',
+        'GWA'
     ];
 
     public function user(){
@@ -31,6 +32,14 @@ class GradStudent extends Model
 
     public function department(){
         return $this->belongsTo(Department::class);
+    }
+    public function subjects(){
+        //return $this->belongsToMany(Subject::class, 'subject_undergrad_student')->withPivot(['grade']);
+        return $this->belongsToMany(Subject::class, 'subject_grad_student')
+                    ->whereHas('department', function ($query) {
+                        $query->where('id', $this->department_id);
+                    })
+                    ->withPivot(['grade']);
     }
 
     

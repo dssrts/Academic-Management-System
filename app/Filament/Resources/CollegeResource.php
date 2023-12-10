@@ -25,10 +25,13 @@ class CollegeResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('Code')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\TextInput::make('Title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
+                    
             ]);
     }
 

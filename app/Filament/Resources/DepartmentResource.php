@@ -26,13 +26,16 @@ class DepartmentResource extends Resource
                 Forms\Components\Select::make('college_id')
                 ->relationship('college', 'Title')
                 ->required(),
+                
                     
                 Forms\Components\TextInput::make('code')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
             ]);
     }
 

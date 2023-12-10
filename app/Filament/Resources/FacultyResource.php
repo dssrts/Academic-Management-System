@@ -34,13 +34,15 @@ class FacultyResource extends Resource
                 
                 Forms\Components\TextInput::make('first_name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\TextInput::make('middle_name')
-                    
+                ->dehydrateStateUsing(fn (string $state): string => strtoupper($state))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 // Section::make('Subjects')->schema([
                 //     Select::make('subjects')
                 //     ->relationship('subjects', 'subject_title')
