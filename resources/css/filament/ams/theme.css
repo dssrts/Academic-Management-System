@@ -1,0 +1,31 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+/* .fi-simple-layout {
+    @apply bg-cyan-100/50;
+}
+
+.fi-simple-main {
+    @apply bg-emerald-100/50;
+} */
+
+@layer components {
+    .fi-sidebar {
+        @apply bg-plm-blue !important;
+    }
+
+    .fi-sidebar-header {
+        @apply bg-plm-blue !important;
+    }
+
+    .fi-sidebar-group-label{
+        @apply text-white !important;
+    }
+
+
+    /* .fi-sidebar-item-label:focus {
+        @apply  text-plm-blue !important;
+        
+    }  */
+}
