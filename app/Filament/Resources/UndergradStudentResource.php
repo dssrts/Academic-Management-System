@@ -98,6 +98,8 @@ class UndergradStudentResource extends Resource
                 Select::make('reg_status')
                 ->options(['Regular'=> "Regular", "Irregular"=> "Irregular"])
                 ->required(),
+                Select::make('classification')
+                ->options(['LOA'=> "LOA", "Tranferee"=> "Transferee", "Shifter"=>"Shifter"]),
                 Select::make('enrollment_status')
                     ->options(['Enrolled'=> "Enrolled", "Not Enrolled"=> "Not Enrolled"])
                     ->required(),
@@ -152,6 +154,8 @@ class UndergradStudentResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('enrollment_status')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('classification')
+                    ->searchable(),
                 TextColumn::make('GWA')
                     ->numeric()
                     ->label('GWA')
@@ -169,6 +173,13 @@ class UndergradStudentResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->where('GWA','>', '2.75')),
                 Filter::make('Dean Lister')
                     ->query(fn (Builder $query): Builder => $query->where('GWA','<=', '1.75')),
+                Filter::make('LOA')
+                    ->label('LOA')
+                    ->query(fn (Builder $query): Builder => $query->where('classification', 'LOA')),
+                Filter::make('Transferee')
+                    ->query(fn (Builder $query): Builder => $query->where('classification', 'Transferee')),
+                Filter::make('Shifter')
+                    ->query(fn (Builder $query): Builder => $query->where('classification', 'Shifter')),    
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
