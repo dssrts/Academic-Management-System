@@ -22,6 +22,7 @@ class FacultyResource extends Resource
     protected static ?string $model = Faculty::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Dean Controls';
     
 
     public static function form(Form $form): Form
@@ -37,7 +38,7 @@ class FacultyResource extends Resource
                     ->maxLength(255)
                     ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\TextInput::make('middle_name')
-                ->dehydrateStateUsing(fn (string $state): string => strtoupper($state))
+                // ->dehydrateStateUsing(fn (string $state): string => strtoupper($state))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
                     ->required()

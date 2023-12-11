@@ -32,7 +32,7 @@ class GradStudentResource extends Resource
 {
     protected static ?string $model = GradStudent::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $recordTitleAttribute = 'student_num';
     public static function form(Form $form): Form
     {

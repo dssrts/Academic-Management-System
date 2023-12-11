@@ -15,7 +15,8 @@ class Subject extends Model
         'department_id',
         'subject_code',
         'subject_title',
-        'units', 
+        'units',
+        'faculty',
     ] ;
     
     public function college(){
@@ -37,4 +38,6 @@ class Subject extends Model
     public function gradStudents(){
         return $this->belongsToMany(GradStudent::class, 'subject_grad_student')->withPivot(['grade']);
     }
+
+
 }

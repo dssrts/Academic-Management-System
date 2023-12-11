@@ -35,7 +35,7 @@ class UndergradStudentResource extends Resource
 {
     protected static ?string $model = UndergradStudent::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $recordTitleAttribute = 'student_number';
     public static function getGlobalSearchResultDetails(Model $record): array
 {
@@ -77,7 +77,7 @@ class UndergradStudentResource extends Resource
 
                 Forms\Components\Select::make('college_id')
                     ->relationship(name:'college', titleAttribute:'Title')
-                    ->searchable() 
+                    ->searchable()
                     ->live()
                     ->preload()
                     ->required()
@@ -92,6 +92,8 @@ class UndergradStudentResource extends Resource
                     ->preload()
                     ->live()
                     ->required(),
+                Forms\Components\Select::make('year')
+                    ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5']),
                 Forms\Components\Select::make('block')
                 ->options(['1'=>'1', '2'=>'2', '3'=>'3']),
                     
@@ -169,7 +171,7 @@ class UndergradStudentResource extends Resource
                     ->relationship('department', 'title')
                     ->searchable()
                     ->preload(),
-                Filter::make('Below Retention Grade')
+                Filter::make('Over the retention Grade')
                     ->query(fn (Builder $query): Builder => $query->where('GWA','>', '2.75')),
                 Filter::make('Dean Lister')
                     ->query(fn (Builder $query): Builder => $query->where('GWA','<=', '1.75')),

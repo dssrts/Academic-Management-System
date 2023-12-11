@@ -13,7 +13,7 @@ class GradStudentPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_gsp')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of graduate school')|| $user->hasRole('director')) 
         {
             return true;
         }
@@ -25,7 +25,7 @@ class GradStudentPolicy
      */
     public function view(User $user, GradStudent $gradStudent): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_gsp')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of graduate school')|| $user->hasRole('director')) 
         {
             return true;
         }
@@ -37,7 +37,7 @@ class GradStudentPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_gsp')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of graduate school')|| $user->hasRole('director')) 
         {
             return true;
         }
@@ -49,7 +49,7 @@ class GradStudentPolicy
      */
     public function update(User $user, GradStudent $gradStudent): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_gsp')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of graduate school')|| $user->hasRole('director')) 
         {
             return true;
         }
@@ -61,7 +61,7 @@ class GradStudentPolicy
      */
     public function delete(User $user, GradStudent $gradStudent): bool
     {
-        if ($user->hasRole('admin') ) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of graduate school')|| $user->hasRole('director')) 
         {
             return true;
         }

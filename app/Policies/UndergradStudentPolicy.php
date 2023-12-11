@@ -13,7 +13,7 @@ class UndergradStudentPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_crs')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
         {
             return true;
         }
@@ -25,7 +25,7 @@ class UndergradStudentPolicy
      */
     public function view(User $user, UndergradStudent $undergradStudent): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_crs')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
         {
             return true;
         }
@@ -37,7 +37,7 @@ class UndergradStudentPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_crs')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
         {
             return true;
         }
@@ -49,7 +49,7 @@ class UndergradStudentPolicy
      */
     public function update(User $user, UndergradStudent $undergradStudent): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean_crs')|| $user->hasRole('dean_dual')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
         {
             return true;
         }
