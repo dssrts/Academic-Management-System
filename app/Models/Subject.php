@@ -16,6 +16,7 @@ class Subject extends Model
         'subject_code',
         'subject_title',
         'units', 
+        'year'
     ] ;
     
     public function college(){

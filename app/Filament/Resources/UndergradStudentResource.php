@@ -35,7 +35,7 @@ class UndergradStudentResource extends Resource
 {
     protected static ?string $model = UndergradStudent::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $recordTitleAttribute = 'student_number';
     public static function getGlobalSearchResultDetails(Model $record): array
 {

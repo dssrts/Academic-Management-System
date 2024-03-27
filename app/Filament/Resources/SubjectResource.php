@@ -25,7 +25,7 @@ class SubjectResource extends Resource
 {
     protected static ?string $model = Subject::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
     public static function form(Form $form): Form
     {
@@ -60,6 +60,8 @@ class SubjectResource extends Resource
                     ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\Select::make('units')
                     ->options(['1'=>'1', '2'=>'2', '3'=>'3']),
+                Forms\Components\Select::make('year')
+                    ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=> '4']),
                 Section::make('Faculties')->schema([
                     Select::make('faculties')
                     ->relationship('faculties', 'last_name')
@@ -84,6 +86,7 @@ class SubjectResource extends Resource
                     ->searchable(),
                     
                 Tables\Columns\TextColumn::make('units'),
+                Tables\Columns\TextColumn::make('year'),
                 // Tables\Columns\TextColumn::make('created_at')
                 //     ->dateTime()
                 //     ->sortable()
