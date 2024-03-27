@@ -25,7 +25,8 @@ class UndergradStudent extends Model
         'student_number',
         'block',
         'GWA',
-        'classification'
+        'classification',
+        'year'
     ];
     
     public function user(){
