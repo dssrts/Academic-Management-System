@@ -23,10 +23,10 @@ class ListUndergradStudents extends ListRecords
 {
     return [
         'all' => Tab::make(),
-        'Regular' => Tab::make()
-            ->modifyQueryUsing(fn (Builder $query) => $query->where('reg_status', 'Regular')),
-        'Irregular' => Tab::make()
-            ->modifyQueryUsing(fn (Builder $query) => $query->where('reg_status', 'Irregular')),
+        'DL' => Tab::make()
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('gwa', '<=', 1.75)),
+        'Below Retention' => Tab::make()
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('gwa', '>', 2.75)),
     ];
 }
 }

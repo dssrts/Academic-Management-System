@@ -190,7 +190,10 @@ class UndergradStudentResource extends Resource
             ->headerActions([
                 Action::make('Blocks')
                 ->icon('heroicon-o-users')
-                ->url('/ams/undergrad-students/blocks')
+                ->url('/ams/undergrad-students/blocks'),
+                Action::make('Year')
+                ->icon('heroicon-o-user-group')
+                ->url('/ams/undergrad-students/year')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -213,6 +216,7 @@ class UndergradStudentResource extends Resource
             'create' => Pages\CreateUndergradStudent::route('/create'),
             'edit' => Pages\EditUndergradStudent::route('/{record}/edit'),
             'view_blocks'=>Pages\FilterBlocks::route('/blocks'),
+            'view_year'=>Pages\FilterYear::route('/year'),
         ];
     }
 
