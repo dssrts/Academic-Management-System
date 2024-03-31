@@ -13,7 +13,7 @@ class DepartmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')||$user->hasRole('director')) 
         {
             return true;
         }
