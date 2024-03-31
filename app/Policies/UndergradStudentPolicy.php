@@ -13,10 +13,10 @@ class UndergradStudentPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
-        {
-            return true;
-        }
+        // if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
+        // {
+        //     return true;
+        // }
         return false;
     }
 
@@ -25,10 +25,10 @@ class UndergradStudentPolicy
      */
     public function view(User $user, UndergradStudent $undergradStudent): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')||$user->account_type == 'Student'|| $user->hasRole('director')) 
-        {
-            return true;
-        }
+        // if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')||$user->account_type == 'Student'|| $user->hasRole('director')) 
+        // {
+        //     return true;
+        // }
         return false;
     }
 
@@ -37,10 +37,10 @@ class UndergradStudentPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
-        {
-            return true;
-        }
+        // if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
+        // {
+        //     return true;
+        // }
         return false;
     }
 
@@ -49,10 +49,10 @@ class UndergradStudentPolicy
      */
     public function update(User $user, UndergradStudent $undergradStudent): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
-        {
-            return true;
-        }
+        // if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
+        // {
+        //     return true;
+        // }
         return false;
     }
 
@@ -61,10 +61,10 @@ class UndergradStudentPolicy
      */
     public function delete(User $user, UndergradStudent $undergradStudent): bool
     {
-        if ($user->hasRole('admin')) 
-        {
-            return true;
-        }
+        // if ($user->hasRole('admin')) 
+        // {
+        //     return true;
+        // }
         return false;
     }
 
@@ -73,10 +73,10 @@ class UndergradStudentPolicy
      */
     public function restore(User $user, UndergradStudent $undergradStudent): bool
     {
-        if ($user->hasRole('admin') ) 
-        {
-            return true;
-        }
+        // if ($user->hasRole('admin') ) 
+        // {
+        //     return true;
+        // }
         return false;
     }
 
@@ -85,10 +85,10 @@ class UndergradStudentPolicy
      */
     public function forceDelete(User $user, UndergradStudent $undergradStudent): bool
     {
-        if ($user->hasRole('admin') ) 
-        {
-            return true;
-        }
+        // if ($user->hasRole('admin') ) 
+        // {
+        //     return true;
+        // }
         return false;
     }
 }
