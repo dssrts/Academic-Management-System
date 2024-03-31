@@ -16,8 +16,8 @@ class Grade extends Model
         'completion_grade',
         'remarks' 
     ];
-    public function undergradStudent(){
-        return $this->belongsTo(UndergradStudent::class);
+    public function student(){
+        return $this->belongsTo(Student::class);
     }
     public function subject(){
         return $this->belongsTo(Subject::class);

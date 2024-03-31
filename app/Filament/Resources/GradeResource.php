@@ -23,8 +23,8 @@ class GradeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('undergrad_student_id')
-                ->relationship('undergradStudent', 'last_name')
+                Forms\Components\Select::make('student_id')
+                ->relationship('student', 'last_name')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                 ->relationship('subject', 'subject_title')
@@ -44,7 +44,7 @@ class GradeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('undergradStudent.first_name')
+                Tables\Columns\TextColumn::make('student.first_name')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subject.subject_title'),
