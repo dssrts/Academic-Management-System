@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer("student_no");
             $table->string("last_name");
             $table->string("first_name");
-            $table->string("middle_name");
+            $table->string("middle_name")->nullable();
             $table->string("biological_sex");
             $table->string("birthdate");
             $table->string("birthdate_city");
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string("plm_email");
             $table->string("personal_email");
             $table->integer("mobile_no");
-            $table->integer("telephone_no");
+            $table->integer("telephone_no")->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
