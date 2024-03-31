@@ -13,7 +13,7 @@ class UndergradStudentPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')||$user->account_type == 'Student'|| $user->hasRole('director')) 
+        if ($user->hasRole('admin') || $user->hasRole('dean of undergraduate college')|| $user->hasRole('director')) 
         {
             return true;
         }
