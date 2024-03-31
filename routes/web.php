@@ -21,6 +21,10 @@ Route::get('/login', function () {
    abort(404);
 });
 
+Route::get('/ams/view-information', function () {
+    return view('view-information');
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

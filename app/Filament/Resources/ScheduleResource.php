@@ -29,7 +29,6 @@ class ScheduleResource extends Resource
             ->schema([
                 Forms\Components\Select::make('subject_id')
                 ->label('Subject Code')
-                ->required()
                 ->searchable()
                 ->preload()
                 ->relationship(name:'subject',titleAttribute:'subject_title'),

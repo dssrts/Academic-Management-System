@@ -98,4 +98,12 @@ class DepartmentResource extends Resource
         }
 
     }
+    public static function canCreate(): bool
+    {
+        if(auth()->user()->hasRole('admin'))
+        {
+            return true;
+        }
+       return false;
+    }
 }

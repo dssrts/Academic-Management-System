@@ -81,4 +81,12 @@ class CollegeResource extends Resource
             'edit' => Pages\EditCollege::route('/{record}/edit'),
         ];
     }
+    public static function canCreate(): bool
+    {
+        if(auth()->user()->hasRole('admin'))
+        {
+            return true;
+        }
+       return false;
+    }
 }

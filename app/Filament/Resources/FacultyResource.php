@@ -84,10 +84,7 @@ class FacultyResource extends Resource
                 
                 
             ])
-            ->headerActions([
-                Action::make('Subjects')
-                ->icon('heroicon-o-calculator')
-            ])
+            
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -109,6 +106,16 @@ class FacultyResource extends Resource
             'create' => Pages\CreateFaculty::route('/create'),
             'edit' => Pages\EditFaculty::route('/{record}/edit'),
         ];
+    }
+    public static function getEloquentQuery(): Builder
+    {
+        if(auth()->user()->hasRole('admin')) {
+            return parent::getEloquentQuery();
+            
+        } else{
+            return parent::getEloquentQuery()->where('college_id', auth()->user()->college_id);
+        }
+
     }
    
     
