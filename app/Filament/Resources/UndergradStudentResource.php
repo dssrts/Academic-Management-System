@@ -129,6 +129,9 @@ class UndergradStudentResource extends Resource
                 // Tables\Columns\TextColumn::make('user.user_code')
                 //     ->label('Student Number')
                 //     ->sortable(),
+                Tables\Columns\TextColumn::make('user_id')
+                    
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('student_number')
                     ->label('Student Number')
                     ->sortable(),

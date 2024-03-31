@@ -25,6 +25,22 @@ class Student extends Model
         'department_id',
         'academic_year',
         'permanent_address',
-        'plm'
+        'plm_email',
+        'personal_email',
+        'mobile_no', 
+        'telephone_no', 
+        'user_id'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class)->where('account_type', 'Student');
+    }
+    
+    public function college(){
+        return $this->belongsTo(College::class);
+    }
+
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 }

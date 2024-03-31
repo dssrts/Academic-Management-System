@@ -1,17 +1,23 @@
 <?php
 
 namespace App\Filament\Resources;
-
-use App\Filament\Resources\StudentResource\Pages;
-use App\Filament\Resources\StudentResource\RelationManagers;
-use App\Models\Student;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use App\Models\Student;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
+use App\Models\Department;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Support\Collection;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\StudentResource\RelationManagers;
 
 class StudentResource extends Resource
 {
@@ -23,18 +29,30 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('college_id')
+                Forms\Components\Select::make('college_id')
+                    ->relationship(name:'college', titleAttribute:'Title')
+                    ->searchable()
+                    ->live()
+                    ->preload()
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('department_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                    ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
+                    Forms\Components\Select::make('department_id')
+                    //->relationship(name:'city', titleAttribute:'name')
+                    ->options(fn(Get $get): Collection => Department::query()
+                        ->where('college_id', $get('college_id'))
+                        ->pluck('title', 'id'))
+                        ->searchable() 
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    ->required(),
+                Select::make('user_id')
+                    ->relationship(name:'user', titleAttribute:'name')
+                    ->label('Account'),
+                    
                 Forms\Components\TextInput::make('student_no')
                     ->required()
-                    ->numeric(),
+                    ->maxLength(9),
                 Forms\Components\TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
@@ -46,9 +64,7 @@ class StudentResource extends Resource
                 Forms\Components\TextInput::make('biological_sex')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('birthdate')
-                    ->required()
-                    ->maxLength(255),
+                DatePicker::make('birthdate'),
                 Forms\Components\TextInput::make('birthdate_city')
                     ->required()
                     ->maxLength(255),
@@ -94,17 +110,16 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('college_id')
+                Tables\Columns\TextColumn::make('college.Title')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('department_id')
+                Tables\Columns\TextColumn::make('department.title')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('user_id'),
+                    
                 Tables\Columns\TextColumn::make('student_no')
-                    ->numeric()
+                    
                     ->sortable(),
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
