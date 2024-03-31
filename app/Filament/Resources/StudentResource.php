@@ -55,12 +55,15 @@ class StudentResource extends Resource
                     ->maxLength(9),
                 Forms\Components\TextInput::make('last_name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\TextInput::make('first_name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\TextInput::make('middle_name')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => $state !== null ? strtoupper($state) : null),
                 Forms\Components\Select::make('biological_sex')
                     ->required()
                     ->options(['MALE'=>'MALE', 'FEMALE'=>'FEMALE']),
