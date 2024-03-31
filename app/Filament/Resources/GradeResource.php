@@ -25,6 +25,7 @@ class GradeResource extends Resource
             ->schema([
                 Forms\Components\Select::make('student_id')
                 ->relationship('student', 'last_name')
+
                     ->required(),
                 Forms\Components\Select::make('subject_id')
                 ->relationship('subject', 'subject_title')
