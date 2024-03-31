@@ -61,28 +61,28 @@ class StudentResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('middle_name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('biological_sex')
+                Forms\Components\Select::make('biological_sex')
                     ->required()
-                    ->maxLength(255),
+                    ->options(['MALE'=>'MALE', 'FEMALE'=>'FEMALE']),
                 DatePicker::make('birthdate'),
                 Forms\Components\TextInput::make('birthdate_city')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('religion')
+                Forms\Components\Select::make('religion')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('civil_status')
+                    ->options(['Roman Catholic'=>'Roman Catholic', 'Iglesia ni Cristo'=>'Iglesia ni Cristo']),
+                Forms\Components\Select::make('civil_status')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('student_type')
+                    ->options(['Single'=>'Single', 'Married'=>'Married', 'Widow'=>'Widow', 'Divorced'=>'Divorced']),
+                Forms\Components\Select::make('student_type')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('registration_status')
+                    ->options(['Regular'=>'Regular', 'Irregular'=>'Irregular']),
+                Forms\Components\Select::make('registration_status')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('year_level')
+                    ->options(['Enrolled'=>'Enrolled', 'Not Enrolled'=>'Not Enrolled']),
+                Forms\Components\Select::make('year_level')
                     ->required()
-                    ->numeric(),
+                    ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5']),
                 Forms\Components\TextInput::make('academic_year')
                     ->required()
                     ->maxLength(255),
@@ -99,10 +99,11 @@ class StudentResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('mobile_no')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->maxLength(11),
                 Forms\Components\TextInput::make('telephone_no')
                     ->tel()
-                    ->numeric(),
+                    ->maxLength(8),
             ]);
     }
 
