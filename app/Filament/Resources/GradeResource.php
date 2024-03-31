@@ -23,7 +23,7 @@ class GradeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('undergrad_student_id')
+                Forms\Components\Select::make('student_id')
                 ->relationship('undergradStudent', 'last_name')
                     ->required(),
                 Forms\Components\Select::make('subject_id')
