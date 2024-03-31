@@ -43,4 +43,13 @@ class Student extends Model
     public function department(){
         return $this->belongsTo(Department::class);
     }
+
+    public function subjects(){
+        //return $this->belongsToMany(Subject::class, 'subject_undergrad_student')->withPivot(['grade']);
+        return $this->belongsToMany(Subject::class, 'subject_student')
+                    ->whereHas('department', function ($query) {
+                        $query->where('id', $this->department_id);
+                    })
+                    ->withPivot(['grade']);
+    }
 }
