@@ -11,23 +11,25 @@ use Filament\Forms\Set;
 use Filament\Forms\Form;
 use App\Models\Department;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
-use Filament\Forms\Components\Select;
 // use Filament\Forms\Components\Section;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Select;
+use PHPUnit\Util\Filter as UtilFilter;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use Illuminate\Contracts\Support\Htmlable;
+use DeepCopy\Filter\Filter as FilterFilter;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\StudentResource\RelationManagers;
-use DeepCopy\Filter\Filter as FilterFilter;
 use Filament\Tables\Filters\Filter as FiltersFilter;
-use Filament\Infolists\Infolist;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use PHPUnit\Util\Filter as UtilFilter;
-use Filament\Tables\Filters\Filter;
+use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
 
 
@@ -36,7 +38,15 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-
+    protected static ?string $recordTitleAttribute = 'student_no';
+    
+public static function getGlobalSearchResultDetails(Model $record): array
+{
+    return [
+        'Student Number' => $record->student_no,
+        'Last Name' => $record->last_name,
+    ];
+}
     public static function form(Form $form): Form
     {
         return $form
