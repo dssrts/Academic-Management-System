@@ -134,15 +134,17 @@ public static function getGlobalSearchResultDetails(Model $record): array
                 //     ->tel()
                 //     ->maxLength(8),
                     FormSec::make('Subjects')->schema([
-                        CheckboxList::make('Subjects')
+                        
+                        Select::make('Subjects')
+                        ->multiple()
                         ->options(fn(Get $get): Collection => Subject::query()
                             ->where('department_id', $get('department_id'))
                             ->pluck('subject_title'))
                             ->searchable()
                         ->relationship('subjects', 'subject_title')
                         // ->multiple()
-                        // ->preload()
-                    ])
+                        ->preload()
+                    ])->hidden(!auth()->user()->is_admin()),
             ]);
     }
 
