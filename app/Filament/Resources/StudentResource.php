@@ -15,13 +15,16 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 // use Filament\Forms\Components\Section;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section as FormSec;
 use PHPUnit\Util\Filter as UtilFilter;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Infolists\Components\Section;
 use Illuminate\Contracts\Support\Htmlable;
 use DeepCopy\Filter\Filter as FilterFilter;
 use Filament\Forms\Components\CheckboxList;
@@ -29,6 +32,7 @@ use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Filters\Filter as FiltersFilter;
+use Filament\Infolists\Components\Section as InfoSec;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
 
@@ -129,16 +133,16 @@ public static function getGlobalSearchResultDetails(Model $record): array
                 // Forms\Components\TextInput::make('telephone_no')
                 //     ->tel()
                 //     ->maxLength(8),
-                //     Section::make('Subjects')->schema([
-                //         CheckboxList::make('Subjects')
-                //         ->options(fn(Get $get): Collection => Subject::query()
-                //             ->where('department_id', $get('department_id'))
-                //             ->pluck('subject_title'))
-                //             ->searchable()
-                //         ->relationship('subjects', 'subject_title')
-                //         // ->multiple()
-                //         // ->preload()
-                //     ])
+                    FormSec::make('Subjects')->schema([
+                        CheckboxList::make('Subjects')
+                        ->options(fn(Get $get): Collection => Subject::query()
+                            ->where('department_id', $get('department_id'))
+                            ->pluck('subject_title'))
+                            ->searchable()
+                        ->relationship('subjects', 'subject_title')
+                        // ->multiple()
+                        // ->preload()
+                    ])
             ]);
     }
 
@@ -205,6 +209,7 @@ public static function getGlobalSearchResultDetails(Model $record): array
                 //     ->dateTime()
                 //     ->sortable()
                 //     ->toggleable(isToggledHiddenByDefault: true),
+                
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('College')
@@ -231,7 +236,96 @@ public static function getGlobalSearchResultDetails(Model $record): array
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                ->label("View Info")
+                
+                ->label("View Info"),
+                Action::make('edit')
+                ->hidden(!auth()->user()->is_admin())
+                ->icon('heroicon-o-pencil-square')
+                ->label('Edit student')
+                ->form([
+                    Forms\Components\Select::make('college_id')
+                    ->relationship(name:'college', titleAttribute:'Title')
+                    ->searchable()
+                    ->live()
+                    ->preload()
+                    ->required()
+                    ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
+                    Forms\Components\Select::make('department_id')
+                    //->relationship(name:'city', titleAttribute:'name')
+                    ->options(fn(Get $get): Collection => Department::query()
+                        ->where('college_id', $get('college_id'))
+                        ->pluck('title', 'id'))
+                        ->searchable() 
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    ->required(),
+                Select::make('user_id')
+                    ->relationship(name:'user', titleAttribute:'name')
+                    ->label('Account'),
+                    
+                Forms\Components\TextInput::make('student_no')
+                    ->required()
+                    ->maxLength(9),
+                Forms\Components\TextInput::make('last_name')
+                    ->required()
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
+                Forms\Components\TextInput::make('first_name')
+                    ->required()
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
+                Forms\Components\TextInput::make('middle_name')
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => $state !== null ? strtoupper($state) : null),
+                Forms\Components\Select::make('biological_sex')
+                    ->required()
+                    ->options(['MALE'=>'MALE', 'FEMALE'=>'FEMALE']),
+                DatePicker::make('birthdate'),
+                Forms\Components\TextInput::make('birthdate_city')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Select::make('religion')
+                    ->required()
+                    ->options(['Roman Catholic'=>'Roman Catholic', 'Iglesia ni Cristo'=>'Iglesia ni Cristo']),
+                Forms\Components\Select::make('civil_status')
+                    ->required()
+                    ->options(['Single'=>'Single', 'Married'=>'Married', 'Widow'=>'Widow', 'Divorced'=>'Divorced']),
+                Forms\Components\Select::make('student_type')
+                    ->required()
+                    ->options(['Regular'=>'Regular', 'Irregular'=>'Irregular']),
+                Forms\Components\Select::make('registration_status')
+                    ->required()
+                    ->options(['Enrolled'=>'Enrolled', 'Not Enrolled'=>'Not Enrolled']),
+                Forms\Components\Select::make('year_level')
+                    ->required()
+                    ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5']),
+                Forms\Components\TextInput::make('academic_year')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('permanent_address')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('plm_email')
+                    ->email()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('personal_email')
+                    ->email()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('mobile_no')
+                    ->required()
+                    ->numeric()
+                    ->maxLength(11),
+                Forms\Components\TextInput::make('telephone_no')
+                    ->tel()
+                    ->maxLength(8),
+                    
+                    
+                ])
+    
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -245,7 +339,7 @@ public static function getGlobalSearchResultDetails(Model $record): array
     {
         return $infolist
             ->schema([
-                Section::make("General Information")
+                InfoSec::make("General Information")
                     ->schema([
                         TextEntry::make('student_no')->label('Student Number:')->weight('bold'),
                         TextEntry::make('last_name')->label('Last Name:')->weight('bold'),
@@ -262,7 +356,7 @@ public static function getGlobalSearchResultDetails(Model $record): array
                         TextEntry::make('year_level')->label('Year Level:')->weight('bold'),
 
                     ])->columns(2),
-                    Section::make('Student Information')
+                    InfoSec::make('Student Information')
                     ->schema([
                         TextEntry::make('college.Title')->label('College:')->weight('bold'),
                         TextEntry::make('department.title')->label('Department:')->weight('bold'),
