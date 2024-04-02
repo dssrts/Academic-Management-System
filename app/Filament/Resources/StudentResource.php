@@ -329,4 +329,14 @@ class StudentResource extends Resource
     //         Pages\EditStudentInfo::class,
     //     ]);
     // }
+    public static function getEloquentQuery(): Builder
+    {
+        if(auth()->user()->hasRole('admin')) {
+            return parent::getEloquentQuery();
+            
+        } else{
+            return parent::getEloquentQuery()->where('department_id', auth()->user()->department_id);
+        }
+
+    }
 }

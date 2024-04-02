@@ -25,7 +25,7 @@ class CollegePolicy
      */
     public function view(User $user, College $college): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -37,7 +37,7 @@ class CollegePolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -49,7 +49,7 @@ class CollegePolicy
      */
     public function update(User $user, College $college): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -61,7 +61,7 @@ class CollegePolicy
      */
     public function delete(User $user, College $college): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -73,7 +73,7 @@ class CollegePolicy
      */
     public function restore(User $user, College $college): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -85,7 +85,7 @@ class CollegePolicy
      */
     public function forceDelete(User $user, College $college): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }

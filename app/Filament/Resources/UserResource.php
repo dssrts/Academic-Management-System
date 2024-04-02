@@ -41,6 +41,16 @@ class UserResource extends Resource
                     ->live()
                     ->preload()
                     ->required(),
+                    Forms\Components\Select::make('department_id')
+                    //->relationship(name:'city', titleAttribute:'name')
+                    ->options(fn(Get $get): Collection => Department::query()
+                        ->where('college_id', $get('college_id'))
+                        ->pluck('title', 'id'))
+                        ->searchable() 
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    ->required(),
                     
                 TextInput::make('name')
                     ->required()

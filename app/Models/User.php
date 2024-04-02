@@ -35,6 +35,7 @@ class User extends Authenticatable
         'user_code',
         'account_type',
         'college_id',
+        'department_id'
         
     ];
 
@@ -70,6 +71,9 @@ class User extends Authenticatable
 
     public function college(){
         return $this->belongsTo(College::class);
+    }
+    public function department(){
+        return $this->belongsTo(Department::class);
     }
 
     public function is_admin(){

@@ -13,7 +13,7 @@ class FacultyPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')||$user->account_type == 'Chairperson') 
         {
             return true;
         }
@@ -25,7 +25,7 @@ class FacultyPolicy
      */
     public function view(User $user, Faculty $faculty): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')||$user->account_type == 'Chairperson') 
         {
             return true;
         }
@@ -37,7 +37,7 @@ class FacultyPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin')) 
+        if ($user->hasRole('admin')||$user->account_type == 'Chairperson') 
         {
             return true;
         }
@@ -49,7 +49,7 @@ class FacultyPolicy
      */
     public function update(User $user, Faculty $faculty): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')||$user->account_type == 'Chairperson') 
         {
             return true;
         }
@@ -61,7 +61,7 @@ class FacultyPolicy
      */
     public function delete(User $user, Faculty $faculty): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')||$user->account_type == 'Chairperson') 
         {
             return true;
         }
@@ -73,7 +73,7 @@ class FacultyPolicy
      */
     public function restore(User $user, Faculty $faculty): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')||$user->account_type == 'Chairperson') 
         {
             return true;
         }
@@ -85,7 +85,7 @@ class FacultyPolicy
      */
     public function forceDelete(User $user, Faculty $faculty): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')||$user->account_type == 'Chairperson') 
         {
             return true;
         }

@@ -13,7 +13,7 @@ class DepartmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin')||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -25,7 +25,7 @@ class DepartmentPolicy
      */
     public function view(User $user, Department $department): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -37,7 +37,7 @@ class DepartmentPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -49,7 +49,7 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -61,7 +61,7 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -73,7 +73,7 @@ class DepartmentPolicy
      */
     public function restore(User $user, Department $department): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
@@ -85,7 +85,7 @@ class DepartmentPolicy
      */
     public function forceDelete(User $user, Department $department): bool
     {
-        if ($user->hasRole('admin')||$user->account_type == 'Dean'||$user->hasRole('director')) 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }
