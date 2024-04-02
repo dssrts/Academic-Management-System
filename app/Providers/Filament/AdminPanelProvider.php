@@ -6,8 +6,10 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
 use Filament\Pages\Auth\EditProfile;
+use Filament\Navigation\NavigationItem;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -60,6 +62,19 @@ class AdminPanelProvider extends PanelProvider
             ])->viteTheme('resources/css/filament/ams/theme.css')
             ->sidebarFullyCollapsibleOnDesktop()
             ->profile(EditProfile::class)
-            ->darkMode(false);;
+            ->darkMode(false)
+            ->navigationItems([
+                // NavigationItem::make('Analytics')
+                //     ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
+                //     ->icon('heroicon-o-presentation-chart-line')
+                //     ->group('Reports')
+                //     ->sort(3),
+                    // eto sariling button na pwede mo ren lagyan ng url
+                // NavigationItem::make('dashboard')
+                //     ->label(fn (): string => __('filament-panels::pages/dashboard.title'))
+                //     ->url(fn (): string => Dashboard::getUrl())
+                //     ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard')),
+                // ...
+            ]);
     }
 }
