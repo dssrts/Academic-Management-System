@@ -13,12 +13,12 @@ use App\Models\Department;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Illuminate\Support\Collection;
+use Filament\Resources\Pages\Page;
 // use Filament\Forms\Components\Section;
+use Illuminate\Support\Collection;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Section as FormSec;
 use PHPUnit\Util\Filter as UtilFilter;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
@@ -30,10 +30,12 @@ use DeepCopy\Filter\Filter as FilterFilter;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\StudentResource\Pages;
+use Filament\Forms\Components\Section as FormSec;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Filters\Filter as FiltersFilter;
 use Filament\Infolists\Components\Section as InfoSec;
 use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\StudentResource\Pages\EditStudentInfo;
 use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
 
 
@@ -44,13 +46,17 @@ class StudentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $recordTitleAttribute = 'student_no';
     
-public static function getGlobalSearchResultDetails(Model $record): array
-{
-    return [
-        'Student Number' => $record->student_no,
-        'Last Name' => $record->last_name,
-    ];
-}
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Student Number' => $record->student_no,
+            'Last Name' => $record->last_name,
+        ];
+    }
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -136,6 +142,7 @@ public static function getGlobalSearchResultDetails(Model $record): array
                     FormSec::make('Subjects')->schema([
                         
                         Select::make('Subjects')
+                        
                         ->multiple()
                         ->options(fn(Get $get): Collection => Subject::query()
                             ->where('department_id', $get('department_id'))
@@ -152,9 +159,9 @@ public static function getGlobalSearchResultDetails(Model $record): array
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->label("User Id")
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('user_id')
+                //     ->label("User Id")
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('student_no')
                     ->label("Student Number")
                     ->sortable(),
@@ -238,95 +245,14 @@ public static function getGlobalSearchResultDetails(Model $record): array
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                
+
                 ->label("View Info"),
-                Action::make('edit')
+                Action::make('edit-info')
+                ->icon("heroicon-o-pencil-square")
                 ->hidden(!auth()->user()->is_admin())
-                ->icon('heroicon-o-pencil-square')
-                ->label('Edit student')
-                ->form([
-                    Forms\Components\Select::make('college_id')
-                    ->relationship(name:'college', titleAttribute:'Title')
-                    ->searchable()
-                    ->live()
-                    ->preload()
-                    ->required()
-                    ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
-                    Forms\Components\Select::make('department_id')
-                    //->relationship(name:'city', titleAttribute:'name')
-                    ->options(fn(Get $get): Collection => Department::query()
-                        ->where('college_id', $get('college_id'))
-                        ->pluck('title', 'id'))
-                        ->searchable() 
-                    ->searchable()
-                    ->preload()
-                    ->live()
-                    ->required(),
-                Select::make('user_id')
-                    ->relationship(name:'user', titleAttribute:'name')
-                    ->label('Account'),
+                ->url(fn (Model $record): string => StudentResource::getUrl('edit-info', ['record' => $record])),
+                
                     
-                Forms\Components\TextInput::make('student_no')
-                    ->required()
-                    ->maxLength(9),
-                Forms\Components\TextInput::make('last_name')
-                    ->required()
-                    ->maxLength(255)
-                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
-                Forms\Components\TextInput::make('first_name')
-                    ->required()
-                    ->maxLength(255)
-                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
-                Forms\Components\TextInput::make('middle_name')
-                    ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => $state !== null ? strtoupper($state) : null),
-                Forms\Components\Select::make('biological_sex')
-                    ->required()
-                    ->options(['MALE'=>'MALE', 'FEMALE'=>'FEMALE']),
-                DatePicker::make('birthdate'),
-                Forms\Components\TextInput::make('birthdate_city')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('religion')
-                    ->required()
-                    ->options(['Roman Catholic'=>'Roman Catholic', 'Iglesia ni Cristo'=>'Iglesia ni Cristo']),
-                Forms\Components\Select::make('civil_status')
-                    ->required()
-                    ->options(['Single'=>'Single', 'Married'=>'Married', 'Widow'=>'Widow', 'Divorced'=>'Divorced']),
-                Forms\Components\Select::make('student_type')
-                    ->required()
-                    ->options(['Regular'=>'Regular', 'Irregular'=>'Irregular']),
-                Forms\Components\Select::make('registration_status')
-                    ->required()
-                    ->options(['Enrolled'=>'Enrolled', 'Not Enrolled'=>'Not Enrolled']),
-                Forms\Components\Select::make('year_level')
-                    ->required()
-                    ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5']),
-                Forms\Components\TextInput::make('academic_year')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('permanent_address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('plm_email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('personal_email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('mobile_no')
-                    ->required()
-                    ->numeric()
-                    ->maxLength(11),
-                Forms\Components\TextInput::make('telephone_no')
-                    ->tel()
-                    ->maxLength(8),
-                    
-                    
-                ])
-    
                 
             ])
             ->bulkActions([
@@ -376,8 +302,12 @@ public static function getGlobalSearchResultDetails(Model $record): array
     
     public static function getRelations(): array
     {
+        // if(auth()->user()->is_admin()){
+        //     return [];
+        // }
         return [
             SubjectsRelationManager::class,
+            
         ];
     }
 
@@ -387,6 +317,16 @@ public static function getGlobalSearchResultDetails(Model $record): array
             'index' => Pages\ListStudents::route('/'),
             'create' => Pages\CreateStudent::route('/create'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
+            'edit-info' => Pages\EditStudentInfo::route('/{record}/edit/student'),
+            
+            
         ];
     }
+    // public static function getRecordSubNavigation(Page $page): array
+    // {
+    //     return $page->generateNavigationItems([
+    //         // ...
+    //         Pages\EditStudentInfo::class,
+    //     ]);
+    // }
 }

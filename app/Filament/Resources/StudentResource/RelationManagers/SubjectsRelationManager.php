@@ -48,10 +48,11 @@ class SubjectsRelationManager extends RelationManager
                 //    ->attribute('subjects.year')
                     //->searchable()
                     ->preload(),
+                
             ])
                     
             ->headerActions([
-                // Tables\Actions\AttachAction::make(),
+                //
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),
