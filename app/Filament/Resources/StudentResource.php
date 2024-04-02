@@ -244,6 +244,8 @@ class StudentResource extends Resource
                 ]),
             ])
             ->actions([
+                // -- you can  actually use this to  return forms 
+                //eto yung keywords sa filament "Filling the form with existing data"
                 Tables\Actions\ViewAction::make()
 
                 ->label("View Info"),
@@ -302,9 +304,7 @@ class StudentResource extends Resource
     
     public static function getRelations(): array
     {
-        // if(auth()->user()->is_admin()){
-        //     return [];
-        // }
+        
         return [
             SubjectsRelationManager::class,
             

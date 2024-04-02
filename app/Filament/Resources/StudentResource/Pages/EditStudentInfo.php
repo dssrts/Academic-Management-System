@@ -6,13 +6,14 @@ use Filament\Actions;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
+use InteractsWithRecord;
 use App\Models\Department;
 use Illuminate\Support\Collection;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Forms\Components\DatePicker;
 use App\Filament\Resources\StudentResource;
-use InteractsWithRecord;
+use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
     
 
 
@@ -111,10 +112,11 @@ class EditStudentInfo extends EditRecord
             ]);
     }
     public static function getRelations(): array
-        {
-            return [
-                
-                
-            ];
-        }
+    {
+        
+        return [
+            SubjectsRelationManager::class,
+            
+        ];
+    }
 }

@@ -60,7 +60,7 @@ class UserResource extends Resource
                 Select::make('role')
                     ->relationship('roles', 'name'),
                 Select::make('account_type')
-                    ->options(['Dean'=>'Dean', 'Student'=>'Student', 'Admin'=>'Admin']),
+                    ->options(['Chairperson'=>'Chairperson', 'Student'=>'Student', 'Admin'=>'Admin']),
                 TextInput::make('user_code')
                 ->required(),
                 
