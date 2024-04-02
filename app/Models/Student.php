@@ -29,7 +29,8 @@ class Student extends Model
         'personal_email',
         'mobile_no', 
         'telephone_no', 
-        'user_id'
+        'user_id',
+        'block'
     ];
 
     public function user(){
