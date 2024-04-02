@@ -22,7 +22,7 @@ class FacultyResource extends Resource
     protected static ?string $model = Faculty::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Dean Controls';
+    protected static ?string $navigationGroup = 'Chairperson Controls';
     
 
     public static function form(Form $form): Form
