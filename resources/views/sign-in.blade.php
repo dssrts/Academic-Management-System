@@ -12,7 +12,7 @@
     @vite('resources/css/app.css')
 </head>
 <body class = "flex flex-row justify-start" style="background-image: url('images/PLM.png'); background-repeat: no-repeat; background-size: cover"
-               x-data="{nav_open: false, align:''}" x-bind:class="nav_open ? 'justify-start' : 'justify-center'">
+               x-data="{nav_open: true, align:''}" x-bind:class="nav_open ? 'justify-start' : 'justify-center'">
 
      <!-- Navigation Bar Division-->
     <div class="h-screen menu w-1/5  flex-col drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)] opacity-.99]" x-show="nav_open">
