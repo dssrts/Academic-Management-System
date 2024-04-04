@@ -221,27 +221,42 @@ class StudentResource extends Resource
                 
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('College')
-                ->options([
-                    'CET' => 'College of Engineering and Technology',
-                    'CAUP' => 'College of Architecture & Urban Planning',
-                    'CISTM' => 'College of Information and System Managament',
-                    'CAE' => 'College of Accountancy & Economics',
-                    'CS'  => 'College of Science',
-                    'CPT'  => 'College of Physical Therapy',
-                ]),
+                // Tables\Filters\SelectFilter::make('College')
+                // ->options([
+                //     'CET' => 'College of Engineering and Technology',
+                //     'CAUP' => 'College of Architecture & Urban Planning',
+                //     'CISTM' => 'College of Information and System Managament',
+                //     'CAE' => 'College of Accountancy & Economics',
+                //     'CS'  => 'College of Science',
+                //     'CPT'  => 'College of Physical Therapy',
+                // ]),
                 
-                Tables\Filters\SelectFilter::make('Student Status')
+                Tables\Filters\SelectFilter::make('student_type')
                 ->options([
                     'Regular' => 'Regular Student',
-                    'Ireggular' => 'Ireggular Student',
+                    'Irregular' => 'Irregular Student',
+                ]),
+                Tables\Filters\SelectFilter::make('block')
+                ->options([
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                ]),
+                Tables\Filters\SelectFilter::make('year_level')
+                ->options([
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
                 ]),
 
-                Tables\Filters\SelectFilter::make('Sex')
-                ->options([
-                    'Male' => 'Male',
-                    'Female' => 'Female',
-                ]),
+                // Tables\Filters\SelectFilter::make('Sex')
+                // ->options([
+                //     'Male' => 'Male',
+                //     'Female' => 'Female',
+                // ]),
             ])
             ->actions([
                 // -- you can  actually use this to  return forms 

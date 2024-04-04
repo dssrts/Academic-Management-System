@@ -45,7 +45,8 @@ class SubjectsRelationManager extends RelationManager
                 Forms\Components\Select::make('grade')
                     ->options(['1'=>'1', '1.25'=> '1.25', '1.5'=>'1.5', '1.75'=> '1.75', '2'=>'2', '2.25'=> '2.25', '2.5'=>'2.5', '2.75'=> '2.75', '3'=>'3', 'INC'=>'INC', 'FAILED'=>'FAILED']),
                 Forms\Components\Select::make('remarks')
-                    ->options(['PASSED'=>'PASSED', 'FAILED'=> 'FAILED', 'INC'=>'INC']),
+                    ->options(['PASSED'=>'PASSED', 'FAILED'=> 'FAILED', 'INC'=>'INC'])
+                    
                     
                     // ->beforeStateUpdated(function ($record, $state) {
                     //     // Runs before the state is saved to the database.
@@ -78,7 +79,7 @@ class SubjectsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('subject_title'),
                 Tables\Columns\TextColumn::make('grade'),
                 Tables\Columns\TextColumn::make('remarks')
-                //->badge()
+                ->badge()
                 
                 // ->afterStateUpdated(function ($record, $state) {
                 //     // Runs after the state is saved to the database.
