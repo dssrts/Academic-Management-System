@@ -268,6 +268,7 @@
                     </div>  
                 </div>
                  --}}
+            <a href="{{ route('sign-in.get') }}">
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:text-gold-hover hover:font-bold hover:text-[16px] hover:gap-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" 
@@ -277,6 +278,7 @@
                     <path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
                         Log-Out
                 </div>
+            </a>
             </div>  
 
             <div class="flex pb-2 flex-col justify-end flex-1">

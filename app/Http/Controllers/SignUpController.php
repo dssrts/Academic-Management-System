@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Student;
 use App\Models\College;
 use App\Models\Department;
-
+use Illuminate\Contracts\Session\Session;
 
 class SignUpController extends Controller
 {
     public function get(Request $request){
-        $students = Student::all();
-
-        return view('sign-in',['students' => $students]);
+        Auth::logout(); // Logs the user out
+        $request->session()->invalidate(); // Invalidates the session
+        $request->session()->regenerateToken(); // Regenerate the CSRF token
+        return view('sign-in');
     }
 
     public function studentview(Request $request,$student_no){
