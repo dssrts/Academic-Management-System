@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -88,4 +89,9 @@ class User extends Authenticatable
         return $this->hasRole('dean_gsp');
     }
     
+
+    public function student():HasOne
+    {
+        return $this->hasOne(Student::class);
+    }
 }

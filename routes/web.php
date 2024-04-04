@@ -18,9 +18,7 @@ use vendor\filament\filament\resources\views\pages;
 
 Route::get('/',[SignUpController::class,'get'])->name("sign-in.get");
 Route::post('/',[SignUpController::class,'post']);
-Route::get('/student-view/{id}', function () {
-    return view('student-view');
- }) -> name('student-view.get');
+Route::get('/student-view/{id}',[SignUpController::class,'studentview']) -> name('student-view.get');
 
  Route::get('/dashboard', function () {
     return view('dashboard'); 
