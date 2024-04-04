@@ -4,6 +4,7 @@ namespace App\Filament\Resources\StudentResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Student;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\Filter;
@@ -17,7 +18,23 @@ use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationMana
 class SubjectsRelationManager extends RelationManager
 {
     protected static string $relationship = 'subjects';
-
+    // protected function mutateFormDataBeforeSave(array $data): array
+    // {
+    //     //$data['remarks'] = auth()->id();
+    //     if ($data['grade'] == "INC") {
+                            
+    //         $data['remarks'] = 'INC';
+    //     } elseif ($data['grade'] <= 3) {
+            
+    //         $data['remarks'] = 'Passed';
+    //     } else {
+            
+    //         // Modify the remarks field if grade is greater than 3
+    //         $data['remarks'] = 'Failed';
+    //     }
+     
+    //     return $data;
+    // }
     public function form(Form $form): Form
     {
         return $form
@@ -27,6 +44,24 @@ class SubjectsRelationManager extends RelationManager
                     ->maxLength(255),
                 Forms\Components\Select::make('grade')
                     ->options(['1'=>'1', '1.25'=> '1.25', '1.5'=>'1.5', '1.75'=> '1.75', '2'=>'2', '2.25'=> '2.25', '2.5'=>'2.5', '2.75'=> '2.75', '3'=>'3', 'INC'=>'INC', 'FAILED'=>'FAILED']),
+                Forms\Components\Select::make('remarks')
+                    ->options(['PASSED'=>'PASSED', 'FAILED'=> 'FAILED', 'INC'=>'INC']),
+                    
+                    // ->beforeStateUpdated(function ($record, $state) {
+                    //     // Runs before the state is saved to the database.
+                    //     if ($record->grade == "INC") {
+                            
+                    //         $state->remarks = 'INC';
+                    //     } elseif ($record->grade <= 3) {
+                            
+                    //         $record->remarks = 'Passed';
+                    //     } else {
+                            
+                    //         // Modify the remarks field if grade is greater than 3
+                    //         $state->remarks = 'Failed';
+                    //     }
+                    // })
+
             ])//->hiddenOn(SubRelManager::class)
             ;
     }
@@ -42,6 +77,12 @@ class SubjectsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('subject_title'),
                 Tables\Columns\TextColumn::make('grade'),
+                Tables\Columns\TextColumn::make('remarks')
+                //->badge()
+                
+                // ->afterStateUpdated(function ($record, $state) {
+                //     // Runs after the state is saved to the database.
+                // }),
 
             ])
             ->filters([
@@ -83,7 +124,8 @@ class SubjectsRelationManager extends RelationManager
     // }
     public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
     {
-        return !auth()->user()->is_admin();
+        return true;
+        //return !auth()->user()->is_admin();
     }
     
 }

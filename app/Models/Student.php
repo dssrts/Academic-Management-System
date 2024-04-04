@@ -51,6 +51,7 @@ class Student extends Model
                     ->whereHas('department', function ($query) {
                         $query->where('id', $this->department_id);
                     })
-                    ->withPivot(['grade']);
+                    ->withPivot(['grade'])
+                    ->withPivot(['remarks']);
     }
 }
