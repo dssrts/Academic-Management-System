@@ -95,6 +95,7 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make('account_type'),
                 TextColumn::make('college.Title'),
+                TextColumn::make('department.title'),
                 // Tables\Columns\TextColumn::make('email_verified_at')
                 //     ->dateTime()
                 //     ->sortable(),

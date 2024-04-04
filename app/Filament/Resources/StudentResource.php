@@ -344,6 +344,13 @@ class StudentResource extends Resource
     //         Pages\EditStudentInfo::class,
     //     ]);
     // }
+
+//     public static function getWidgets(): array
+// {
+//     return [
+//         StudentResource\Widgets\StudentsOverview::class,
+//     ];
+// }
     public static function getEloquentQuery(): Builder
     {
         if(auth()->user()->hasRole('admin')) {
@@ -354,4 +361,10 @@ class StudentResource extends Resource
         }
 
     }
+    // protected function getHeaderWidgets(): array
+    // {
+    //     return [
+    //         StudentResource\Widgets\StudentsOverview::class,
+    //     ];
+    // }
 }

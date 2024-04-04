@@ -54,4 +54,11 @@ class Student extends Model
                     ->withPivot(['grade'])
                     ->withPivot(['remarks']);
     }
+
+    public static function get_department($departmentId)
+    {
+        return static::where([
+            ["department_id", $departmentId]
+        ]);
+    }
 }

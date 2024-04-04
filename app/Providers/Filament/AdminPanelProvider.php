@@ -63,6 +63,7 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarFullyCollapsibleOnDesktop()
             ->profile(EditProfile::class)
             ->darkMode(false)
+            ->widgets([])
             ->navigationItems([
                 // NavigationItem::make('Analytics')
                 //     ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
