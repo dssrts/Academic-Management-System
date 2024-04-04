@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -80,5 +81,9 @@ class SubjectsRelationManager extends RelationManager
     //     }
 
     // }
+    public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
+    {
+        return !auth()->user()->is_admin();
+    }
     
 }
