@@ -139,8 +139,8 @@ class SubjectsRelationManager extends RelationManager
     // }
     public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
     {
-        return true;
-        //return !auth()->user()->is_admin();
+        //return true;
+        return !auth()->user()->is_admin();
     }
     
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Faculty;
 use App\Models\Subject;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -18,8 +19,8 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\SubjectResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Filament\Resources\SubjectResource\RelationManagers\FacultiesRelationManager;
 use App\Filament\Resources\SubjectResource\RelationManagers\FacultyRelationManager;
+use App\Filament\Resources\SubjectResource\RelationManagers\FacultiesRelationManager;
 
 class SubjectResource extends Resource
 {
@@ -27,10 +28,12 @@ class SubjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Chairperson Controls';
-
+    
     public static function form(Form $form): Form
     {
+        
         return $form
+        
             ->schema([
                 Forms\Components\Select::make('college_id')
                     ->relationship(name:'college', titleAttribute:'Title')
@@ -65,9 +68,42 @@ class SubjectResource extends Resource
                     ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4']),
                 Section::make('Faculties')->schema([
                     Select::make('faculties')
-                    ->relationship('faculties', 'last_name')
+                    //->relationship('faculties', 'last_name')
                     ->multiple()
                     ->preload()
+                    // ->options(fn(Get $get): Collection => Faculty::query()
+                    //     ->where('college_id', $get('college_id'))
+                    //     ->pluck('last_name'))
+                    //     ->searchable()
+                    ->options(function (Get $get): array {
+                        if (auth()->user()->is_admin()){
+                            
+                            return Faculty::all()->pluck('last_name')->all();
+                        }
+                        return Faculty::query()
+                            ->where('college_id', $get('college_id'))
+                            ->pluck('last_name')
+                            ->searchable();
+                    })
+                
+                    // ->options(function (Get $get, $label) {
+                    //     if (auth()->user()->is_admin()){
+                    //         return Faculty::all();
+                    // } else{
+                    //     return Faculty::query()
+                    //     ->where('college_id', $get('college_id'))
+                    //     ->pluck('last_name')
+                    //     ->searchable();
+                    //     //->relationship('faculties', 'last_name');
+                    // }
+                    // else {
+                    //     return Faculty::query()
+                    //     ->where('college_id', $get('college_id'))
+                    //     ->pluck('last_name'))
+                    //     ->searchable();
+                    //->relationship('faculties', 'last_name')
+                    // })
+                    
                 ])
                 
             ]);
