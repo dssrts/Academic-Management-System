@@ -15,7 +15,7 @@
                x-data="{nav_open: true, align:''}" x-bind:class="nav_open ? 'justify-start' : 'justify-center'">
 
      <!-- Navigation Bar Division-->
-    <div class="h-screen menu w-1/5  flex-col drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)] opacity-.99]" x-show="nav_open">
+    <div class="h-screen menu w-1/5 flex-col drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)] opacity-.99]" x-show="nav_open">
 
         <!-- Top Nav Bar Division-->                
         <div class = "bg-blue h-3/4 grow flex-col flex items-center opacity-[.99]">
@@ -135,7 +135,7 @@
                           <label class="block font-inter  text-[13px] text-gray-700 text-sm mb-[6px]" for="username">
                               Email
                            </label>
-                          <input class="shadow appearance-none border rounded h-[32px] w-72 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]"
+                          <input class="shadow appearance-none border rounded h-[32px] w-72 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus: focus:border-[#FFD700] focus:border-opacity-75 focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]"
                                  id="username" name="email" type="email" placeholder="2021-xxxxx" required>
                       </div>
                     
@@ -144,7 +144,7 @@
                          <label class="block font-inter  text-[13px] text-gray-700 text-sm mb-[6px]" for="password">
                               Password
                          </label>
-                         <input class="shadow appearance-none border border-red-500 rounded h-[32px] w-72 py-2 px-3 text-gray-700 mb-0 leading-tight focus:outline-none focus:shadow-outline  focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]" 
+                         <input class="shadow appearance-none border border-red-500 rounded h-[32px] w-72 py-2 px-3 text-gray-700 mb-0 leading-tight focus:outline-none focus:shadow-outline focus:border-[#FFD700] focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]" 
                                 id="password" name="password" type="password" placeholder="************" required>
                       </div>
 
