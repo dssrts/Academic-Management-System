@@ -75,6 +75,7 @@ class SubjectResource extends Resource
                     //     ->where('college_id', $get('college_id'))
                     //     ->pluck('last_name'))
                     //     ->searchable()
+                    ->searchable()
                     ->options(function (Get $get): array {
                         if (auth()->user()->is_admin()){
                             
@@ -83,7 +84,7 @@ class SubjectResource extends Resource
                         return Faculty::query()
                             ->where('college_id', $get('college_id'))
                             ->pluck('last_name')
-                            ->searchable();
+                            ->all();
                     })
                 
                     // ->options(function (Get $get, $label) {
@@ -161,5 +162,15 @@ class SubjectResource extends Resource
             'create' => Pages\CreateSubject::route('/create'),
             'edit' => Pages\EditSubject::route('/{record}/edit'),
         ];
+    }
+    public static function getEloquentQuery(): Builder
+    {
+        if(auth()->user()->hasRole('admin')) {
+            return parent::getEloquentQuery();
+            
+        } else{
+            return parent::getEloquentQuery()->where('department_id', auth()->user()->department_id);
+        }
+
     }
 }
