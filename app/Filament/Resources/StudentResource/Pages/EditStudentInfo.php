@@ -104,7 +104,7 @@ class EditStudentInfo extends EditRecord
                         ->maxLength(255),
                     Forms\Components\TextInput::make('mobile_no')
                         ->required()
-                        ->numeric()
+                        //->numeric()
                         ->maxLength(11),
                     Forms\Components\TextInput::make('telephone_no')
                         ->tel()
