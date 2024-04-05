@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubjectResource\RelationManagers;
 use App\Filament\Resources\SubjectResource\RelationManagers\FacultyRelationManager;
 use App\Filament\Resources\SubjectResource\RelationManagers\FacultiesRelationManager;
+use Filament\Tables\Filters\SelectFilter;
 
 class SubjectResource extends Resource
 {
@@ -134,7 +135,18 @@ class SubjectResource extends Resource
                 //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('college')
+                ->relationship('college', 'Title'), 
+                SelectFilter::make('department')
+                ->relationship('department', 'title'), 
+                SelectFilter::make('year')
+                ->options([
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                ]), 
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
