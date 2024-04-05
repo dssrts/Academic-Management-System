@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         Subject::factory(100)->create();
         User::factory(50)->create();
         $this->call(RoleSeeder::class);
+        $this->call(ModelHasRoleSeeder::class);
+
 
         // \App\Models\User::factory(10)->create();
 
