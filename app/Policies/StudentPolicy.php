@@ -37,7 +37,7 @@ class StudentPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->account_type == 'Chairperson') 
+        if ($user->hasRole('admin')) 
         {
             return true;
         }

@@ -151,7 +151,7 @@ class StudentResource extends Resource
                         ->relationship('subjects', 'subject_title')
                         // ->multiple()
                         ->preload()
-                    ])->hidden(!auth()->user()->is_admin()),
+                    ])//->hidden(!auth()->user()->is_admin()),
             ]);
     }
 
