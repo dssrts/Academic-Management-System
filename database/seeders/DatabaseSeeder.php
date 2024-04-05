@@ -7,11 +7,14 @@ use Database\Seeders\DepartmentSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Faculty;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\User;
+use App\Models\Grade;
+
 
 class DatabaseSeeder extends Seeder
-{
+{   
     /**
      * Seed the application's database.
      */
@@ -24,8 +27,8 @@ class DatabaseSeeder extends Seeder
         User::factory(50)->create();
         $this->call(RoleSeeder::class);
         $this->call(ModelHasRoleSeeder::class);
-
-
+        Student::factory(User::where('account_type', 'Student')->count())->create();    
+        $this->call(GradesSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

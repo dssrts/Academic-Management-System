@@ -22,16 +22,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $randomDepartmentID = Department::inRandomOrder()->first()->college_id;
-        $randomDepartmentCollegeID =  Department::find($randomDepartmentID)->college_id;
-
-        $name = $this->faker->name();
+        $randomDepartmentID = Department::inRandomOrder()->first()->id;
+        // $randomDepartmentCollegeID =  Department::find($randomDepartmentID)->college_id;
+    
+        $firstName = $this->faker->firstName();
+        $lastName = $this->faker->lastName();
+        $name = $firstName . ' ' . $lastName;
         $email = strtolower(str_replace(' ', '', $name)) . '@example.com';
         $password = bcrypt('password');
-        $initials = strtoupper(substr($name, 0, 2)); // Assuming you want only the first two initials
+        $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1)); // Assuming you want the first letter of first name and last name
         $accountTypes = ['Student', 'Admin', 'Chairperson'];
         $accountType = $accountTypes[array_rand($accountTypes)];
-
+    
         return [
             'name' => $name,
             'email' => $email,
@@ -46,11 +48,11 @@ class UserFactory extends Factory
             'updated_at' => now(),
             'user_code' => $initials,
             'account_type' => $accountType,
-            'college_id' => $randomDepartmentCollegeID,
+            'college_id' => Department::find($randomDepartmentID)->college_id,
             'department_id' => $randomDepartmentID,
         ];
     }
-
+    
     /**
      * Indicate that the model's email address should be unverified.
      */
