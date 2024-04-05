@@ -104,7 +104,7 @@ class CreateStudent extends CreateRecord
                         ->maxLength(255),
                     TextInput::make('mobile_no')
                         ->required()
-                        ->numeric()
+                        //->numeric()
                         ->maxLength(11),
                     TextInput::make('telephone_no')
                         ->tel()
