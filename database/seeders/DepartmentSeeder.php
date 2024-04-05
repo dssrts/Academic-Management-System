@@ -33,14 +33,14 @@ class DepartmentSeeder extends Seeder
             ],
             // College of Engineering and Technology (CET)
             'COE' => [
-                'CE' => 'Civil Engineering',
-                'EE' => 'Electrical Engineering',
-                'ME' => 'Mechanical Engineering',
-                'IE' => 'Industrial Engineering',
-                'ChE' => 'Chemical Engineering',
-                'SE' => 'Software Engineering',
-                'CpE' => 'Computer Engineering',
-                'EECE' => 'Electrical and Computer Engineering',
+                'BSCE' => 'Bachelor of Science in Civil Engineering',
+                'BSEE' => 'Bachelor of Science in Electrical Engineering',
+                'BSME' => 'Bachelor of Science in Mechanical Engineering',
+                'BSIE' => 'Bachelor of Science in Industrial Engineering',
+                'BSChE' => 'Bachelor of Science in Chemical Engineering',
+                'BSSE' => 'Bachelor of Science in Software Engineering',
+                'BSCpE' => 'Bachelor of Science in Computer Engineering',
+                'BSEECE' => 'Bachelor of Science in Electrical and Computer Engineering',                
             ],
             // College of Humanities, Arts, and Social Sciences (CHASS)
             'CHASS' => [
@@ -75,7 +75,6 @@ class DepartmentSeeder extends Seeder
                 'MSN' => 'Master of Science in Nursing',
                 'DNP' => 'Doctor of Nursing Practice',
                 'PhD' => 'Doctor of Philosophy in Nursing',
-                'RN' => 'Registered Nurse',
             ],
             
             // College of Physical Therapy (CPT)
@@ -84,7 +83,6 @@ class DepartmentSeeder extends Seeder
                 'MPT' => 'Master of Physical Therapy',
                 'BSPT' => 'Bachelor of Science in Physical Therapy',
                 'PTA' => 'Physical Therapist Assistant',
-                'PT' => 'Physical Therapist',
             ],
             
             // College of Business (COB)

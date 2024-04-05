@@ -162,10 +162,9 @@ class SubjectFactory extends Factory
         $subjectCode = strtoupper(substr(str_replace(' ', '', $subjectTitle), 0, 3)) . $this->faker->numberBetween(0, 9999);
         $randomDepartmentID = Department::inRandomOrder()->first()->id;
         $randomFacultyID = Faculty::inRandomOrder()->first()->id;
-        $randomFaculty = Faculty::where('id',$randomFacultyID)->last_name;
-        $randomDepartmentCollegeID = College::where('id',$randomDepartmentID)->first();
+        $randomFaculty = Faculty::find($randomFacultyID)->last_name;
         return [
-            'college_id' => $randomDepartmentCollegeID,
+            'college_id' => Department::find($randomDepartmentID)->college_id,
             'department_id' => $randomDepartmentID,
             'subject_code' => $subjectCode,
             'subject_title' => $subjectTitle,

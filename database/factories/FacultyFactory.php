@@ -18,14 +18,10 @@ class FacultyFactory extends Factory
      */
     public function definition(): array
     {
-        $randomCode = College::inRandomOrder()->first()->Code;
-        $id = College::where('id', $randomCode)->first();
-        // echo $randomCollege;
-        // $a = "1";
         return [
             'college_id' => College::inRandomOrder()->first()->id,
             'first_name' => $this->faker->firstName(),
-            'middle_name' => $this->faker->name,
+            'middle_name' => $this->faker->lastName(),
             'last_name' => $this->faker->lastName(),
         ];
     }
