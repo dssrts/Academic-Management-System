@@ -312,84 +312,94 @@
                         </div>
                         <div class="flex max-w-2xl mx-auto justify-center items-center">
                             <div class="flex rounded my-6 justify-center items-center">
-                                <table class="w-full table-auto text-[12px]">
-                                    <tbody class=" font-semibold border">
+                                <table class="w-full table-auto text-[11px] border-t">
+                                    <thead>
                                         <tr>
-                                            <td class="text-white-10 px-24 py-0 border-b align-middle bg-gold-pressed">Student Number :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->student_no}}</td>
+                                            <th class="text-white-10 font-inter font-bold border-b border-r border-opacity-50 border-black-300 text-[12px] px-24 py-1 bg-blue-hover bg-opacity-95">Field</th>
+                                            <th class="text-white-10 font-inter font-bold border-b text-[12px] px-24 py-1  bg-blue-hover bg-opacity-95">Data</th>
                                         </tr>
                                         <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b    align-middle bg-gold-pressed">Last Name :</td>
-                                            <td class="px-24 py-0 border-b   align-middle">{{$students->last_name}}</td>
+                                            <td class ="h-[4px]">
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0 border-b align-middle bg-gold-pressed">First Name :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->first_name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0 border-b align-middle bg-gold-pressed">Middle Name :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->middle_name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0 border-b align-middle bg-gold-pressed">Sex :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->biological_sex}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0 border-b align-middle bg-gold-pressed">Birthdate :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->birthdate}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0 border-b align-middle bg-gold-pressed">Birthplace :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->birthdate_city}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0 border-b align-middle bg-gold-pressed">Religion :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->religion}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Civil Status :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->civil_status}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b  align-middle bg-gold-pressed">Student Type :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->student_type}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Registration Status :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->registration_status}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Year Level :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->year_level}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">College :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$college->Code}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Department :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$department->code}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Permanent Address :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->permanent_address}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">PLM Email :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->plm_email}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Personal Email :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{Auth::user()->email}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Mobile Number :</td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->mobile_no}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-white-10 px-24 py-0  border-b align-middle bg-gold-pressed">Telephone Number: </td>
-                                            <td class="px-24 py-0 border-b align-middle">{{$students->telephone_no}}</td>
-                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Student Number:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->student_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Last Name:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->last_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">First Name:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->first_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Middle Name:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->middle_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Sex:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->biological_sex}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Birthdate:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->birthdate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Birthplace:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->birthdate_city}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Religion:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->religion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Civil Status:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->civil_status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Student Type:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->student_type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Registration Status:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->registration_status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Year Level:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->year_level}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">College:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$college->Code}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Department:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$department->code}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Permanent Address:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->permanent_address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">PLM Email:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->plm_email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Personal Email:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{Auth::user()->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Mobile Number:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->mobile_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Telephone Number:</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->telephone_no}}</td>
+                                    </tr>
+                                    
                                     </tbody>
                                 </table>
                             </div>
