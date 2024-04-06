@@ -86,11 +86,11 @@
             </button>
 
             <!-- Inquiries Label -->
-            <div class="flex mt-1 flex-col">
-                <p class="ml-6 mt-4 text-white-10 text-[9px] font-inter align-self-end"> 
+            <div class="flex pb-2 flex-col justify-end flex-1">
+                <p class="pl-5 mt-4 text-white-10 text-[9px] font-inter align-self-end"> 
                   For more inquiries or concerns, please email: 
                   <b> 
-                    <u class="hover:text-gold-hover hover:opacity-95"> ithelp@plm.edu.ph </u> 
+                    <u class="hover:text-gold-hover hover:opacity-95"> <a href="https://mail.google.com/"> ithelp@plm.edu.ph  </a></u> 
                   </b>
                 </p>
             </div>

@@ -19,42 +19,66 @@ class SignUpController extends Controller
         return view('sign-in');
     }
 
-    public function studentview(Request $request, $student_no){
+
+    public function studentview(Request $request, $student_no)
+    {
         $student = Student::where('student_no', $student_no)->first();
-    
+
+        $btns = [
+            'information' => false,
+            'grades' => false,
+            'process' => false,
+            'classroom' => false,
+            'services' => false,
+        ];
+
+        if ($request->has('buttons')) {
+            // If 'buttons' parameter exists in the request
+            $requestedButton = $request->input('buttons');
+            if (array_key_exists($requestedButton, $btns)) {
+                // If the requested button exists in the $btns array
+                $btns[$requestedButton] = true;
+            }
+        } else {
+            // If 'buttons' parameter is not present in the request
+            $btns['information'] = true; // Set 'information' to true
+        }
+
         if (!$student) {
             // Handle if student not found
             // For example, return an error message or redirect
         }
-    
+
         $college_id = $student->college_id;
         $department_id = $student->department_id;
-    
+
         $college = College::where('id', $college_id)->first();
         $department = Department::where('id', $department_id)->first();
-    
+
         $gradesQuery = Grade::where('student_id', $student->id);
-    
+
         $defaultYear = '20241'; // Default year
         if ($request->has('year') && $request->year != 'all') {
             $defaultYear = $request->year;
             $gradesQuery->where(function ($query) use ($defaultYear) {
                 $query->where('year', $defaultYear)
-                      ->orWhere('year', 'LIKE', $defaultYear.'%');
+                    ->orWhere('year', 'LIKE', $defaultYear.'%');
             });
         }
-    
+
         $grades = $gradesQuery->get();
-    
+
         return view('student-view', [
             'students' => $student,
             'department' => $department,
             'college' => $college,
             'grades' => $grades, // Pass grades to the view
             'defaultYear' => $defaultYear ?? null, // Pass the default year to the view if set
+            'buttons' => "information",
+            'btns' => $btns,
         ]);
     }
-    
+        
     
     public function post(Request $request){
         $request->validate([

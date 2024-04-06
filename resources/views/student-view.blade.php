@@ -13,7 +13,7 @@
     <title>CRS</title>
 </head>
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
-      x-data="{ btns:{information:true, grades: false, process: false, classroom: false, services: false}}">
+      x-data="{ btns:{{ json_encode($btns) }}}">
      <!-- Whole Container -->
     <div class  = "w-screen h-screen  flex flex-row">
         <!-- Nav Division -->
@@ -285,7 +285,7 @@
                 <p class="pl-5 mt-4 text-white-10 text-[9px] font-inter align-self-end"> 
                   For more inquiries or concerns, please email: 
                   <b> 
-                    <u class="hover:text-gold-hover hover:opacity-95"> ithelp@plm.edu.ph </u> 
+                    <u class="hover:text-gold-hover hover:opacity-95"> <a href="https://mail.google.com/"> ithelp@plm.edu.ph  </a></u> 
                   </b>
                 </p>
             </div>
@@ -410,6 +410,7 @@
                     </div>
                     <div class="pt-3 flex justify-center items-center">
                         <form action="#" method="GET" class="flex">
+                            <input type="hidden" name="buttons" value="grades" >
                             <input type="text" name="year" placeholder="Ex. '20231' or 'all'" class="px-3 h-5 w-36 mr-4 text-[12px] text-black-200 mt-1 border rounded-2xl">
                             <input type="submit" class="bg-blue px-3 rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 w-20 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Filter">
                         </form>
@@ -493,8 +494,19 @@
         </div>
     </div>
 
-<script>
+@if($buttons == "information")
 
+@elseif($buttons == "grades")
+
+@elseif($buttons == "process")
+
+@elseif($buttons == "classroom")
+
+@elseif($buttons == "services")
+
+@endif
+
+<script>
     function ButtonClick(buttonlist, currentbutton) {
         // If the current button is already true, no need to change its state
         if (buttonlist.hasOwnProperty(currentbutton) && buttonlist[currentbutton]) {
