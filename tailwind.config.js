@@ -56,7 +56,8 @@ export default {
             hover: '#D2CB65',
             DEFAULT: '#AB830F ',
             pressed: '#C9AE5D',
-            surace: '#FFF0E0 '
+            surace: '#FFF0E0 ',
+            amber: '#D5A106',
           }
         },
         fontSize: {

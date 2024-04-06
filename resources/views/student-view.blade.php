@@ -31,7 +31,7 @@
                   <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M6.168 18.849a4 4 0 0 1 3.832 
                   -2.849h4a4 4 0 0 1 3.834 2.855" /></svg>
                  <div class = "bg-white-10 flex flex-col justify-center items-center py-2 pb-2 pl-7 pr-7 rounded-lg">
-                    <h2 class = "font-inter text-blue text-[12px]"> <b> Welcome, {{Auth::user()->name}} </b>  </h2>
+                    <h2 class = "font-inter text-blue text-[12px]"> <b> Welcome, {{$students->first_name}} </b>  </h2>
                     <h2 class = "font-inter font-bold text-blue text-[12px] leading-[10px]"> {{$students->student_no}} </h2>
                     <h2 class = "font-inter  text-gold-hover text-[12px]"> <b> Undergraduate </b> </h2>
                  </div>
@@ -40,9 +40,9 @@
             <div class = "bg-blue flex flex-col font-inter">
 
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
-                                duration-150 hover:bg-blue-hover hover:text-gold-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
+                                duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 hover:text-white-10 group"
                                 x-on:click="ButtonClick(btns,'registration')" 
-                                x-bind:class="btns.registration ? 'bg-gold-hover font-bold hover:bg-gold-hover hover:text-white-10 opacity-95': 'bg-blue'">
+                                x-bind:class="btns.registration ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
                     <svg xmlns="http://www.w3.org/2000/svg"
                      class="icon icon-tabler icon-tabler-user-plus" width="24"
                       height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -92,9 +92,9 @@
 
                 <!-- View Information -->
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
-                                duration-150 hover:bg-blue-hover hover:text-gold-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
+                                duration-150 hover:bg-blue-hover  hover:font-bold hover:text-[16px] hover:gap-5 group"
                                 x-on:click="ButtonClick(btns,'view')"
-                                x-bind:class="btns.view ? 'bg-gold-hover font-bold hover:bg-gold-hover hover:text-white-10 opacity-95': 'bg-blue'">
+                                x-bind:class="btns.view ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-info h" width="24" height="24" 
                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" />
@@ -135,9 +135,9 @@
 
                 <!-- Process Information Student -->
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
-                                duration-150 hover:bg-blue-hover hover:text-gold-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
+                                duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
                                 x-on:click="ButtonClick(btns,'process')"
-                                x-bind:class="btns.process ? 'bg-gold-hover font-bold hover:bg-gold-hover hover:text-white-10 opacity-95': 'bg-blue'">
+                                x-bind:class="btns.process ? 'bg-gold-amberfont-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-files"
                      width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -178,9 +178,9 @@
                
                 <!-- Go to Classroom -->
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
-                                duration-150 hover:bg-blue-hover hover:text-gold-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
+                                duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
                                 x-on:click="ButtonClick(btns,'classroom')"
-                                x-bind:class="btns.classroom ? 'bg-gold-hover font-bold hover:bg-gold-hover hover:text-white-10 opacity-95': 'bg-blue'">
+                                x-bind:class="btns.classroom ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chalkboard " width="24" height="24"
                      viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"
                     fill="none"/><path d="M8 19h-3a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v11a1 1 0 0 1 -1 1" />
@@ -270,7 +270,7 @@
                  --}}
             <a href="{{ route('sign-in.get') }}">
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
-                                duration-150 hover:bg-blue-hover hover:text-gold-hover hover:font-bold hover:text-[16px] hover:gap-5">
+                                duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" 
                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" 
                     stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -303,11 +303,11 @@
             </div>
 
             <div class = "flex-1 flex flex-row justify-center items-center ">
-                    <!--SCHEDULE OF ACTIVITIES DIVISION-->
-                    <div class="bg-white-10 h-[480px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
+                <!--SCHEDULE OF ACTIVITIES DIVISION-->
+                <!--<div class="bg-white-10 h-[490px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
                         <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
                             <h1 class="font-bold font-inter text-[20px] text-white-10 italic"> 
-                                Student Information
+                                STUDENT INFORMATION
                             </h1>
                         </div>
                         <div class="flex max-w-2xl mx-auto justify-center items-center">
@@ -389,7 +389,7 @@
                                     </tr>
                                     <tr>
                                         <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Personal Email:</td>
-                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{Auth::user()->email}}</td>
+                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->personal_email}}</td>
                                     </tr>
                                     <tr>
                                         <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Mobile Number:</td>
@@ -403,9 +403,120 @@
                                     </tbody>
                                 </table>
                             </div>
+                    </div>-->
+                        
+                    <div class = "flex-1 flex flex-row justify-center items-center ">
+                        <!-- View Grades DIVISION -->
+                        <div class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
+                            <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
+                                <h1 class="font-bold font-inter text-[20px] text-white-10 italic"> 
+                                    VIEW GRADES
+                                </h1>
+                            </div>
+                            <div class="flex flex-col justify-center items-center mt-8 h-[4px]">
+                                <form action="#" method="GET" class="flex">
+                                    <input type="text" name="year" placeholder="Filter by Year" class="w-40 h-8 px-3 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500">
+                                    <button type="submit" class="ml-2 bg-blue hover:bg-blue-600 text-white font-bold py-1 px-3 rounded">Submit</button>
+                                </form>
+                            </div>
+                            <div class="mt-8 mx-4 font-inter text-[10px] text-black-300 overflow-y-auto max">
+                                <table class="w-full border-collapse table-auto overflow-scroll text-left">
+                                    <thead class="text-white-10 text-[11px] text-left">
+                                        <tr class="bg-blue text-white border">
+                                            <th class="border-r border-black-200 py-2 px-4">Subject</th>
+                                            <th class="border-r border-black-200 py-2 px-4">Code</th>
+                                            <th class="border-r border-black-200 py-2 px-4">Grade</th>
+                                            <th class="border-r border-black-200 py-2 px-4">Completion</th>
+                                            <th class="border-r border-black-200 py-2 px-4">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        <!-- Sample row, replace with actual data dynamically -->
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
+                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
+                                            <td class="border border-black-200 py-2 px-4">A</td>
+                                            <td class="border border-black-200 py-2 px-4">Completed</td>
+                                            <td class="border border-black-200 py-2 px-4">Excellent</td>
+                                        </tr>
+                                        <!-- More rows can be added dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
                         </div>
-                        
-                        
+
 
                     {{-- <!--REGISTER DIVISION-->
                     <div class = "bg-white-10 h-[240px] w-[760px] rounded-xl flex flex-col justify-center items-center text-center drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] border-[2px] border-blue">

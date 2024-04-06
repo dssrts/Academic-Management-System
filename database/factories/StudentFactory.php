@@ -46,6 +46,10 @@ class StudentFactory extends Factory
         $personal_email = strtolower($first_name) . '@personal.com';
         $plm_email = strtolower($first_name) . '@plm.edu.ph';
 
+        $randomNumbers = $this->faker->numberBetween(100, 999); // Generates a random three-digit number
+        $randomLastName = $this->faker->lastName; // Generates a random last name
+        $randomCity = $this->faker->city; // Generates a random city
+
         // Generate student data
         $studentData = [
             'student_no' => date('Y') . '-' . $this->faker->unique()->numberBetween(10000, 99999),
@@ -67,7 +71,7 @@ class StudentFactory extends Factory
             'mobile_no' => '0' . $this->faker->numberBetween(900000000, 999999999),
             'telephone_no' => $this->faker->phoneNumber,
             'academic_year' => $this->faker->randomElement(['2020-2021', '2019-2020', '2021-2022', '2022-2023', '2023-2024']),
-            'permanent_address' => $this->faker->address,
+            'permanent_address' => $randomNumbers . ' '. $randomLastName . ' St. ' . $randomCity,
             'user_id' => $user->id,
             'block' => $this->faker->numberBetween(1,10),
         ];
