@@ -28,7 +28,7 @@ class GradesSeeder extends Seeder
         // Loop through each student
         for ($i = 1; $i <= $numStudents; $i++) {
             // Get a random number of subjects for each student (between 10 and 30)
-            $numAssignedSubjects = rand(10, 30);
+            $numAssignedSubjects = rand(15, 40);
 
             // Generate an array of unique subject IDs for the current student
             $subjectIds = range(1, $numSubjects);
@@ -42,6 +42,9 @@ class GradesSeeder extends Seeder
                 $remarks = ($grade > 3.00) ? 'Failed' : 'Passed'; // Determine remarks based on grade
                 $createdAt = now();
                 $updatedAt = now();
+                $year = rand(2020, 2024); // Randomly select a year between 2019 and 2024
+                $suffix = rand(1, 2); // Randomly select a suffix '1' or '2' for the year
+                $year .= $suffix; // Combine the year and the suffix
 
                 DB::table('grades')->insert([
                     'student_id' => $i,
@@ -49,6 +52,7 @@ class GradesSeeder extends Seeder
                     'grade' => $grade,
                     'completion_grade' => $completionGrade,
                     'remarks' => $remarks,
+                    'year' => $year,
                     'created_at' => $createdAt,
                     'updated_at' => $updatedAt,
                 ]);

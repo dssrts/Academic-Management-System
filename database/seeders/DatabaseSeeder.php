@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CollegeSeeder::class);
         $this->call(DepartmentSeeder::class);
-        Faculty::factory(100)->create();
-        Subject::factory(100)->create();
-        User::factory(50)->create();
+        Faculty::factory(70)->create();
+        Subject::factory(500)->create();
+        User::factory(100)->create();
         $this->call(RoleSeeder::class);
         $this->call(ModelHasRoleSeeder::class);
         Student::factory(User::where('account_type', 'Student')->count())->create();    
