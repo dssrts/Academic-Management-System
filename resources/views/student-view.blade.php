@@ -405,142 +405,78 @@
                             </div>
                     </div>-->
                         
-                        <!-- View Grades Division -->
-                        <div class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
-                            <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
-                                <h1 class="font-bold font-inter text-[20px] text-white-10 italic">VIEW GRADES</h1>
-                            </div>
-                            <div class="pt-3 flex justify-center items-center">
-                                <form action="#" method="GET" class="flex">
-                                    <input type="text" name="year" placeholder="Ex. 2023" class="px-3 h-5 w-36 mr-4 text-[13px] text-black-200 mt-1 border rounded-2xl">
-                                    <input type="submit" class="bg-blue px-3 rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 w-20 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Filter">
-                                </form>
-                            </div>
-                            <div class=" pb-12 mt-3  font-inter text-[10px] text-black-300 table-wrp block max-h-full overflow-y-auto">
-                                <table class="w-full border-collapse text-left">
-                                    <thead class="text-white-10 text-[11px] text-left border-b sticky top-0">
-                                        <tr class="bg-blue text-white border">
-                                            <th class="border-r border-black-200 py-2 px-4">Subject</th>
-                                            <th class="border-r border-black-200 py-2 px-4">Code</th>
-                                            <th class="border-r border-black-200 py-2 px-4">Grade</th>
-                                            <th class="border-r border-black-200 py-2 px-4">Completion</th>
-                                            <th class="border-r border-black-200 py-2 px-4">Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="overflow-y-auto" style="max-height: 300px;">
-                                        <tr>
-                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                            <td class="border border-black-200 py-2 px-4">A</td>
-                                            <td class="border border-black-200 py-2 px-4">Completed</td>
-                                            <td class="border border-black-200 py-2 px-4">asx</td>
-                                        </tr>              <tr>
-                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                            <td class="border border-black-200 py-2 px-4">A</td>
-                                            <td class="border border-black-200 py-2 px-4">Completed</td>
-                                            <td class="border border-black-200 py-2 px-4">asx</td>
-                                        </tr>              <tr>
-                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                            <td class="border border-black-200 py-2 px-4">A</td>
-                                            <td class="border border-black-200 py-2 px-4">Completed</td>
-                                            <td class="border border-black-200 py-2 px-4">asx</td>
-                                        </tr>              <tr>
-                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                            <td class="border border-black-200 py-2 px-4">A</td>
-                                            <td class="border border-black-200 py-2 px-4">Completed</td>
-                                            <td class="border border-black-200 py-2 px-4">asx</td>
-                                        </tr>              <tr>
-                                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                            <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                            <td class="border border-black-200 py-2 px-4">A</td>
-                                            <td class="border border-black-200 py-2 px-4">Completed</td>
-                                            <td class="border border-black-200 py-2 px-4">asx</td>
-                                        </tr>
-                                    </tr>              <tr>
-                                        <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                        <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                        <td class="border border-black-200 py-2 px-4">A</td>
-                                        <td class="border border-black-200 py-2 px-4">Completed</td>
-                                        <td class="border border-black-200 py-2 px-4">asx</td>
-                                    </tr>              <tr>
-                                        <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                        <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                        <td class="border border-black-200 py-2 px-4">A</td>
-                                        <td class="border border-black-200 py-2 px-4">Completed</td>
-                                        <td class="border border-black-200 py-2 px-4">asx</td>
+                    <div class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
+                        <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
+                            <h1 class="font-bold font-inter text-[20px] text-white-10 italic">VIEW GRADES</h1>
+                        </div>
+                        <div class="pt-3 flex justify-center items-center">
+                            <form action="#" method="GET" class="flex">
+                                <input type="text" name="year" placeholder="Ex. '20231' or 'all'" class="px-3 h-5 w-36 mr-4 text-[12px] text-black-200 mt-1 border rounded-2xl">
+                                <input type="submit" class="bg-blue px-3 rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 w-20 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Filter">
+                            </form>
+                        </div>
+                        <div class="pb-28 mt-3  font-inter text-[10px] text-black-300 table-wrp block max-h-full overflow-y-auto">
+                            <table class="w-full border-collapse text-left">
+                                <thead class="text-white-10 text-[11px] text-left border-b sticky top-0">
+                                    <tr class="bg-blue text-white border">
+                                        <th class="border-r border-black-200 py-2 px-4">Subject</th>
+                                        <th class="border-r border-black-200 py-2 px-4">Code</th>
+                                        <th class="border-r border-black-200 py-2 px-4">Grade</th>
+                                        <th class="border-r border-black-200 py-2 px-4">Completion</th>
+                                        <th class="border-r border-black-200 py-2 px-4">Remarks</th>
                                     </tr>
-                                </tr>              <tr>
-                                    <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                    <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                    <td class="border border-black-200 py-2 px-4">A</td>
-                                    <td class="border border-black-200 py-2 px-4">Completed</td>
-                                    <td class="border border-black-200 py-2 px-4">asx</td>
-                                </tr>              <tr>
-                                    <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                    <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                    <td class="border border-black-200 py-2 px-4">A</td>
-                                    <td class="border border-black-200 py-2 px-4">Completed</td>
-                                    <td class="border border-black-200 py-2 px-4">asx</td>
-                                </tr>
-                            </tr>              <tr>
-                                <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                <td class="border border-black-200 py-2 px-4">A</td>
-                                <td class="border border-black-200 py-2 px-4">Completed</td>
-                                <td class="border border-black-200 py-2 px-4">asx</td>
-                            </tr>              <tr>
-                                <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                                <td class="border border-black-200 py-2 px-4">MATH101</td>
-                                <td class="border border-black-200 py-2 px-4">A</td>
-                                <td class="border border-black-200 py-2 px-4">Completed</td>
-                                <td class="border border-black-200 py-2 px-4">asx</td>
-                            </tr>
-                        </tr>              <tr>
-                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                            <td class="border border-black-200 py-2 px-4">MATH101</td>
-                            <td class="border border-black-200 py-2 px-4">A</td>
-                            <td class="border border-black-200 py-2 px-4">Completed</td>
-                            <td class="border border-black-200 py-2 px-4">asx</td>
-                        </tr>              <tr>
-                            <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                            <td class="border border-black-200 py-2 px-4">MATH101</td>
-                            <td class="border border-black-200 py-2 px-4">A</td>
-                            <td class="border border-black-200 py-2 px-4">Completed</td>
-                            <td class="border border-black-200 py-2 px-4">asx</td>
-                        </tr>
-                    </tr>              <tr>
-                        <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                        <td class="border border-black-200 py-2 px-4">MATH101</td>
-                        <td class="border border-black-200 py-2 px-4">A</td>
-                        <td class="border border-black-200 py-2 px-4">Completed</td>
-                        <td class="border border-black-200 py-2 px-4">asx</td>
-                    </tr>              <tr>
-                        <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                        <td class="border border-black-200 py-2 px-4">MATH101</td>
-                        <td class="border border-black-200 py-2 px-4">A</td>
-                        <td class="border border-black-200 py-2 px-4">Completed</td>
-                        <td class="border border-black-200 py-2 px-4">asx</td>
-                    </tr>
-                </tr>              <tr>
-                    <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                    <td class="border border-black-200 py-2 px-4">MATH101</td>
-                    <td class="border border-black-200 py-2 px-4">A</td>
-                    <td class="border border-black-200 py-2 px-4">Completed</td>
-                    <td class="border border-black-200 py-2 px-4">asx</td>
-                </tr>              <tr>
-                    <td class="border border-black-200 py-2 px-4">Mathematics</td>
-                    <td class="border border-black-200 py-2 px-4">MATH101</td>
-                    <td class="border border-black-200 py-2 px-4">A</td>
-                    <td class="border border-black-200 py-2 px-4">Completed</td>
-                    <td class="border border-black-200 py-2 px-4">asx</td>
-                </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> <!-- View Grades Ending Division-->
+                                </thead>
+                                <tbody class="overflow-y-auto" style="max-height: 300px;">
+                                    @php
+                                        $totalGrade = 0;
+                                        $totalGrades = count($grades);
+                                    @endphp
+                                    @if ($totalGrades > 0) {{-- Check if totalGrades is greater than 0 --}}
+                                        @foreach ($grades as $grade)
+                                            <tr>
+                                                <td class="border border-black-200 py-2 px-4">
+                                                    @php
+                                                        $subject = \App\Models\Subject::find($grade->subject_id);
+                                                        if ($subject) {
+                                                            echo $subject->subject_title;
+                                                        } else {
+                                                            echo "Subject Not Found";
+                                                        }
+                                                    @endphp
+                                                </td>
+                                                <td class="border border-black-200 py-2 px-4">
+                                                    @php
+                                                        $subject = \App\Models\Subject::find($grade->subject_id);
+                                                        if ($subject) {
+                                                            echo $subject->subject_code;
+                                                        } else {
+                                                            echo "Code Not Found";
+                                                        }
+                                                    @endphp
+                                                </td>
+                                                <td class="border border-black-200 py-2 px-4">{{ $grade->grade }}</td>
+                                                <td class="border border-black-200 py-2 px-4">{{ $grade->completion_grade }}</td>
+                                                <td class="border border-black-200 py-2 px-4">{{ $grade->remarks }}</td>
+                                            </tr>
+                                            @php
+                                                $totalGrade += $grade->grade;
+                                            @endphp
+                                        @endforeach
+                                        <tr>
+                                            <td colspan="2" class="border border-black-200 py-2 px-4 text-right font-inter font-bold">| General Weighted Average :</td>
+                                            <td class="border border-black-200 py-2 px-4 font-bold" colspan="3">{{ number_format($totalGrade / $totalGrades, 2) }}</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td colspan="5" class="border border-black-200 py-2 px-4 text-center font-bold">No grades found.</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- View Grades Ending Division-->
                         
 
                     {{-- <!--REGISTER DIVISION-->
