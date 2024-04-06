@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ModelHasRoleSeeder::class);
         Student::factory(User::where('account_type', 'Student')->count())->create();    
         $this->call(GradesSeeder::class);
+        $this->call(ScheduleSeeder::class);
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

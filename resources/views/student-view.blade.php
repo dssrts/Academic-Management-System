@@ -13,7 +13,7 @@
     <title>CRS</title>
 </head>
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
-      x-data="{ btns:{registration:false, view: false, process: false, classroom: false, services: false}}">
+      x-data="{ btns:{information:true, grades: false, process: false, classroom: false, services: false}}">
      <!-- Whole Container -->
     <div class  = "w-screen h-screen  flex flex-row">
         <!-- Nav Division -->
@@ -41,8 +41,8 @@
 
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 hover:text-white-10 group"
-                                x-on:click="ButtonClick(btns,'registration')" 
-                                x-bind:class="btns.registration ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
+                                x-on:click="ButtonClick(btns,'information')" 
+                                x-bind:class="btns.information ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
                     <svg xmlns="http://www.w3.org/2000/svg"
                      class="icon icon-tabler icon-tabler-user-plus" width="24"
                       height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -55,12 +55,12 @@
 
                        {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down" 
                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                       stroke-linecap="round" stroke-linejoin="round"  x-show="btns.registration"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                       stroke-linecap="round" stroke-linejoin="round"  x-show="btns.information"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                        <path d="M6 9l6 6l6 -6" /></svg> --}}
                 </div>
 
                 {{-- <!-- Registration Hidden -->
-                <div x-show="btns.registration">
+                <div x-show="btns.information">
                     <div class = "bg-blue-hover flex flex-row gap-2 pl-16 py-1 pb-1 text-[14px] text-white-10  duration-150 hover:bg-blue-surface group">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right hidden group-hover:flex" width="18
                         " height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -93,8 +93,8 @@
                 <!-- View Information -->
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
                                 duration-150 hover:bg-blue-hover  hover:font-bold hover:text-[16px] hover:gap-5 group"
-                                x-on:click="ButtonClick(btns,'view')"
-                                x-bind:class="btns.view ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
+                                x-on:click="ButtonClick(btns,'grades')"
+                                x-bind:class="btns.grades ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-info h" width="24" height="24" 
                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" />
@@ -302,24 +302,21 @@
                 </div>
             </div>
 
-            <div class = "flex-1 flex flex-row justify-center items-center ">
-                <!--SCHEDULE OF ACTIVITIES DIVISION-->
-                <!--<div class="bg-white-10 h-[490px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
-                        <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
-                            <h1 class="font-bold font-inter text-[20px] text-white-10 italic"> 
-                                STUDENT INFORMATION
-                            </h1>
+            <div class = "flex-1 flex flex-row justify-center items-center rounded-xl ">
+                <!--View Grades Division-->
+                <div x-show = "btns.information" class="bg-white-10 h-[490px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
+                        <div class="h-16 bg-blue rounded-tr-xl rounded-tl-xl flex justify-center items-center"> 
+                            <h1 class="font-bold font-inter text-[20px] text-white-10 italic">STUDENT INFORMATION</h1>
                         </div>
-                        <div class="flex max-w-2xl mx-auto justify-center items-center">
                             <div class="flex rounded my-6 justify-center items-center">
-                                <table class="w-full table-auto text-[11px] border-t">
+                                <table class="w-full table-auto text-[12px] border-t">
                                     <thead>
                                         <tr>
-                                            <th class="text-white-10 font-inter font-bold border-b border-r border-opacity-50 border-black-300 text-[12px] px-24 py-1 bg-blue-hover bg-opacity-95">Field</th>
-                                            <th class="text-white-10 font-inter font-bold border-b text-[12px] px-24 py-1  bg-blue-hover bg-opacity-95">Data</th>
+                                            <th class="text-white-10 font-inter font-bold border-b border-r border-opacity-50 border-black-300 text-[14px] px-24 py-1 bg-blue bg-opacity-95">Field</th>
+                                            <th class="text-white-10 font-inter font-bold border-b text-[14px] px-24 py-1  bg-blue bg-opacity-95">Data</th>
                                         </tr>
                                         <tr>
-                                            <td class ="h-[4px]">
+                                            <td class ="h-[8px]">
                                             </td>
                                         </tr>
                                     </thead>
@@ -396,86 +393,86 @@
                                         <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->mobile_no}}</td>
                                     </tr>
                                     <tr>
-                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Telephone Number:</td>
-                                        <td class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->telephone_no}}</td>
+                                        <td class="px-24 py-0  border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">Telephone Number:</td>
+                                        <td class="px-24 py-0 border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">{{$students->telephone_no}}</td>
                                     </tr>
                                     
                                     </tbody>
                                 </table>
-                            </div>
-                    </div>-->
+                     </div>
                         
-                    <div class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
-                        <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
-                            <h1 class="font-bold font-inter text-[20px] text-white-10 italic">VIEW GRADES</h1>
-                        </div>
-                        <div class="pt-3 flex justify-center items-center">
-                            <form action="#" method="GET" class="flex">
-                                <input type="text" name="year" placeholder="Ex. '20231' or 'all'" class="px-3 h-5 w-36 mr-4 text-[12px] text-black-200 mt-1 border rounded-2xl">
-                                <input type="submit" class="bg-blue px-3 rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 w-20 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Filter">
-                            </form>
-                        </div>
-                        <div class="pb-28 mt-3  font-inter text-[10px] text-black-300 table-wrp block max-h-full overflow-y-auto">
-                            <table class="w-full border-collapse text-left">
-                                <thead class="text-white-10 text-[11px] text-left border-b sticky top-0">
-                                    <tr class="bg-blue text-white border">
-                                        <th class="border-r border-black-200 py-2 px-4">Subject</th>
-                                        <th class="border-r border-black-200 py-2 px-4">Code</th>
-                                        <th class="border-r border-black-200 py-2 px-4">Grade</th>
-                                        <th class="border-r border-black-200 py-2 px-4">Completion</th>
-                                        <th class="border-r border-black-200 py-2 px-4">Remarks</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="overflow-y-auto" style="max-height: 300px;">
-                                    @php
-                                        $totalGrade = 0;
-                                        $totalGrades = count($grades);
-                                    @endphp
-                                    @if ($totalGrades > 0) {{-- Check if totalGrades is greater than 0 --}}
-                                        @foreach ($grades as $grade)
-                                            <tr>
-                                                <td class="border border-black-200 py-2 px-4">
-                                                    @php
-                                                        $subject = \App\Models\Subject::find($grade->subject_id);
-                                                        if ($subject) {
-                                                            echo $subject->subject_title;
-                                                        } else {
-                                                            echo "Subject Not Found";
-                                                        }
-                                                    @endphp
-                                                </td>
-                                                <td class="border border-black-200 py-2 px-4">
-                                                    @php
-                                                        $subject = \App\Models\Subject::find($grade->subject_id);
-                                                        if ($subject) {
-                                                            echo $subject->subject_code;
-                                                        } else {
-                                                            echo "Code Not Found";
-                                                        }
-                                                    @endphp
-                                                </td>
-                                                <td class="border border-black-200 py-2 px-4">{{ $grade->grade }}</td>
-                                                <td class="border border-black-200 py-2 px-4">{{ $grade->completion_grade }}</td>
-                                                <td class="border border-black-200 py-2 px-4">{{ $grade->remarks }}</td>
-                                            </tr>
-                                            @php
-                                                $totalGrade += $grade->grade;
-                                            @endphp
-                                        @endforeach
-                                        <tr>
-                                            <td colspan="2" class="border border-black-200 py-2 px-4 text-right font-inter font-bold">| General Weighted Average :</td>
-                                            <td class="border border-black-200 py-2 px-4 font-bold" colspan="3">{{ number_format($totalGrade / $totalGrades, 2) }}</td>
-                                        </tr>
-                                    @else
-                                        <tr>
-                                            <td colspan="5" class="border border-black-200 py-2 px-4 text-center font-bold">No grades found.</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
+                   
+                </div>
+
+                <div x-show= "btns.grades" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
+                    <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
+                        <h1 class="font-bold font-inter text-[20px] text-white-10 italic">VIEW GRADES</h1>
                     </div>
-                    
+                    <div class="pt-3 flex justify-center items-center">
+                        <form action="#" method="GET" class="flex">
+                            <input type="text" name="year" placeholder="Ex. '20231' or 'all'" class="px-3 h-5 w-36 mr-4 text-[12px] text-black-200 mt-1 border rounded-2xl">
+                            <input type="submit" class="bg-blue px-3 rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 w-20 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Filter">
+                        </form>
+                    </div>
+                    <div class="pb-28 mt-3  font-inter text-[10px] text-black-300 table-wrp block max-h-full overflow-y-auto">
+                        <table class="w-full border-collapse text-left">
+                            <thead class="text-white-10 text-[11px] text-left border-b sticky top-0">
+                                <tr class="bg-blue text-white border">
+                                    <th class="border-r border-black-200 py-2 px-4">Subject</th>
+                                    <th class="border-r border-black-200 py-2 px-4">Code</th>
+                                    <th class="border-r border-black-200 py-2 px-4">Grade</th>
+                                    <th class="border-r border-black-200 py-2 px-4">Completion</th>
+                                    <th class="border-r border-black-200 py-2 px-4">Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody class="overflow-y-auto" style="max-height: 300px;">
+                                @php
+                                    $totalGrade = 0;
+                                    $totalGrades = count($grades);
+                                @endphp
+                                @if ($totalGrades > 0) {{-- Check if totalGrades is greater than 0 --}}
+                                    @foreach ($grades as $grade)
+                                        <tr>
+                                            <td class="border border-black-200 py-2 px-4">
+                                                @php
+                                                    $subject = \App\Models\Subject::find($grade->subject_id);
+                                                    if ($subject) {
+                                                        echo $subject->subject_title;
+                                                    } else {
+                                                        echo "Subject Not Found";
+                                                    }
+                                                @endphp
+                                            </td>
+                                            <td class="border border-black-200 py-2 px-4">
+                                                @php
+                                                    $subject = \App\Models\Subject::find($grade->subject_id);
+                                                    if ($subject) {
+                                                        echo $subject->subject_code;
+                                                    } else {
+                                                        echo "Code Not Found";
+                                                    }
+                                                @endphp
+                                            </td>
+                                            <td class="border border-black-200 py-2 px-4">{{ $grade->grade }}</td>
+                                            <td class="border border-black-200 py-2 px-4">{{ $grade->completion_grade }}</td>
+                                            <td class="border border-black-200 py-2 px-4">{{ $grade->remarks }}</td>
+                                        </tr>
+                                        @php
+                                            $totalGrade += $grade->grade;
+                                        @endphp
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="2" class="border border-black-200 py-2 px-4 text-right font-inter font-bold">| General Weighted Average :</td>
+                                        <td class="border border-black-200 py-2 px-4 font-bold" colspan="3">{{ number_format($totalGrade / $totalGrades, 2) }}</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td colspan="5" class="border border-black-200 py-2 px-4 text-center font-bold">No grades found.</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                     <!-- View Grades Ending Division-->
                         
 
@@ -498,18 +495,23 @@
 
 <script>
 
-    function ButtonClick(buttonlist,currentbutton) {
-            // Reverse the current clicked button
-        if(buttonlist.hasOwnProperty(currentbutton)) {
-                buttonlist[currentbutton] = !buttonlist[currentbutton]
-         }
+    function ButtonClick(buttonlist, currentbutton) {
+        // If the current button is already true, no need to change its state
+        if (buttonlist.hasOwnProperty(currentbutton) && buttonlist[currentbutton]) {
+            return;
+        }
+        
+        // Reverse the current clicked button
+        if (buttonlist.hasOwnProperty(currentbutton)) {
+            buttonlist[currentbutton] = !buttonlist[currentbutton];
+        }
 
-        // Closed Other Buttons, Except The Clicked Buttons
-         for(const key in buttonlist){
-                if(buttonlist.hasOwnProperty(currentbutton) && String(key) != String(currentbutton)) {
-                     buttonlist[key] = false
-                }
-         }
+        // Close other buttons, except the clicked button
+        for (const key in buttonlist) {
+            if (buttonlist.hasOwnProperty(currentbutton) && String(key) !== String(currentbutton)) {
+                buttonlist[key] = false;
+            }
+        }
     }
 </script>
 

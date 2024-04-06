@@ -73,7 +73,7 @@ class StudentFactory extends Factory
             'academic_year' => $this->faker->randomElement(['2020-2021', '2019-2020', '2021-2022', '2022-2023', '2023-2024']),
             'permanent_address' => $randomNumbers . ' '. $randomLastName . ' St. ' . $randomCity,
             'user_id' => $user->id,
-            'block' => $this->faker->numberBetween(1,10),
+            'block' => $this->faker->numberBetween(1,4),
         ];
 
         return $studentData;
