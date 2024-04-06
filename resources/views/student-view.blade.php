@@ -144,7 +144,7 @@
                       fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none"
                        d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" />
                        <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
-                        Process Infromation                         
+                        Process Information                         
                         {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down hidden group-hover:flex" 
                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -177,6 +177,7 @@
                 </div> --}}
                
                 <!-- Go to Classroom -->
+                <a href='https://www.microsoft.com/en-us/microsoft-teams/log-in'>
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
                                 x-on:click="ButtonClick(btns,'classroom')"
@@ -193,6 +194,7 @@
                     stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M6 9l6 6l6 -6" /></svg> --}}
                 </div>
+                </a>
 
                 <!-- Go to Classroom Hidden-->
                 {{-- <div x-show="btns.classroom">
@@ -398,10 +400,8 @@
                                     </tr>
                                     
                                     </tbody>
-                                </table>
+                             </table>
                      </div>
-                        
-                   
                 </div>
 
                 <div x-show= "btns.grades" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
@@ -475,7 +475,7 @@
                         </table>
                     </div>
                     <!-- View Grades Ending Division-->
-                        
+
 
                     {{-- <!--REGISTER DIVISION-->
                     <div class = "bg-white-10 h-[240px] w-[760px] rounded-xl flex flex-col justify-center items-center text-center drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] border-[2px] border-blue">
@@ -487,24 +487,42 @@
                                 The Start of classes will be on <b> August 29, 2023. </b>
                             </h1>
                     </div> --}}
-            </div>
+           
+                </div>
+
+                <div x-show= "btns.process" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
+                    <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
+                        <h1 class="font-bold font-inter text-[20px] text-white-10 italic">PROCESSING INFORMATION</h1>
+                    </div>
+                    <div class="p-8 font-inter text-[12px]">
+                            <form>
+                                 <div class="mb-4">
+                                    <label for="name" class="block text-sm font-bold text-gray-700">Student Number</label>
+                                    <input type="text" id="name" name="name" placeholder="{{$students->student_no}}" class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                 </div>
+                                 <div class="mb-4">
+                                    <label for="email" class="block text-sm font-bold text-gray-700">Recipient Email</label>
+                                    <input type="email" id="email" name="email" placeholder="chairperson@gmail.com" autocomplete="email"class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                 </div>
+                                 <div class="mb-4">
+                                    <label for="subject" class="block text-sm font-bold text-gray-700">Subject</label>
+                                    <input type="text" id="subject" name="subject" placeholder="About Grades" class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                 </div>
+                                 <div class="mb-4">
+                                    <label for="message" class="block text-sm font-bold text-gray-700">Message</label>
+                                    <textarea id="message" name="message" rows="4" placeholder="Enter Something..." class="p-2 h-36 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                 </div>
+                                 <div class="mb-4 justify-center flex">
+                                    <input type="submit" class="bg-blue px-3 w-1/4 text-center rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5  mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Request">
+                                </div>
+                            </form>
+                    </div>
             </div>
 
 
         </div>
     </div>
 
-@if($buttons == "information")
-
-@elseif($buttons == "grades")
-
-@elseif($buttons == "process")
-
-@elseif($buttons == "classroom")
-
-@elseif($buttons == "services")
-
-@endif
 
 <script>
     function ButtonClick(buttonlist, currentbutton) {
