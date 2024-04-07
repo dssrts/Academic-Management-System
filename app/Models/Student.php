@@ -31,7 +31,8 @@ class Student extends Model
         'mobile_no', 
         'telephone_no', 
         'user_id',
-        'block'
+        'block',
+        'remarks'
     ];
 
     public function user(){

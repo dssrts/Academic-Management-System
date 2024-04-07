@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(Subject::class);
             $table->float('grade')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
         
