@@ -31,7 +31,7 @@ class UserFactory extends Factory
         $email = strtolower(str_replace(' ', '', $name)) . '@example.com';
         $password = bcrypt('password');
         $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1)); // Assuming you want the first letter of first name and last name
-        $accountTypes = ['Student', 'Admin', 'Chairperson'];
+        $accountTypes = ['Student', 'Admin', 'Chairperson','Student','Chairperson'];
         $accountType = $accountTypes[array_rand($accountTypes)];
     
         return [
