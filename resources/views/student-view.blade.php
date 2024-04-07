@@ -513,7 +513,7 @@
                                     <textarea id="message" name="message" rows="4" placeholder="Enter Something..." class="p-2 h-36 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
                                  </div>
                                  <div class="mb-4 justify-center flex">
-                                    <input type="submit" class="bg-blue px-3 w-1/4 text-center rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5  mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Request">
+                                    <input type="submit" class="bg-blue px-3 w-1/4 text-center rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Request">
                                 </div>
                             </form>
                     </div>
@@ -543,6 +543,7 @@
             }
         }
     }
+
 </script>
 
 </body>

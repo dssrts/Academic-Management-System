@@ -32,12 +32,13 @@ class ScheduleSeeder extends Seeder
 
             // Generate status (Taken or Available)
             $status = rand(0, 1) ? 'Taken' : 'Available';
+            $typeofroom = rand(0, 1) ? 'Lab' : 'Lec';
 
             // Create schedule
             Schedule::create([
                 'building' => $building,
                 'room_number' => $roomNumber,
-                'type' => 'Type', // You need to replace 'Type' with the actual type
+                'type' => $typeofroom, // You need to replace 'Type' with the actual type
                 'day' => $day,
                 'time' => $time,
                 'status' => $status,
