@@ -15,7 +15,7 @@
                x-data="{nav_open: true, align:''}" x-bind:class="nav_open ? 'justify-start' : 'justify-center'">
 
      <!-- Navigation Bar Division-->
-    <div class="h-screen menu w-1/5 flex-col drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)] opacity-.99]" x-show="nav_open">
+    <div class="h-screen menu w-1/5  flex-col drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)] opacity-.99]" x-show="nav_open">
 
         <!-- Top Nav Bar Division-->                
         <div class = "bg-blue h-3/4 grow flex-col flex items-center opacity-[.99]">
@@ -86,11 +86,11 @@
             </button>
 
             <!-- Inquiries Label -->
-            <div class="flex pb-2 flex-col justify-end flex-1">
-                <p class="pl-5 mt-4 text-white-10 text-[9px] font-inter align-self-end"> 
+            <div class="flex mt-1 flex-col">
+                <p class="ml-6 mt-4 text-white-10 text-[9px] font-inter align-self-end"> 
                   For more inquiries or concerns, please email: 
                   <b> 
-                    <u class="hover:text-gold-hover hover:opacity-95"> <a href="https://mail.google.com/"> ithelp@plm.edu.ph  </a></u> 
+                    <u class="hover:text-gold-hover hover:opacity-95"> ithelp@plm.edu.ph </u> 
                   </b>
                 </p>
             </div>
@@ -133,18 +133,28 @@
                     <!-- Email Input -->
                       <div class="">
                           <label class="block font-inter  text-[13px] text-gray-700 text-sm mb-[6px]" for="username">
-                              Email
+                            Email 
+                            @if(isset($error) && $error === 'invalid')
+                            <span class = "font-inter font-semibold text-[11px] inline-block text-red"> 
+                                ( Invalid Credentials ) 
+                             </span>
+                            @endif 
                            </label>
-                          <input class="shadow appearance-none border rounded h-[32px] w-72 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus: focus:border-[#FFD700] focus:border-opacity-75 focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]"
+                          <input class="shadow appearance-none border rounded h-[32px] w-72 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]"
                                  id="username" name="email" type="email" placeholder="2021-xxxxx" required>
                       </div>
-                    
+
                       <!-- Password Input -->
                       <div class="">
-                         <label class="block font-inter  text-[13px] text-gray-700 text-sm mb-[6px]" for="password">
-                              Password
-                         </label>
-                         <input class="shadow appearance-none border border-red-500 rounded h-[32px] w-72 py-2 px-3 text-gray-700 mb-0 leading-tight focus:outline-none focus:shadow-outline focus:border-[#FFD700] focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]" 
+                         <label class="inline-block font-inter  text-[13px] text-gray-700 text-sm mb-[6px]" for="password">
+                            Password 
+                            @if(isset($error) && $error === 'invalid')
+                             <span class = "font-inter font-semibold text-[11px] inline-block text-red"> 
+                                ( Invalid Credentials ) 
+                             </span>
+                            @endif
+                        </label>
+                         <input class="shadow appearance-none border border-red-500 rounded h-[32px] w-72 py-2 px-3 text-gray-700 mb-0 leading-tight focus:outline-none focus:shadow-outline  focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]" 
                                 id="password" name="password" type="password" placeholder="************" required>
                       </div>
 

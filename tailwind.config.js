@@ -58,6 +58,10 @@ export default {
             pressed: '#C9AE5D',
             surace: '#FFF0E0 ',
             amber: '#D5A106',
+          },
+
+          'red': {
+            DEFAULT: '#E63049 ',
           }
         },
         fontSize: {
