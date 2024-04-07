@@ -49,19 +49,21 @@ class SubjectsRelationManager extends RelationManager
                     ->options(['1'=>'1', '1.25'=> '1.25', '1.5'=>'1.5', '1.75'=> '1.75', '2'=>'2', '2.25'=> '2.25', '2.5'=>'2.5', '2.75'=> '2.75', '3'=>'3', '5'=>'5'])
                     //->afterStateUpdated(fn (Set $set)=>$set('remarks', "PASSED")),
                     ->afterStateUpdated(function (Set $set, $state) {
-                        if ($state === '') {
-                            $set('remarks', "INC");
-                        } elseif ($state < 3) {
+                        
+                        if ($state <= 3) {
                             $set('remarks', "PASSED");
                         } elseif ($state == 5) {
                             $set('remarks', "FAILED");
+                        }else{
+                            $set('remarks', "INC");
                         }
                     }),
                 Forms\Components\Select::make('remarks')
                     ->options(['PASSED'=>'PASSED', 'FAILED'=> 'FAILED', 'INC'=>'INC'])
-                    ->live()
-                    ->disabled()
-                    ->reactive()
+                    //->live()
+                    //->disabled()
+                    //->reactive()
+                    //->hidden()
                     // ->options(function (Model $record, $state) {
                     //        if ($record->grade == "INC") {
                                 
