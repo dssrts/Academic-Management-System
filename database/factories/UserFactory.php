@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
+use App\Models\Department;
+use App\Models\College;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -20,19 +22,37 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $randomDepartmentID = Department::inRandomOrder()->first()->id;
+        // $randomDepartmentCollegeID =  Department::find($randomDepartmentID)->college_id;
+    
+        $firstName = $this->faker->firstName();
+        $lastName = $this->faker->lastName();
+        $name = $firstName . ' ' . $lastName;
+        $email = strtolower(str_replace(' ', '', $name)) . '@example.com';
+        $password = bcrypt('password');
+        $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1)); // Assuming you want the first letter of first name and last name
+        $accountTypes = ['Student', 'Admin', 'Chairperson'];
+        $accountType = $accountTypes[array_rand($accountTypes)];
+    
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => $name,
+            'email' => $email,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => $password,
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
-            'remember_token' => Str::random(10),
+            'remember_token' => null,
             'profile_photo_path' => null,
             'current_team_id' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+            'user_code' => $initials,
+            'account_type' => $accountType,
+            'college_id' => Department::find($randomDepartmentID)->college_id,
+            'department_id' => $randomDepartmentID,
         ];
     }
-
+    
     /**
      * Indicate that the model's email address should be unverified.
      */
@@ -50,14 +70,14 @@ class UserFactory extends Factory
      */
     public function withPersonalTeam(callable $callback = null): static
     {
-        if (! Features::hasTeamFeatures()) {
+        if (!Features::hasTeamFeatures()) {
             return $this->state([]);
         }
 
         return $this->has(
             Team::factory()
-                ->state(fn (array $attributes, User $user) => [
-                    'name' => $user->name.'\'s Team',
+                ->state(fn(array $attributes, User $user) => [
+                    'name' => $user->name . '\'s Team',
                     'user_id' => $user->id,
                     'personal_team' => true,
                 ])

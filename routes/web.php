@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SignUpController;
+use vendor\filament\filament\resources\views\pages;
 
-/*
+/*;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -14,11 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[SignUpController::class,'get'])->name("sign-in.get");
+Route::post('/',[SignUpController::class,'post']);
+Route::get('/student-view/{id}',[SignUpController::class,'studentview']) -> name('student-view.get');
+Route::post('/student-view/{id}',[SignUpController::class,'gradesview']) -> name('student-view.postgrades');
+
+
+ Route::get('/dashboard', function () {
+    return view('dashboard'); 
+ });
+ 
 Route::get('/login', function () {
-   abort(404);
+   abort(404); 
 });
 
 Route::get('/ams/view-information', function () {

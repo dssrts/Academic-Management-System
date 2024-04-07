@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('subject_id')->cascadeOnDelete();
             $table->decimal("grade");
             $table->decimal("completion_grade");
+            $table->string("year");
             $table->string("remarks");
             $table->timestamps();
         });

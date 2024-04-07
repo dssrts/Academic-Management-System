@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->integer("student_no");
+            $table->string("student_no");
             $table->string("last_name");
             $table->string("first_name");
             $table->string("middle_name")->nullable();
@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string("permanent_address");
             $table->string("plm_email");
             $table->string("personal_email");
-            $table->integer("mobile_no");
-            $table->integer("telephone_no")->nullable();
+            $table->string("mobile_no");
+            $table->string("telephone_no")->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
