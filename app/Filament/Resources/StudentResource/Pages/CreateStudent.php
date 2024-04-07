@@ -37,6 +37,7 @@ class CreateStudent extends CreateRecord
                             $set('department_id', User::query()->where('id', $state)->pluck('college_id'));
                             //need to set the student number according to the user account user_code
                             $set('student_no', User::query()->where('id', $state)->pluck('user_code'));
+                            $set('plm_email', User::query()->where('id', $state)->pluck('email'));
                     })
                     ->live(),
                     
@@ -111,7 +112,8 @@ class CreateStudent extends CreateRecord
                     TextInput::make('plm_email')
                         ->email()
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->disabled(),
                     TextInput::make('personal_email')
                         ->email()
                         ->required()
