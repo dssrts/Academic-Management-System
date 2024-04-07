@@ -39,7 +39,7 @@ class ModelHasRoleSeeder extends Seeder
         $roleMap = [
             'Admin' => 1,
             'Chairperson' => 3,
-            'Student' => 4,
+            'Student' => 2,
             // Add more mappings if needed
         ];
 
