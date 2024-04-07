@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\StudentResource;
-
+use App\Models\User;
 
 class CreateStudent extends CreateRecord
 {
@@ -28,12 +28,26 @@ class CreateStudent extends CreateRecord
                 // TextInput::make('role')
                 // ->required(),
                 ->schema([
+                    Select::make('user_id')
+                        ->relationship(name:'user', titleAttribute:'name')
+                        ->label('Account')
+                        ->afterStateUpdated(function (Set $set, $state) {
+                
+                            $set('college_id', User::query()->where('id', $state)->pluck('college_id'));
+                            $set('department_id', User::query()->where('id', $state)->pluck('college_id'));
+                            //need to set the student number according to the user account user_code
+                            $set('student_no', User::query()->where('id', $state)->pluck('user_code'));
+                    })
+                    ->live(),
+                    
                     Select::make('college_id')
                         ->relationship(name:'college', titleAttribute:'Title')
                         ->searchable()
                         ->live()
                         ->preload()
                         ->required()
+                        ->disabled()
+                        
                         ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
                         Select::make('department_id')
                         //->relationship(name:'city', titleAttribute:'name')
@@ -44,13 +58,13 @@ class CreateStudent extends CreateRecord
                         ->searchable()
                         ->preload()
                         ->live()
-                        ->required(),
-                    Select::make('user_id')
-                        ->relationship(name:'user', titleAttribute:'name')
-                        ->label('Account'),
+                        ->required()
+                        ->disabled(),
+                    
                         
                     TextInput::make('student_no')
                         ->required()
+                        ->disabled()
                         ->maxLength(9),
                 TextInput::make('last_name')
                         ->required()

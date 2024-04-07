@@ -37,6 +37,7 @@ class EditStudentInfo extends EditRecord
                         ->live()
                         ->preload()
                         ->required()
+                        
                         ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
                         Forms\Components\Select::make('department_id')
                         //->relationship(name:'city', titleAttribute:'name')
