@@ -19,6 +19,10 @@ class SignUpController extends Controller
         return view('sign-in');
     }
 
+    // public function studentemail(Request $request, $student_no)
+    // {
+    //     // Create me a function that emails then
+    // }
 
     public function studentview(Request $request, $student_no)
     {

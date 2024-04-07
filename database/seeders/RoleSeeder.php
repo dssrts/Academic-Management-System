@@ -23,20 +23,6 @@ class RoleSeeder extends Seeder
             ],
 
             [
-                'name' => 'dean_gsp',
-                'guard_name' => 'web',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-
-            [
-                'name' => 'dean_crs',
-                'guard_name' => 'web',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-
-            [
                 'name' => 'student',
                 'guard_name' => 'web',
                 'created_at' => Carbon::now(),
@@ -44,7 +30,7 @@ class RoleSeeder extends Seeder
             ],
              
             [
-                'name' => 'dean_dual',
+                'name' => 'chairperson',
                 'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
