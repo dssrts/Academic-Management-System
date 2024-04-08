@@ -17,6 +17,7 @@ use Filament\Infolists\Components\Section as InfoSec;
 use Filament\Infolists\Infolist;
 use Illuminate\Support\Facades\DB;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 
 
 
@@ -60,7 +61,11 @@ class AppealResource extends Resource
                 })
             ])
             ->filters([
-                //
+                Filter::make('Read')
+                ->query(fn (Builder $query): Builder => $query->where('viewed', 'read')),
+
+                Filter::make('Unread')
+                ->query(fn (Builder $query): Builder => $query->where('viewed', 'unread')),
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make(),
@@ -93,7 +98,7 @@ class AppealResource extends Resource
     {
         return $infolist
             ->schema([
-                InfoSec::make("Subject")
+                InfoSec::make("About")
                     ->schema([
                         TextEntry::make('subject'),
                     ])->columns(1),
