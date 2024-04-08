@@ -262,7 +262,6 @@ class StudentResource extends Resource
                 // -- you can  actually use this to  return forms 
                 //eto yung keywords sa filament "Filling the form with existing data"
                 Tables\Actions\ViewAction::make()
-
                 ->label("View Info"),
                 Action::make('edit-info')
                 ->icon("heroicon-o-pencil-square")

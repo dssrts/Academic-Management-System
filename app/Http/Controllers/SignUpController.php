@@ -8,7 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Student;
 use App\Models\College;
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Contracts\Session\Session;
+use App\Models\Grade;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class SignUpController extends Controller
 {
@@ -19,20 +24,137 @@ class SignUpController extends Controller
         return view('sign-in',['error' => "valid"]);
     }
 
-    public function studentview(Request $request,$student_no){
-        $student = Student::where('student_no',$student_no)->first();
+    public function studentrequest(Request $request, $student_no)
+    {
+        $studentNumber = $request->studentnumber; // assuming 'name' is the input name for Student Number
+        $recipientEmail = $request->recipientemail;
+        $studentId = Student::where('student_no', $studentNumber)->first()->id;
+        $chairpersonId = User::where('email',$recipientEmail)->first()->id;
+        // $studentId = DB::table('students')->where("student_no",$studentNumber)->value('id');
+        // $chairpersonId = DB::table('users')->where("email",$recipientEmail)->value('id');
+        $subject = $request->subject;
+        $message = $request->message;
+
+        DB::table('appeals')->insert([
+            'student_id' => $studentId,
+            'user_id' => $chairpersonId,
+            'subject' => $subject,
+            'message' => $message,
+            'viewed' => "unread",
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        $student = Student::where('student_no', $student_no)->first();
+
+        $btns = [
+            'information' => false,
+            'grades' => false,
+            'process' => true,
+            'classroom' => false,
+            'services' => false,
+        ];
 
         $college_id = $student->college_id;
         $department_id = $student->department_id;
 
-        $college = College::where('id',$college_id)->first();
-        $department = Department::where('id',$department_id)->first();
+        $college = College::where('id', $college_id)->first();
+        $department = Department::where('id', $department_id)->first();
 
+        $gradesQuery = Grade::where('student_id', $student->id);
 
-        return view('student-view',['students' => $student,'department' => $department,'college' => $college]);
+        $defaultYear = '20241'; // Default year
+        if ($request->has('year') && $request->year != 'all') {
+            $defaultYear = $request->year;
+            $gradesQuery->where(function ($query) use ($defaultYear) {
+                $query->where('year', $defaultYear)
+                    ->orWhere('year', 'LIKE', $defaultYear.'%');
+            });
+        }
+
+        $grades = $gradesQuery->get();
+        session()->flash('buttons', 'process');
+
+        return redirect()->route('student-view.get',$student_no);
+
+        // return view('student-view', [
+        //     'students' => $student,
+        //     'department' => $department,
+        //     'college' => $college,
+        //     'grades' => $grades, // Pass grades to the view
+        //     'defaultYear' => $defaultYear ?? null, // Pass the default year to the view if set
+        //     'buttons' => "information",
+        //     'btns' => $btns,
+        // ]);
     }
 
+    public function studentview(Request $request, $student_no)
+    {
+        $student = Student::where('student_no', $student_no)->first();
+        $buttons = session()->get('buttons');
+        session()->forget('buttons');
+
+        $btns = [
+            'information' => false,
+            'grades' => false,
+            'process' => false,
+            'classroom' => false,
+            'services' => false,
+        ];
+
+        if ( $buttons ) {
+            if (array_key_exists( $buttons , $btns)) {
+                // If the requested button exists in the $btns array
+                $btns[$buttons ] = true;
+            }
+        } else {
+            // If 'buttons' parameter is not present in the request
+            $btns['information'] = true; // Set 'information' to true
+        }
+
+        if (!$student) {
+            // Handle if student not found
+            // For example, return an error message or redirect
+        }
+
+        $college_id = $student->college_id;
+        $department_id = $student->department_id;
+
+        $college = College::where('id', $college_id)->first();
+        $department = Department::where('id', $department_id)->first();
+
+        $gradesQuery = Grade::where('student_id', $student->id);
+
+        $defaultYear = '20241'; // Default year
+        if ($request->has('year') && $request->year != 'all') {
+            $defaultYear = $request->year;
+            $gradesQuery->where(function ($query) use ($defaultYear) {
+                $query->where('year', $defaultYear)
+                    ->orWhere('year', 'LIKE', $defaultYear.'%');
+            });
+        }
+
+        $grades = $gradesQuery->get();
+
+        return view('student-view', [
+            'students' => $student,
+            'department' => $department,
+            'college' => $college,
+            'grades' => $grades, // Pass grades to the view
+            'defaultYear' => $defaultYear ?? null, // Pass the default year to the view if set
+            'buttons' => "information",
+            'btns' => $btns,
+        ]);
+    }
+        
     public function post(Request $request){
+        $btns = [
+            'information' => true,
+            'grades' => false,
+            'process' => false,
+            'classroom' => false,
+            'services' => false,
+        ];
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -45,7 +167,7 @@ class SignUpController extends Controller
             $student_no = Student::where('user_id',$userId)->first()->student_no;
             return redirect(route('student-view.get',$student_no))->with([ 'id' => "EMAIL FAILEd" ]);
         }
-        return view('sign-in',['error' => "invalid"]);
+        return view('sign-in',['error' => "invalid",'btns' => $btns]);
 
     }
 }

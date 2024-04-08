@@ -124,7 +124,12 @@
             <!-- Log-in Division -->
             <div class ="bg-white-10 h-80 w-5/12 mt-5 rounded-lg drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] opacity-[.98] flex flex-col">  
                 <div class = "bg-wh h-16 flex pl-4 items-center">    
-                      <h2 class="text-[20px] text-blue-hover font-bold font-inter italic"> Log-In </h2>
+                      <h2 class="text-[20px] text-blue-hover font-bold font-inter italic"> Log-In       </h2>
+                      <h2 class = "font-inter pl-2  font-semibold text-[11px] inline-block text-red"> 
+                        @if(isset($error) && $error === 'invalid')
+                        ( Invalid Credentials ) 
+                        @endif 
+                      </h2>
                 </div> 
                 <div class="flex-1 -mt-3">
                    <form  method ="post" class="flex flex-col h-[264px] items-start pl-9 justify-evenly"     
@@ -134,11 +139,6 @@
                       <div class="">
                           <label class="block font-inter  text-[13px] text-gray-700 text-sm mb-[6px]" for="username">
                             Email 
-                            @if(isset($error) && $error === 'invalid')
-                            <span class = "font-inter font-semibold text-[11px] inline-block text-red"> 
-                                ( Invalid Credentials ) 
-                             </span>
-                            @endif 
                            </label>
                           <input class="shadow appearance-none border rounded h-[32px] w-72 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]"
                                  id="username" name="email" type="email" placeholder="2021-xxxxx" required>
@@ -148,11 +148,6 @@
                       <div class="">
                          <label class="inline-block font-inter  text-[13px] text-gray-700 text-sm mb-[6px]" for="password">
                             Password 
-                            @if(isset($error) && $error === 'invalid')
-                             <span class = "font-inter font-semibold text-[11px] inline-block text-red"> 
-                                ( Invalid Credentials ) 
-                             </span>
-                            @endif
                         </label>
                          <input class="shadow appearance-none border border-red-500 rounded h-[32px] w-72 py-2 px-3 text-gray-700 mb-0 leading-tight focus:outline-none focus:shadow-outline  focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]" 
                                 id="password" name="password" type="password" placeholder="************" required>

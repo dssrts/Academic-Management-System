@@ -137,7 +137,7 @@
                 <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
                                 x-on:click="ButtonClick(btns,'process')"
-                                x-bind:class="btns.process ? 'bg-gold-amberfont-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
+                                x-bind:class="btns.process ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95': 'bg-blue'">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-files"
                      width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -305,7 +305,7 @@
             </div>
 
             <div class = "flex-1 flex flex-row justify-center items-center rounded-xl ">
-                <!--View Grades Division-->
+                <!--View Information Division-->
                 <div x-show = "btns.information" class="bg-white-10 h-[490px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
                         <div class="h-16 bg-blue rounded-tr-xl rounded-tl-xl flex justify-center items-center"> 
                             <h1 class="font-bold font-inter text-[20px] text-white-10 italic">STUDENT INFORMATION</h1>
@@ -314,8 +314,8 @@
                                 <table class="w-full table-auto text-[12px] border-t">
                                     <thead>
                                         <tr>
-                                            <th class="text-white-10 font-inter font-bold border-b border-r border-opacity-50 border-black-300 text-[14px] px-24 py-1 bg-blue bg-opacity-95">Field</th>
-                                            <th class="text-white-10 font-inter font-bold border-b text-[14px] px-24 py-1  bg-blue bg-opacity-95">Data</th>
+                                            <th class="text-white-10 font-inter font-bold border-b border-r border-b-blue border-white-10 text-[14px] px-24 py-1 bg-blue bg-opacity-95">Field</th>
+                                            <th class="text-white-10 font-inter font-bold border-b border-b-blue border-white-10 text-[14px] px-24 py-1  bg-blue bg-opacity-95">Data</th>
                                         </tr>
                                         <tr>
                                             <td class ="h-[8px]">
@@ -417,13 +417,13 @@
                     </div>
                     <div class="pb-28 mt-3  font-inter text-[10px] text-black-300 table-wrp block max-h-full overflow-y-auto">
                         <table class="w-full border-collapse text-left">
-                            <thead class="text-white-10 text-[11px] text-left border-b sticky top-0">
+                            <thead class="text-white-10 text-[11px] text-left border-b border-t-blue sticky top-[-2px]">
                                 <tr class="bg-blue text-white border">
-                                    <th class="border-r border-black-200 py-2 px-4">Subject</th>
-                                    <th class="border-r border-black-200 py-2 px-4">Code</th>
-                                    <th class="border-r border-black-200 py-2 px-4">Grade</th>
-                                    <th class="border-r border-black-200 py-2 px-4">Completion</th>
-                                    <th class="border-r border-black-200 py-2 px-4">Remarks</th>
+                                    <th class="border-r  border-white-10 py-2 px-4">Subject</th>
+                                    <th class="border-r  border-white-10 py-2 px-4">Code</th>
+                                    <th class="border-r  border-white-10 py-2 px-4">Grade</th>
+                                    <th class="border-r  border-white-10 py-2 px-4">Completion</th>
+                                    <th class="border-r  border-white-10 py-2 px-4">Remarks</th>
                                 </tr>
                             </thead>
                             <tbody class="overflow-y-auto" style="max-height: 300px;">
@@ -495,24 +495,45 @@
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">PROCESSING INFORMATION</h1>
                     </div>
                     <div class="p-8 font-inter text-[12px]">
-                            <form>
+                            <form action ="{{route('student-view.post-request', ['id' => $students->student_no])}}" method="POST"> 
+                                @csrf     
                                  <div class="mb-4">
-                                    <label for="name" class="block text-sm font-bold text-gray-700">Student Number</label>
-                                    <input type="text" id="name" name="name" placeholder="{{$students->student_no}}" class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    <label for="studentnumber" class="block text-sm font-bold text-gray-700">
+                                         Student Number
+                                    </label>
+                                    <input type="text" id="studentnumber" name="studentnumber" value="{{$students->student_no}}"
+                                     class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 
+                                     block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                                  </div>
                                  <div class="mb-4">
-                                    <label for="email" class="block text-sm font-bold text-gray-700">Recipient Email</label>
-                                    <input type="email" id="email" name="email" placeholder="chairperson@gmail.com" autocomplete="email"class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    <label for="recipientemail" class="block text-sm font-bold text-gray-700">
+                                        Recipient Email
+                                    </label>
+                                    <select id="recipientemail" name="recipientemail" class="pl-1 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                        @foreach (DB::table('users')->where('department_id',$students->department_id)->where('account_type','Chairperson')->get() as $user )
+                                            <option value={{$user->email}}>
+                                                {{$user->email}}
+                                            </option>
+                                        @endforeach
+                                    </select>      
+                                </div>
+                                 <div class="mb-4">
+                                    <label for="subject" class="block text-sm font-bold text-gray-700" required>
+                                        Subject
+                                    </label>
+                                    <input type="text" id="subject" name="subject" placeholder="Please Enter A Subject" 
+                                    class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500
+                                    block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                                  </div>
                                  <div class="mb-4">
-                                    <label for="subject" class="block text-sm font-bold text-gray-700">Subject</label>
-                                    <input type="text" id="subject" name="subject" placeholder="About Grades" class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                 </div>
-                                 <div class="mb-4">
-                                    <label for="message" class="block text-sm font-bold text-gray-700">Message</label>
-                                    <textarea id="message" name="message" rows="4" placeholder="Enter Something..." class="p-2 h-36 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                    <label for="message" class="block text-sm font-bold text-gray-700" required>
+                                        Message
+                                    </label>
+                                    <textarea id="message" name="message" rows="4" placeholder="Enter Something..." class="p-2 h-36 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required></textarea>
                                  </div>
                                  <div class="mb-4 justify-center flex">
+                                    <input type="file" placeholder=".pdf only" name="pdf_file" class="font-inter block mr-1 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                                    <p class="font-inter mt-1 mr-8 text-sm text-gray-500 dark:text-gray-200" id="file_input_help">.pdf (max 5 mb)</p>
                                     <input type="submit" class="bg-blue px-3 w-1/4 text-center rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Request">
                                 </div>
                             </form>

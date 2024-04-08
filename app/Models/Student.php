@@ -47,6 +47,11 @@ class Student extends Model
         return $this->belongsTo(Department::class);
     }
 
+    public function appeal(){
+        return $this->hasMany(Appeal::class);
+    }
+
+
     public function subjects(){
         //return $this->belongsToMany(Subject::class, 'subject_undergrad_student')->withPivot(['grade']);
         return $this->belongsToMany(Subject::class, 'subject_student')
