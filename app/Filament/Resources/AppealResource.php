@@ -99,7 +99,7 @@ class AppealResource extends Resource
                     ])->columns(1),
                     InfoSec::make('Message')
                     ->schema([
-                        TextEntry::make('message')->weight('bold'),
+                        TextEntry::make('message')
                     ])->columns(1)
             ]);
     }
