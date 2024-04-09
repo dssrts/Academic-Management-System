@@ -62,6 +62,10 @@ export default {
 
           'red': {
             DEFAULT: '#E63049 ',
+          },
+
+          'green': {
+            DEFAULT: '#378805 ',
           }
         },
         fontSize: {

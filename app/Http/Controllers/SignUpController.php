@@ -75,23 +75,15 @@ class SignUpController extends Controller
         $grades = $gradesQuery->get();
         session()->flash('buttons', 'process');
 
-        return redirect()->route('student-view.get',$student_no);
-
-        // return view('student-view', [
-        //     'students' => $student,
-        //     'department' => $department,
-        //     'college' => $college,
-        //     'grades' => $grades, // Pass grades to the view
-        //     'defaultYear' => $defaultYear ?? null, // Pass the default year to the view if set
-        //     'buttons' => "information",
-        //     'btns' => $btns,
-        // ]);
+        return redirect()->route('student-view.get',$student_no)->with('status', 'success');;
     }
 
     public function studentview(Request $request, $student_no)
     {
+        
         $student = Student::where('student_no', $student_no)->first();
         $buttons = session()->get('buttons');
+        $send  =  session()->get('status');
         session()->forget('buttons');
 
         $btns = [
@@ -144,6 +136,7 @@ class SignUpController extends Controller
             'defaultYear' => $defaultYear ?? null, // Pass the default year to the view if set
             'buttons' => "information",
             'btns' => $btns,
+            'send' => $send
         ]);
     }
         
@@ -170,4 +163,22 @@ class SignUpController extends Controller
         return view('sign-in',['error' => "invalid",'btns' => $btns]);
 
     }
+
+    public function resetpassword(Request $request){
+        $old_password = $request->old_password;
+        $new_password = $request->new_password;
+        $current_email = $request->current_email;
+        $current_student_no = $request->current_student_no;
+    
+        if ($new_password != $old_password) {
+            return view('reset-password');
+        }
+    
+    }
+
+
+    public function getresetpassword(Request $request){
+        return view('reset-password');
+    }
+    
 }

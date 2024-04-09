@@ -18,6 +18,8 @@ use Filament\Infolists\Infolist;
 use Illuminate\Support\Facades\DB;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Enums\FiltersLayout;
+
 
 
 
@@ -40,6 +42,11 @@ class AppealResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordClasses(fn (Appeal $record) => match ($record->viewed) {
+                'read' => 'opacity-60 ',
+                'unread' => 'border-s-2 border-orange-600 dark:border-orange-300',
+                default => null,
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('student.student_no')
                 ->label("Student Number")->badge()
@@ -96,6 +103,8 @@ class AppealResource extends Resource
 
     public static function infolist(Infolist $infolist): Infolist
     {
+
+
         return $infolist
             ->schema([
                 InfoSec::make("About")
@@ -106,6 +115,7 @@ class AppealResource extends Resource
                     ->schema([
                         TextEntry::make('message')
                     ])->columns(1)
+                    
             ]);
     }
 
@@ -125,7 +135,6 @@ class AppealResource extends Resource
         ];
     }
 
-
     public static function getEloquentQuery(): Builder
     {
         if(auth()->user()->hasRole('admin')) {
@@ -136,6 +145,8 @@ class AppealResource extends Resource
         }
 
     }
+
+    
 
     public static function canCreate(): bool
     {
