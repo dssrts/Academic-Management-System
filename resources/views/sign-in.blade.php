@@ -11,7 +11,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     @vite('resources/css/app.css')
 </head>
-<body class = "flex flex-row justify-start" style="background-image: url('images/PLM.png'); background-repeat: no-repeat; background-size: cover"
+<body class = "body-css flex flex-row justify-start" style="background-image: url('images/PLM.png'); background-repeat: no-repeat; background-size: cover"
                x-data="{nav_open: true, align:''}" x-bind:class="nav_open ? 'justify-start' : 'justify-center'">
 
      <!-- Navigation Bar Division-->
