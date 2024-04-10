@@ -16,15 +16,18 @@ use vendor\filament\filament\resources\views\pages;
 |
 */
 
+Route::middleware(['validlogin', 'preventBackHistory'])->group(function () {
+    Route::get('/student-view/{id}',[SignUpController::class,'studentview']) -> name('student-view.get');
+    Route::post('/student-view/{id}',[SignUpController::class,'studentrequest']) -> name('student-view.post-request');
+});
 
-
-Route::get('/student-view/{id}',[SignUpController::class,'studentview']) -> name('student-view.get');
-Route::post('/student-view/{id}',[SignUpController::class,'studentrequest']) -> name('student-view.post-request');
-Route::get('/',[SignUpController::class,'get'])->name("sign-in.get");
-Route::post('/',[SignUpController::class,'post']);
 Route::post('/reset-password',[SignUpController::class,'resetpassword'] )->name('reset-password.post');
 Route::get('/reset-password',[SignUpController::class,'getresetpassword'] )->name('reset-password.get');
-
+Route::get('/faqs', function () {
+    return view("faqs"); 
+ })->name('faqs.get');
+Route::get('/',[SignUpController::class,'get'])->name("sign-in.get");
+Route::post('/',[SignUpController::class,'post']);
  
  Route::get('/dashboard', function () {
     return view('dashboard'); 

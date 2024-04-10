@@ -7,6 +7,23 @@
     <style>
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=Katibeh:wght@400;700&display=swap');
+
+            .enlarged-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .enlarged-image img {
+            max-width: 90%;
+            max-height: 90%;
+        }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     @vite('resources/css/app.css')
@@ -72,15 +89,15 @@
         <!-- Bottom Nav Bar Division--> 
         <div class = "bg-blue h-1/4 flex-col flex items-center opacity-[.99]"> 
             <!-- MAIN INSTRUCTIONS BUTTON -->
-            <button class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-9 font-inter font-bold mb-4 text-center text-[13px]
+            <button  onclick="location.href='//plm.edu.ph/images/downloads/manuals/PLM_Student_Manual_v1.pdf'"class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-9 font-inter font-bold mb-4 text-center text-[13px]
                              underline decoration-gold-hover underline-offset-4
                              transition duration-100 ease-in-out  hover:bg-white-10 hover:text-blue-hover hover:text-[14px] 
                              hover:no-underline hover:opacity-95" style="opacity: 1;"> 
-                Main Instructions 
+                Student Manual
             </button>
 
             <!-- FAQS BUTTON -->
-            <button class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-9 font-inter font-bold mb-4 text-center text-[13px]
+            <button  onclick="window.location='{{ route('faqs.get') }}'" class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-9 font-inter font-bold mb-4 text-center text-[13px]
                            underline decoration-gold-hover underline-offset-4
                            transition duration-100 ease-in-out hover:bg-white-10 hover:text-blue-hover hover:text-[14px] hover:no-underline hover:opacity-95 
                            " style="opacity: 1;"> 
@@ -91,8 +108,10 @@
             <div class="flex mt-1 flex-col">
                 <p class="ml-6 mt-4 text-white-10 text-[9px] font-inter align-self-end"> 
                   For more inquiries or concerns, please email: 
-                  <b> 
+                  <b>
+                    <a href="https://mail.google.com/"> 
                     <u class="hover:text-gold-hover hover:opacity-95"> ithelp@plm.edu.ph </u> 
+                    </a>
                   </b>
                 </p>
             </div>
@@ -167,7 +186,7 @@
 
                       <!-- Submit Button -->
                       <div class = "w-full" >
-                        <input class="bg-blue rounded-lg w-72 text-white-10 h-9 font-inter font-bold 
+                        <input class="bg-blue rounded-lg cursor-pointer w-72 text-white-10 h-9 font-inter font-bold 
                                        transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95"
                                        type ="submit" value="Log-In">   
                       </div>
@@ -195,8 +214,17 @@
                     <!-- First Calendar Image -->
                     <div class = "bg-white-10 w-1/2 flex items-center justify-center p-4">
                         <a> 
-                                 <img src="{{url('images/calendar.png')}}" class = "object-scale-down h-20 mt-4 w-56 border-1 border-gold-hover hover:opacity-70 duration-75"> 
-                        </a>
+                            <img onclick="showEnlargedImage('{{ url('images/calendar.png') }}')" 
+                            src="{{ url('images/calendar.png') }}" 
+                            class="object-scale-down h-20 mt-4 w-56 border-1 border-gold-hover hover:opacity-70 duration-75 cursor-pointer"> 
+                                               </a>
+                    </div>
+                    
+                    <!-- Enlarged Image Modal -->
+                    <div id="enlargedModal" class="enlarged-image">
+                        <!-- Update the color of the '×' button to white -->
+                        <span class="text-white-10 text-[24px] absolute top-5 right-5 cursor-pointer" onclick="hideEnlargedImage()">&times;</span>
+                        <img id="enlargedImg" src="{{ url('images/calendar.png') }}" alt="Enlarged Image">
                     </div>
 
                     <!-- First Calendar Label -->
@@ -204,24 +232,26 @@
                         <span class="font-inter font-bold text-blue italic">University Calendar</span> 
                         <span class="font-inter text-[11px] leading-[12px] text-blue-hover">Academic year 2023-2024</span> 
                         <span class="font-inter font-bold leading-[20px] text-[12px] text-gold">SEMESTER</span> 
-                        <a class = "font-inter text-blue leading-[30px] text-[10px] underline hover:font-bold"> Click here to enlarge image </a>
+                        <a onclick="showEnlargedImage('{{ url('images/calendar.png') }}')" class = "cursor-pointer font-inter text-blue leading-[30px] text-[10px] underline hover:font-bold"> Click here to enlarge image </a>
                     </div>
                 </div>
 
                 <!-- Second Calendar Division -->
                 <div class = "bg-white-10 h-[132px] flex flex-row pb-6 pl-1 rounded-bl-lg rounded-br-lg ">
-
-                    <!-- Second Calendar Image -->
-                    <div class = " bg-white-10 w-1/2 flex items-center justify-center p-4 rounded-bl-lg rounded-br-lg">
-                        <a> <img src="{{url('images/calendar.png')}}"  class = "object-scale-down h-20 w-56 border-spacing-1   border-gold-hover hover:opacity-70 duration-75"> </a>
+                    <!-- First Calendar Image -->
+                    <div class = "bg-white-10 w-1/2 flex items-center justify-center p-4">
+                        <a> 
+                            <img onclick="showEnlargedImage('{{ url('images/calendar.png') }}')" 
+                            src="{{ url('images/calendar.png') }}" 
+                            class="object-scale-down h-20 mt-4 w-56 border-1 border-gold-hover hover:opacity-70 duration-75 cursor-pointer"> 
+                        </a>
                     </div>
-
                     <!-- Second Calendar Label -->
                     <div class = "class = bg-white-10 w-1/2 flex flex-col justify-center pt-10 pb-10 rounded-bl-lg rounded-br-lg">
                         <span class="font-inter font-bold text-blue italic">University Calendar</span> 
                         <span class="font-inter text-[11px] leading-[12px] text-blue-hover">Academic year 2023-2024</span> 
                         <span class="font-inter font-bold leading-[20px] text-gold text-[12px]">TRIMESTER</span> 
-                        <a class = "font-inter text-blue leading-[30px] text-[10px] underline hover:font-bold"> Click here to enlarge image </a>
+                        <a onclick="showEnlargedImage('{{ url('images/calendar.png') }}')" class = "cursor-pointer font-inter text-blue leading-[30px] text-[10px] underline hover:font-bold"> Click here to enlarge image </a>
                     </div>
                 </div>
             </div>
@@ -234,7 +264,7 @@
                 Announcement & Events 
             </div>
             <!-- Announcement 10x2 Banner Image --> 
-            <div class = " h-[157px] w-[785px] bg-white-10 mt-[12px] ml-7 mr-7 rounded-lg drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] opacity-100 hover:bg-black-300"> 
+            <div class = " cursor-pointer h-[157px] w-[785px] bg-white-10 mt-[12px] ml-7 mr-7 rounded-lg drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] opacity-100 hover:bg-black-300"> 
                 <a class = "text-opacity-0 text-white-10 hover:text-opacity-100 "> 
                     <img src = "{{url('images/banner.png')}}" class="object-fill w-fit h-fit rounded-lg opacity-[0.98] hover:opacity-50 animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1" > 
                     <h1 class="absolute text-[12px] text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold font-inter opacity-90
@@ -247,6 +277,20 @@
     </div>
     
 </body>
+
+<script>
+    function showEnlargedImage(imageUrl) {
+        var modal = document.getElementById('enlargedModal');
+        var img = document.getElementById('enlargedImg');
+        img.src = imageUrl;
+        modal.style.display = 'flex';
+    }
+
+    function hideEnlargedImage() {
+        var modal = document.getElementById('enlargedModal');
+        modal.style.display = 'none';
+    }
+</script>
 </html>
 
 <!--  npx tailwindcss -i ./resources/css/app.css -o ./dist/app.css --watch -->

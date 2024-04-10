@@ -15,7 +15,7 @@
     <div class="rounded px-8 pt-6 pb-8 mb-4 w-80 animate-[pulse_0.25s_ease-in-out_infinite]"  style="animation-iteration-count: 1">
         <!-- Logo -->
         <a href="{{ route('sign-in.get') }}">
-        <img src="{{url('images/plm-logo.png')}}" alt="Logo" class="mx-auto mb-4 w-20 h-20 duration-150 hover:w-16 hover:h-16 hover:animate-spin  animate-[pulse_0.25s_ease-in-out_infinite]" style="animation-iteration-count: 1">
+        <img src="{{url('images/plm-logo.png')}}" alt="Logo" class="mx-auto mb-4 w-20 h-20 duration-150 hover:w-16 hover:h-16 hover:animate-[spin_0.2s_ease-in-out_infinite] animate-[pulse_0.25s_ease-in-out_infinite]" style="animation-iteration-count: 1">
         </a>
         <h2 class="text-center text-xl font-semibold text-[20px] mb-2 text-blue ">Reset Password</h2>
         <form action="{{ route('reset-password.post') }}" method="POST">

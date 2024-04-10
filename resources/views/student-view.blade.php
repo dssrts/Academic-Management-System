@@ -306,7 +306,7 @@
 
             <div class = "flex-1 flex flex-row justify-center items-center rounded-xl ">
                 <!--View Information Division-->
-                <div x-show = "btns.information" class="bg-white-10 h-[490px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] animate-[pulse_0.05s_ease-in-out_infinite]" style="animation-iteration-count: 1" >
+                <div x-show = "btns.information" class="bg-white-10 h-[490px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
                         <div class="h-16 bg-blue rounded-tr-xl rounded-tl-xl flex justify-center items-center"> 
                             <h1 class="font-bold font-inter text-[20px] text-white-10 italic">STUDENT INFORMATION</h1>
                         </div>
@@ -404,7 +404,7 @@
                      </div>
                 </div>
 
-                <div x-show= "btns.grades" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden animate-[pulse_0.05s_ease-in-out_infinite]" style="animation-iteration-count: 1"  >
+                <div x-show= "btns.grades" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden"  >
                     <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">VIEW GRADES</h1>
                     </div>
@@ -490,7 +490,7 @@
            
                 </div>
 
-                <div x-show= "btns.process" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden animate-[pulse_0.05s_ease-in-out_infinite]" style="animation-iteration-count: 1"  >
+                <div x-show= "btns.process" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden"  >
                     <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">PROCESSING INFORMATION</h1>
                     </div>
