@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/dist/app.css">
+    <link rel="icon" type="image/png" href="{{url('/images/plm-logo.png')}}">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Katibeh:wght@400;700&display=swap');
