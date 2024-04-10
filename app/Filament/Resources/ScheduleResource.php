@@ -31,7 +31,7 @@ class ScheduleResource extends Resource
                 ->label('Subject Code')
                 ->searchable()
                 ->preload()
-                ->relationship(name:'subject',titleAttribute:'subject_title'),
+                ->relationship(name:'subject',titleAttribute:'subject_code'),
 
                 Forms\Components\Select::make('status')
                 ->label('Status')
@@ -85,18 +85,29 @@ class ScheduleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('building')
-                ->searchable(),
+                ->searchable()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('room_number')
-                ->searchable(),
+                ->searchable()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('type')
-                ->searchable(),
+                ->searchable()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('day')
-                ->searchable(),
+                ->searchable()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('time')
+                ->sortable()
                 ->searchable(),
                 Tables\Columns\TextColumn::make('subject.subject_title')
+                ->sortable()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('subject.subject_code')
+                ->sortable()
+                ->label('Code')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('status')
+                ->sortable()
                 ->searchable()
                 ->badge()
                 ->color(fn(string $state): string => match ($state){
