@@ -40,7 +40,7 @@ class StatsOverview extends BaseWidget
                 ["department_id", auth()->user()->department_id]
             ])->count()), 
             Stat::make('Number of students not yet enrolled in your department',Student::where([
-                ["registration_status", "Not Enrolled"],
+                ["registration_status", "Unenrolled"],
                 ["department_id", auth()->user()->department_id]
             ])->count())
             //Stat::make('Average time on page', '3:12'),

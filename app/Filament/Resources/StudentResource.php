@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Columns\SelectColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Htmlable;
 use DeepCopy\Filter\Filter as FilterFilter;
@@ -177,6 +178,14 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('department.code')
                     ->numeric()
                     ->sortable(),
+                SelectColumn::make('block')
+                    ->options([
+                        '1' => '1',
+                        '2' => '2',
+                        '3' => '3',
+                        '4' => '4',
+                        '5' => '5',
+                    ])
                 // Tables\Columns\TextColumn::make('middle_name')
                 //     ->searchable(),
                 // Tables\Columns\TextColumn::make('biological_sex')
