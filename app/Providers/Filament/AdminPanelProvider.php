@@ -8,6 +8,7 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
+use App\Http\Middleware\StudentAuth;
 use Filament\Pages\Auth\EditProfile;
 use Filament\Navigation\NavigationItem;
 use Filament\Http\Middleware\Authenticate;
@@ -59,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                StudentAuth::class,
             ])->viteTheme('resources/css/filament/ams/theme.css')
             ->sidebarFullyCollapsibleOnDesktop()
             ->profile(EditProfile::class)

@@ -81,6 +81,9 @@ class User extends Authenticatable
     public function is_admin(){
         return $this->hasRole('admin');
     }
+    public function is_student(){
+        return $this->hasRole('student');
+    }
 
     public function is_dean_crs(){
         return $this->hasRole('dean_crs');
