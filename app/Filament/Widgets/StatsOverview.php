@@ -42,7 +42,8 @@ class StatsOverview extends BaseWidget
             Stat::make('Number of students not yet enrolled in your department',Student::where([
                 ["registration_status", "Unenrolled"],
                 ["department_id", auth()->user()->department_id]
-            ])->count())
+            ])->count()),
+            Stat::make("Number of students who haven't answered SFE",'1')
             //Stat::make('Average time on page', '3:12'),
             //Stat::make('Total Products', $this->getPageTableQuery()->count()),
         ];
