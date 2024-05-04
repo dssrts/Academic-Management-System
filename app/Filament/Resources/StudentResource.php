@@ -371,4 +371,9 @@ class StudentResource extends Resource
     //         StudentResource\Widgets\StudentsOverview::class,
     //     ];
     // }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
+    }
 }

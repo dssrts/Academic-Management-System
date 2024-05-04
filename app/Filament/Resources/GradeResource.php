@@ -104,5 +104,11 @@ class GradeResource extends Resource
             $query->where('college_id', auth()->user()->college_id);
         });
     }
+
+}
+
+public static function getNavigationBadge(): ?string
+{
+    return number_format(static::getModel()::count());
 }
 }

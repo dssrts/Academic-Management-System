@@ -54,8 +54,7 @@ class EditStudentInfo extends EditRecord
                         ->label('Account'),
                         
                     Forms\Components\TextInput::make('student_no')
-                        ->required()
-                        ->maxLength(9),
+                        ->required(),
                     Forms\Components\TextInput::make('last_name')
                         ->required()
                         ->maxLength(255)
@@ -96,20 +95,18 @@ class EditStudentInfo extends EditRecord
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('plm_email')
-                        ->email()
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('personal_email')
-                        ->email()
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('mobile_no')
-                        ->required()
+                        ->required(),
                         //->numeric()
-                        ->maxLength(11),
+                        // ->maxLength(11),
                     Forms\Components\TextInput::make('telephone_no')
-                        ->tel()
-                        ->maxLength(8),
+                        // ->tel()
+                        // ->maxLength(8),
             ]);
     }
     public static function getRelations(): array

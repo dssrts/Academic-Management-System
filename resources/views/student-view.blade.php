@@ -156,7 +156,7 @@
             </div>
 
             <div class = "flex-1 flex flex-row justify-center items-center rounded-xl ">
-                <div x-show="btns.dashboard" class=" w-full h-full p-8 grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-4 grid-flow-row"> 
+                <div x-show="btns.dashboard" class=" w-full h-full p-16 grid grid-cols-4 grid-rows-3 gap-x-4 gap-y-4 grid-flow-row"> 
                     <div class="col-span-4 row-span-1 bg-white-10 rounded-2xl drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)] border-black-300 ">
                         <div id="progressBar" class="bg-gray-600 h-full w-full rounded-l-2xl bg-blue flex items-center" style="width: 50%">
                                 <h2 id="progressText" class="ml-5 text-white-10 font-inter text-[26px] font-bold"> Course Completion Rate (50%)</h2>

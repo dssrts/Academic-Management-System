@@ -101,11 +101,17 @@ class ScheduleResource extends Resource
                 ->searchable(),
                 Tables\Columns\TextColumn::make('subject.subject_title')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->formatStateUsing(function ($state, $record) {
+                    return $record->status == 'Available' ? '' : $state;
+                }),
                 Tables\Columns\TextColumn::make('subject.subject_code')
                 ->sortable()
                 ->label('Code')
-                ->searchable(),
+                ->searchable()
+                ->formatStateUsing(function ($state, $record) {
+                    return $record->status == 'Available' ? '' : $state;
+                }),
                 Tables\Columns\TextColumn::make('status')
                 ->sortable()
                 ->searchable()
@@ -151,7 +157,7 @@ class ScheduleResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                 ->label("Schedule")
-                ->visible(fn ($record) => $record->status == 'Available'),
+                ->visible(auth()->user()=="admin"),
 
                 Tables\Actions\ViewAction::make()
                 ->label("Details")
@@ -195,8 +201,8 @@ class ScheduleResource extends Resource
     {
         return [
             'index' => Pages\ListSchedules::route('/'),
-            'create' => Pages\CreateSchedule::route('/create'),
-            'edit' => Pages\EditSchedule::route('/{record}/edit'),
+            // 'create' => Pages\CreateSchedule::route('/create'),
+            // 'edit' => Pages\EditSchedule::route('/{record}/edit'),
         ];
     }
 
@@ -207,6 +213,11 @@ class ScheduleResource extends Resource
             return true;
         }
        return false;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
     }
     
 }

@@ -83,12 +83,23 @@ class AppealResource extends Resource
                 Tables\Actions\DeleteAction::make(),
                 Action::make('Remarks')
                 ->form([
-                    TextInput::make('remarks')->required(),
-                ]),
+                    TextInput::make('remarks')->required(), // sa form baby eto pag inenter na sasave sa $data na array 
+                    // tapos papasa mo dun sa action
+                ])
+                ->action(function (Appeal $appeal, array $data): void{
+                    $appeal->remarks = $data['remarks']; // tapos inaccess ko lang yung model ko na column remarks tapos 
+                                                        // pinasa yung napasok sa form tapos save
+                    $appeal->save();
+                    return;
+                }),
                 Tables\Actions\ViewAction::make()
                 ->label("View"),
 
                 Action::make("Mark as read")
+                ->label(fn(Appeal $appeal): string => match ($appeal->viewed){
+                    'unread' => 'Mark as Read',
+                    'read' => 'Mark as Unread',
+                })
                 ->action(function (Appeal $appeal, array $data): void{
                     if($appeal->viewed == "read"){
                         $appeal->viewed = "unread";
@@ -140,7 +151,7 @@ class AppealResource extends Resource
     {
         return [
             'index' => Pages\ListAppeals::route('/'),
-            'edit' => Pages\EditAppeal::route('/{record}/edit'),
+            // 'edit' => Pages\EditAppeal::route('/{record}/edit'),
         ];
     }
 
@@ -160,6 +171,11 @@ class AppealResource extends Resource
     public static function canCreate(): bool
     {
        return false;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
     }
 }
 

@@ -29,15 +29,16 @@ class CreateStudent extends CreateRecord
                 // ->required(),
                 ->schema([
                     Select::make('user_id')
-                        ->relationship(name:'user', titleAttribute:'name')
-                        ->label('Account')
-                        ->afterStateUpdated(function (Set $set, $state) {
-                
-                            $set('college_id', User::query()->where('id', $state)->pluck('college_id'));
-                            $set('department_id', User::query()->where('id', $state)->pluck('college_id'));
-                            //need to set the student number according to the user account user_code
-                            $set('student_no', User::query()->where('id', $state)->pluck('user_code'));
-                            $set('plm_email', User::query()->where('id', $state)->pluck('email'));
+                    ->relationship('user', 'name')
+                    ->label('Account')
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $user = User::query()->where('id', $state)->first();
+                        if ($user) {
+                            $set('college_id', $user->college_id);
+                            $set('department_id', $user->department_id);
+                            $set('student_no', $user->user_code);
+                            $set('plm_email', $user->email);
+                        }
                     })
                     ->live(),
                     
@@ -47,8 +48,6 @@ class CreateStudent extends CreateRecord
                         ->live()
                         ->preload()
                         ->required()
-                        ->disabled()
-                        
                         ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
                         Select::make('department_id')
                         //->relationship(name:'city', titleAttribute:'name')
@@ -59,14 +58,12 @@ class CreateStudent extends CreateRecord
                         ->searchable()
                         ->preload()
                         ->live()
-                        ->required()
-                        ->disabled(),
+                        ->required(),
                     
                         
                     TextInput::make('student_no')
-                        ->required()
-                        ->disabled()
-                        ->maxLength(9),
+                        ->required(),
+
                 TextInput::make('last_name')
                         ->required()
                         ->maxLength(255)
@@ -110,12 +107,11 @@ class CreateStudent extends CreateRecord
                         ->required()
                         ->maxLength(255),
                     TextInput::make('plm_email')
-                        ->email()
+                        // ->email()
                         ->required()
-                        ->maxLength(255)
-                        ->disabled(),
+                        ->maxLength(255),
                     TextInput::make('personal_email')
-                        ->email()
+                        // ->email()
                         ->required()
                         ->maxLength(255),
                     TextInput::make('mobile_no')
@@ -123,8 +119,8 @@ class CreateStudent extends CreateRecord
                         //->numeric()
                         ->maxLength(11),
                     TextInput::make('telephone_no')
-                        ->tel()
-                        ->maxLength(8),
+                        // ->tel()
+                        // ->maxLength(8),
                         // FormSec::make('Subjects')->schema([
                             
                         //     Select::make('Subjects')

@@ -89,4 +89,9 @@ class CollegeResource extends Resource
         }
        return false;
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
+    }
 }
