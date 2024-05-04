@@ -145,7 +145,7 @@
                       fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none"
                        d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" />
                        <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
-                        Process Information                         
+                        Submit Concerns                         
                         {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-down hidden group-hover:flex" 
                         width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -312,7 +312,7 @@
                             <h1 class="font-bold font-inter text-[20px] text-white-10 italic">STUDENT INFORMATION</h1>
                         </div>
                             <div class="flex rounded my-6 justify-center items-center">
-                                <table class="w-full table-auto text-[11px] border-t">
+                                <table class="w-full table-auto text-[12px] border-t">
                                     <thead>
                                         <tr>
                                             <th class="text-white-10 font-inter font-bold border-b border-r border-b-blue border-white-10 text-[13px] px-24 py-1 bg-blue bg-opacity-100">Field</th>
@@ -411,7 +411,7 @@
                     </div>
                     <div class="pt-3 flex justify-center items-center">
                         <form action="#" method="GET" class="flex">
-                            <input type="hidden" name="buttons" value="grades" >
+                            <input type="hidden" name="panel" value="grades" >
                             <input type="text" name="year" placeholder="Ex. '20231' or 'all'" class="px-3 h-5 w-36 mr-4 text-[12px] text-black-200 mt-1 border rounded-2xl">
                             <input type="submit" class="bg-blue px-3 rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 w-20 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95" value="Filter">
                         </form>
@@ -493,7 +493,7 @@
 
                 <div x-show= "btns.process" class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden"  >
                     <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center"> 
-                        <h1 class="font-bold font-inter text-[20px] text-white-10 italic">PROCESSING INFORMATION</h1>
+                        <h1 class="font-bold font-inter text-[20px] text-white-10 italic">SUBMIT CONCERNS</h1>
                     </div>
                     <div class="p-8 font-inter text-[12px]">
                             <form action ="{{route('student-view.post-request', ['id' => $students->student_no])}}" method="POST"> 
@@ -518,14 +518,27 @@
                                         @endforeach
                                     </select>      
                                 </div>
-                                 <div class="mb-4">
-                                    <label for="subject" class="block text-sm font-bold text-gray-700" required>
+                                <div class="mb-4">
+                                    <label for="subject" class="block text-sm font-bold text-gray-700">
                                         Subject
                                     </label>
-                                    <input type="text" id="subject" name="subject" placeholder="Please Enter A Subject" 
-                                    class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500
-                                    block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                                 </div>
+                                    <select id="subject" name="subject" class="pl-1 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
+                                        <option value="Academic Performance Concerns">Academic Performance Concerns</option>
+                                        <option value="Leave of Absence Request (LOA)">Leave of Absence Request (LOA)</option>
+                                        <option value="Class Schedule Conflicts">Class Schedule Conflicts:</option>
+                                        <option value="Scholarship Compliance">Scholarship Compliance</option>
+                                        <option value="Technology Access Concerns">Technology Access Concerns</option>
+                                        <option value="Request for Transcript of Records (TOR)">Request for Transcript of Records(TOR)</option>
+                                        <option value="Library Resource Accessibility">Library Resource Accessibility</option>
+                                        <option value="Sick Leave">Sick Leave</option>
+                                        <option value="Enrollment Issues">Enrollment Issues</option>
+                                        <option value="Internship Concerns">Internship Concerns</option>
+                                        <option value="Proposal for Research Funding">Proposal for Research Funding</option>
+                                        <option value="Others">Others</option>
+
+                                    </select>      
+                                </div>
+
                                  <div class="mb-4">
                                     <label for="message" class="block text-sm font-bold text-gray-700" required>
                                         Message

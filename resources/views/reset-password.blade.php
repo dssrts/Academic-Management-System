@@ -29,7 +29,7 @@
             </div>
             <!-- Current Email -->
             <div class="mt-4">
-                <label for="current_email" class="block text-gray-700 text-sm font-bold mb-2 text-[12px]">Email</label>
+                <label for="current_email" class="block text-gray-700 text-sm font-bold mb-2 text-[12px]">Student Number</label>
                 <input class="shadow appearance-none border rounded text-[12px] h-[32px] w-72 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]"
                 id="current_student_no" name="current_student_no" type="text" placeholder="20xx-xxxxx" required>            
             </div>

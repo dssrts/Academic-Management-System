@@ -81,8 +81,11 @@ class SignUpController extends Controller
     public function studentview(Request $request, $student_no)
     {
         
+
+
         $student = Student::where('student_no', $student_no)->first();
         $buttons = session()->get('buttons');
+        $panel = $request->panel;
         $send  =  session()->get('status');
         session()->forget('buttons');
 
@@ -101,7 +104,12 @@ class SignUpController extends Controller
             }
         } else {
             // If 'buttons' parameter is not present in the request
-            $btns['information'] = true; // Set 'information' to true
+            if($panel == "grades"){
+                $btns['grades'] = true;
+            }
+            else{
+                $btns['information'] = true; // Set 'information' to true
+            }  
         }
 
         if (!$student) {

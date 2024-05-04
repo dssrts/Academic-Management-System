@@ -164,18 +164,23 @@ class StudentResource extends Resource
                 //     ->sortable(),
                 Tables\Columns\TextColumn::make('student_no')
                     ->label("Student Number")
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('last_name')
+                    ->searchable()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('first_name')
                     ->searchable()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('college.Code')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('department.code')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 // Tables\Columns\TextColumn::make('middle_name')
                 //     ->searchable(),
