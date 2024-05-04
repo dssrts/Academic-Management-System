@@ -5,7 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AppealResource\Pages;
 use App\Filament\Resources\AppealResource\RelationManagers;
 use App\Models\Appeal;
+use Filament\Actions\EditAction;
 use Filament\Forms;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -19,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Actions\EditAction as UseEdit;
 
 
 
@@ -36,6 +40,7 @@ class AppealResource extends Resource
     {
         return $form
             ->schema([
+                TextInput::make('remarks')->required(),
             ]);
     }
 
@@ -76,6 +81,10 @@ class AppealResource extends Resource
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make(),
+                Action::make('Remarks')
+                ->form([
+                    TextInput::make('remarks')->required(),
+                ]),
                 Tables\Actions\ViewAction::make()
                 ->label("View"),
 

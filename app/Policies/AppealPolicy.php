@@ -49,11 +49,7 @@ class AppealPolicy
      */
     public function update(User $user, Appeal $appeal): bool
     {
-        if ($user->hasRole('admin')) 
-        {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     /**

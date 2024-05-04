@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->string('subject');
             $table->text('message');
+            $table->text('remarks')->nullable();
             $table->string('viewed')->nullable();
             $table->timestamps();
         });
