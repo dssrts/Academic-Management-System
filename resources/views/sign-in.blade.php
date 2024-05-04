@@ -167,7 +167,7 @@
                             Email 
                            </label>
                           <input class="shadow appearance-none border rounded h-[32px] w-72 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-gold-hover focus:border-[2px] focus:drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)]"
-                                 id="username" name="email" type="email" placeholder="2021-xxxxx" required>
+                                 id="username" name="email" type="email" placeholder="*************@gmail.com" required>
                       </div>
 
                       <!-- Password Input -->

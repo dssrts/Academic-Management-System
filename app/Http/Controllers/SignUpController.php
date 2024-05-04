@@ -81,8 +81,6 @@ class SignUpController extends Controller
     public function studentview(Request $request, $student_no)
     {
         
-
-
         $student = Student::where('student_no', $student_no)->first();
         $buttons = session()->get('buttons');
         $panel = $request->panel;
@@ -90,6 +88,7 @@ class SignUpController extends Controller
         session()->forget('buttons');
 
         $btns = [
+            'dashboard' => false,
             'information' => false,
             'grades' => false,
             'process' => false,
@@ -100,7 +99,7 @@ class SignUpController extends Controller
         if ( $buttons ) {
             if (array_key_exists( $buttons , $btns)) {
                 // If the requested button exists in the $btns array
-                $btns[$buttons ] = true;
+                $btns[$buttons] = true;
             }
         } else {
             // If 'buttons' parameter is not present in the request
@@ -108,7 +107,7 @@ class SignUpController extends Controller
                 $btns['grades'] = true;
             }
             else{
-                $btns['information'] = true; // Set 'information' to true
+                $btns['dashboard'] = true; // Set 'information' to true
             }  
         }
 
@@ -166,7 +165,7 @@ class SignUpController extends Controller
         if (Auth::attempt(['email' => $email, 'password' => $password, 'account_type' =>"Student"])) { 
             $userId = Auth::id(); // Get the authenticated user's ID  
             $student_no = Student::where('user_id',$userId)->first()->student_no;
-            return redirect(route('student-view.get',$student_no))->with([ 'id' => "EMAIL FAILEd" ]);
+            return redirect(route('student-view.get',$student_no))->with([ 'id' => "EMAIL FAILED" ]);
         }
         return view('sign-in',['error' => "invalid",'btns' => $btns]);
 

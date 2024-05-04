@@ -29,7 +29,7 @@ Route::get('/faqs', function () {
 Route::get('/',[SignUpController::class,'get'])->name("sign-in.get");
 Route::post('/',[SignUpController::class,'post']);
  
- Route::get('/dashboard', function () {
+Route::get('/dashboard', function () {
     return view('dashboard'); 
  });
  
