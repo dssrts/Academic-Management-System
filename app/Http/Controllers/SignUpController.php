@@ -13,6 +13,7 @@ use Illuminate\Contracts\Session\Session;
 use App\Models\Grade;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Appeal;
 
 
 class SignUpController extends Controller
@@ -82,6 +83,10 @@ class SignUpController extends Controller
     {
         
         $student = Student::where('student_no', $student_no)->first();
+        $student_id = $student->id;
+        $appeals = Appeal::where('student_id', $student_id)
+        ->orderBy('created_at', 'desc') // Add this line to order by created_at descending
+        ->get();
         $buttons = session()->get('buttons');
         $panel = $request->panel;
         $send  =  session()->get('status');
@@ -94,26 +99,24 @@ class SignUpController extends Controller
             'process' => false,
             'classroom' => false,
             'services' => false,
+            'inbox' => false, 
         ];
 
         if ( $buttons ) {
             if (array_key_exists( $buttons , $btns)) {
-                // If the requested button exists in the $btns array
                 $btns[$buttons] = true;
             }
         } else {
-            // If 'buttons' parameter is not present in the request
             if($panel == "grades"){
                 $btns['grades'] = true;
             }
             else{
-                $btns['dashboard'] = true; // Set 'information' to true
+                $btns['dashboard'] = true; 
             }  
         }
 
         if (!$student) {
-            // Handle if student not found
-            // For example, return an error message or redirect
+
         }
 
         $college_id = $student->college_id;
@@ -139,10 +142,11 @@ class SignUpController extends Controller
             'students' => $student,
             'department' => $department,
             'college' => $college,
-            'grades' => $grades, // Pass grades to the view
-            'defaultYear' => $defaultYear ?? null, // Pass the default year to the view if set
+            'grades' => $grades, 
+            'defaultYear' => $defaultYear ?? null,
             'buttons' => "information",
             'btns' => $btns,
+            'appeals' => $appeals,
             'send' => $send
         ]);
     }

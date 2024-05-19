@@ -66,6 +66,7 @@ export default {
 
           'green': {
             DEFAULT: '#378805 ',
+            bright: '#07AA07',
           }
         },
         fontSize: {
