@@ -372,8 +372,15 @@ class StudentResource extends Resource
     //     ];
     // }
 
+
     public static function getNavigationBadge(): ?string
     {
-        return number_format(static::getModel()::count());
+        if(auth()->user()->hasRole('admin')) {
+            return number_format(static::getModel()::count());
+        }
+        else{
+        $count = static::getModel()::where('department_id', auth()->user()->department_id)->count();
+        return number_format($count);
+        }
     }
 }

@@ -175,7 +175,13 @@ class AppealResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return number_format(static::getModel()::count());
+        if(auth()->user()->hasRole('admin')) {
+            return number_format(static::getModel()::count());
+        }
+        else{
+        $count = static::getModel()::where('user_id', auth()->id())->count();
+        return number_format($count);
+        }
     }
 }
 

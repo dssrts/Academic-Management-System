@@ -37,18 +37,33 @@ class SubjectResource extends Resource
         
             ->schema([
                 Forms\Components\Select::make('college_id')
-                    ->relationship(name:'college', titleAttribute:'Title')
-                    ->searchable() 
-                    ->live()
-                    ->preload()
-                    ->required()
-                    ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
+                ->relationship(name: 'college', titleAttribute: 'Title')
+                ->options(function () {
+                    if (auth()->user()->hasRole('admin')) {
+                        return \App\Models\College::all()->pluck('Title', 'id');
+                    } else {
+                        $userCollegeId = auth()->user()->college_id;
+                        return \App\Models\College::where('id', $userCollegeId)->pluck('Title', 'id');
+                    }
+                })
+                ->searchable()
+                ->live()
+                ->preload()
+                ->required()
+                ->afterStateUpdated(fn (Set $set) => $set('department_id', null)),
+                
                 Forms\Components\Select::make('department_id')
-                    //->relationship(name:'city', titleAttribute:'name')
-                    ->options(fn(Get $get): Collection => Department::query()
-                        ->where('college_id', $get('college_id'))
-                        ->pluck('title', 'id'))
-                        ->searchable() 
+                ->options(function (Get $get) {
+                    if (auth()->user()->hasRole('admin')) {
+                        return \App\Models\Department::all()->pluck('title', 'id');
+                    } else {
+                        $userCollegeId = auth()->user()->college_id;
+                        $userDepartmentId = auth()->user()->department_id;
+                        return \App\Models\Department::where('college_id', $userCollegeId)
+                            ->where('id', $userDepartmentId)
+                            ->pluck('title', 'id');
+                    }
+                })
                     ->searchable()
                     ->preload()
                     ->live()
@@ -65,8 +80,6 @@ class SubjectResource extends Resource
                     ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
                 Forms\Components\Select::make('units')
                     ->options(['1'=>'1', '2'=>'2', '3'=>'3']),
-                Forms\Components\Select::make('year')
-                    ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4']),
                 Section::make('Faculties')->schema([
                     Select::make('faculties')
                     //->relationship('faculties', 'last_name')
@@ -188,6 +201,12 @@ class SubjectResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return number_format(static::getModel()::count());
+        if(auth()->user()->hasRole('admin')) {
+            return number_format(static::getModel()::count());
+        }
+        else{
+        $count = static::getModel()::where('department_id', auth()->user()->department_id)->count();
+        return number_format($count);
+        }
     }
 }

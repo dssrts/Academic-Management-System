@@ -30,9 +30,15 @@ class FacultyResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('college_id')
-                    ->relationship('college', 'Title')
-                    ->required(),
-                
+                ->options(function () {
+                    if (auth()->user()->hasRole('admin')) {
+                        return \App\Models\College::all()->pluck('Title', 'id');
+                    } else {
+                        $userCollegeId = auth()->user()->college_id;
+                        return \App\Models\College::where('id', $userCollegeId)->pluck('Title', 'id');
+                    }
+                })
+                ->required(),
                 Forms\Components\TextInput::make('first_name')
                     ->required()
                     ->maxLength(255)
@@ -120,7 +126,13 @@ class FacultyResource extends Resource
    
     public static function getNavigationBadge(): ?string
     {
-        return number_format(static::getModel()::count());
+        if(auth()->user()->hasRole('admin')) {
+            return number_format(static::getModel()::count());
+        }
+        else{
+        $count = static::getModel()::where('college_id', auth()->user()->college_id)->count();
+        return number_format($count);
+        }
     }
     
 }
