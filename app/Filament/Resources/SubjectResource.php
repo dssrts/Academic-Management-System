@@ -54,8 +54,10 @@ class SubjectResource extends Resource
                 
                 Forms\Components\Select::make('department_id')
                 ->options(function (Get $get) {
+                    $collegeId = $get('college_id');
+                    
                     if (auth()->user()->hasRole('admin')) {
-                        return \App\Models\Department::all()->pluck('title', 'id');
+                        return \App\Models\Department::where('college_id', $collegeId)->pluck('title', 'id');
                     } else {
                         $userCollegeId = auth()->user()->college_id;
                         $userDepartmentId = auth()->user()->department_id;

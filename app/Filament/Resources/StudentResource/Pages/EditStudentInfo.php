@@ -40,7 +40,6 @@ class EditStudentInfo extends EditRecord
                         
                         ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
                         Forms\Components\Select::make('department_id')
-                        //->relationship(name:'city', titleAttribute:'name')
                         ->options(fn(Get $get): Collection => Department::query()
                             ->where('college_id', $get('college_id'))
                             ->pluck('title', 'id'))
@@ -101,12 +100,12 @@ class EditStudentInfo extends EditRecord
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('mobile_no')
-                        ->required(),
-                        //->numeric()
-                        // ->maxLength(11),
+                        ->required()
+                        ->numeric()
+                        ->maxLength(11),
                     Forms\Components\TextInput::make('telephone_no')
-                        // ->tel()
-                        // ->maxLength(8),
+                        ->tel()
+                        ->maxLength(8),
             ]);
     }
     public static function getRelations(): array

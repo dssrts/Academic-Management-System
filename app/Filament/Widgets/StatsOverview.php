@@ -3,7 +3,12 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Resources\DashboardResource\Widgets\ProductsChart;
+use App\Models\Appeal;
+use App\Models\College;
+use App\Models\Faculty;
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
@@ -18,6 +23,32 @@ class StatsOverview extends BaseWidget
         if (auth()->user()->is_admin()){
             return [
                 Stat::make('Total Students', Student::count())
+                ->chart([1,2,2,3,3,2,4,4,3,3,4,3,4,4,3,3,3,4,3,2,1])
+                ->descriptionIcon("heroicon-m-arrow-trending-up")
+                ->description("This is is the number of regular students in your department")
+                ->color('success'),
+                Stat::make('Total College', College::count())
+                ->chart([1,2,2,3,4,3,4,4,3,3,4,3,2,2,1,2,1])
+                ->color('primary') 
+                ->descriptionIcon("heroicon-m-arrow-trending-up"),
+                Stat::make('Total Department', College::count())
+                ->chart([5,4,3,3,4,2,3,3,4,4,4,2,3,3,2,2,1])
+                ->color('primary') 
+                ->descriptionIcon("heroicon-m-arrow-trending-up"),
+                Stat::make('Total Faculties', Faculty::count())
+                ->chart([1,4,4,3,3,4,3,2,3,4,3,2,1])
+                ->descriptionIcon("heroicon-m-arrow-trending-up")
+                ->description("This is is the number of regular students in your department")
+                ->color('success'),
+                Stat::make('Total Subject', Subject::count())
+                ->chart([1,2,2,3,3,4,3,3,3,2,3,2,1,2,3])
+                ->descriptionIcon("heroicon-m-arrow-trending-up")
+                ->description("This is is the number of regular students in your department")
+                ->color('success'),
+                Stat::make('Total Requests', Appeal::count())
+                ->chart([3,3,4,3,2,2,1,2,1,2])
+                ->color('primary') 
+                ->descriptionIcon("heroicon-m-arrow-trending-up"),
             ];
 
             }
@@ -62,10 +93,5 @@ class StatsOverview extends BaseWidget
             ->descriptionIcon("heroicon-m-arrow-trending-up")
         ];
     }
-    public static function getWidgets(): array
-{
-    return [
-        ProductsChart::class,
-    ];
-}
+
 }
