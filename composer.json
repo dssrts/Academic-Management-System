@@ -17,6 +17,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.5",
+        "laravolt/avatar": "^5.1",
         "livewire/livewire": "^3.0",
         "spatie/laravel-permission": "^6.2"
     },

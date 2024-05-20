@@ -27,15 +27,12 @@
                 <h1 class = "text-white-10 font-inter font-bold italic text-[20px]">
                     Student CRS
                 </h1>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle stroke-white-10"
-                    width="90" height="90" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                    <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                    <path d="M6.168 18.849a4 4 0 0 1 3.832
-                  -2.849h4a4 4 0 0 1 3.834 2.855" />
-                </svg>
+                <img src="{{ Avatar::create($students->first_name . ' ' . $students->last_name)
+                ->setBackground('#ffffff')
+                ->setForeground('#2D349A')
+                ->setDimension(80, 80)
+                ->setFontSize(24)
+                ->toBase64() }}"  style="border: 1px solid #2D349A; border-radius: 50%;"/>
                 <div class = "bg-white-10 flex flex-col justify-center items-center py-2 pb-2 pl-7 pr-7 rounded-lg">
                     <h2 class = "font-inter text-blue text-[13px]"> <b> Welcome, {{ $students->first_name }} </b> </h2>
                     <h2 class = "font-inter font-bold text-blue text-[13px] leading-[10px]"> {{ $students->student_no }}
