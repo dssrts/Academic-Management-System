@@ -2,24 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\BarChart;
+use App\Filament\Widgets\DoughnutChart;
+use App\Filament\Widgets\PieChart;
+use App\Filament\Widgets\SalesChart;
+use App\Filament\Widgets\StatsOverview;
 use Filament\Pages;
 use Filament\Panel;
-use Filament\Widgets;
 use Filament\PanelProvider;
-use Filament\Pages\Dashboard;
-use Filament\Support\Colors\Color;
-use Filament\Pages\Auth\EditProfile;
-use Filament\Navigation\NavigationItem;
-use Filament\Http\Middleware\Authenticate;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -35,46 +25,37 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandName('')
             ->favicon(asset('images/plm-logo.png'))
-
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-            Pages\Dashboard::class,
+                Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                SalesChart::class,
+                BarChart::class,
+                PieChart::class,
+                DoughnutChart::class,
+                StatsOverview::class, // Ensure all relevant widgets are included
             ])
             ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
+                \Illuminate\Cookie\Middleware\EncryptCookies::class,
+                \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+                \Illuminate\Session\Middleware\StartSession::class,
+                \Illuminate\Session\Middleware\AuthenticateSession::class,
+                \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+                \Illuminate\Routing\Middleware\SubstituteBindings::class,
+                \Filament\Http\Middleware\DisableBladeIconComponents::class,
+                \Filament\Http\Middleware\DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
-            ])->viteTheme('resources/css/filament/ams/theme.css')
+                \Filament\Http\Middleware\Authenticate::class,
+            ])
+            ->viteTheme('resources/css/filament/ams/theme.css')
             ->sidebarFullyCollapsibleOnDesktop()
-            ->profile(EditProfile::class)
+            ->profile(\Filament\Pages\Auth\EditProfile::class)
             ->darkMode(false)
-            ->widgets([])
-            ->navigationItems([
-                // NavigationItem::make('Analytics')
-                //     ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
-                //     ->icon('heroicon-o-presentation-chart-line')
-                //     ->group('Reports')
-                //     ->sort(3),
-                    // eto sariling button na pwede mo ren lagyan ng url
-                // NavigationItem::make('dashboard')
-                //     ->label(fn (): string => __('filament-panels::pages/dashboard.title'))
-                //     ->url(fn (): string => Dashboard::getUrl())
-                //     ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard')),
-                // ...
-            ]);
+            ->navigationItems([]);
     }
 }

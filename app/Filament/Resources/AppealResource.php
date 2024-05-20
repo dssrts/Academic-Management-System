@@ -30,14 +30,26 @@ use Illuminate\Support\Facades\URL; // Add this at the top of your file
 use App\Services\AppealsExportService;
 use Filament\Notifications\Collection as NotificationsCollection;
 use Filament\Tables\Actions\BulkAction;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Response;
 use PhpParser\ErrorHandler\Collecting;
 
 class AppealResource extends Resource
 {
     protected static ?string $model = Appeal::class;
+    protected static ?string $recordTitleAttribute = 'subject';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Subject' => $record->subject,
+            'Message' => $record->message,
+            'Time' => $record->created_at,
+        ];
+    }
+
 
     public static function form(Form $form): Form
     {
@@ -63,10 +75,12 @@ class AppealResource extends Resource
                 Tables\Columns\TextColumn::make('student.plm_email')
                     ->label("PLM Email")
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('subject')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('filepath')
                     ->label("File")
                     ->formatStateUsing(fn (?Appeal $record) => $record && $record->filepath ? 'Attachment' : null)

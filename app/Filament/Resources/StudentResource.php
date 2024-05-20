@@ -37,12 +37,20 @@ use Filament\Infolists\Components\Section as InfoSec;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Filament\Resources\StudentResource\Pages\EditStudentInfo;
 use App\Filament\Resources\StudentResource\RelationManagers\SubjectsRelationManager;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL; 
+use App\Services\SchedulesExportService;
+use App\Services\StudentsExportService;
+use Filament\Notifications\Collection as NotificationsCollection;
+use Filament\Tables\Actions\BulkAction;
+use Illuminate\Support\Facades\Response;
+use PhpParser\ErrorHandler\Collecting;
+use Illuminate\Support\Facades\Auth;
 
 
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $recordTitleAttribute = 'student_no';
     
@@ -53,6 +61,8 @@ class StudentResource extends Resource
             'Last Name' => $record->last_name,
         ];
     }
+
+    
     public static function canAccess(): bool
     {
         return auth()->user()->hasRole('admin');
@@ -61,88 +71,8 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                // Forms\Components\Select::make('college_id')
-                //     ->relationship(name:'college', titleAttribute:'Title')
-                //     ->searchable()
-                //     ->live()
-                //     ->preload()
-                //     ->required()
-                //     ->afterStateUpdated(fn (Set $set)=>$set('department_id', null)),
-                //     Forms\Components\Select::make('department_id')
-                //     //->relationship(name:'city', titleAttribute:'name')
-                //     ->options(fn(Get $get): Collection => Department::query()
-                //         ->where('college_id', $get('college_id'))
-                //         ->pluck('title', 'id'))
-                //         ->searchable() 
-                //     ->searchable()
-                //     ->preload()
-                //     ->live()
-                //     ->required(),
-                // Select::make('user_id')
-                //     ->relationship(name:'user', titleAttribute:'name')
-                //     ->label('Account'),
-                    
-                // Forms\Components\TextInput::make('student_no')
-                //     ->required()
-                //     ->maxLength(9),
-                // Forms\Components\TextInput::make('last_name')
-                //     ->required()
-                //     ->maxLength(255)
-                //     ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
-                // Forms\Components\TextInput::make('first_name')
-                //     ->required()
-                //     ->maxLength(255)
-                //     ->dehydrateStateUsing(fn (string $state): string => strtoupper($state)),
-                // Forms\Components\TextInput::make('middle_name')
-                //     ->maxLength(255)
-                //     ->dehydrateStateUsing(fn ($state) => $state !== null ? strtoupper($state) : null),
-                // Forms\Components\Select::make('biological_sex')
-                //     ->required()
-                //     ->options(['MALE'=>'MALE', 'FEMALE'=>'FEMALE']),
-                // DatePicker::make('birthdate'),
-                // Forms\Components\TextInput::make('birthdate_city')
-                //     ->required()
-                //     ->maxLength(255),
-                // Forms\Components\Select::make('religion')
-                //     ->required()
-                //     ->options(['Roman Catholic'=>'Roman Catholic', 'Iglesia ni Cristo'=>'Iglesia ni Cristo']),
-                // Forms\Components\Select::make('civil_status')
-                //     ->required()
-                //     ->options(['Single'=>'Single', 'Married'=>'Married', 'Widow'=>'Widow', 'Divorced'=>'Divorced']),
-                // Forms\Components\Select::make('student_type')
-                //     ->required()
-                //     ->options(['Regular'=>'Regular', 'Irregular'=>'Irregular']),
-                // Forms\Components\Select::make('registration_status')
-                //     ->required()
-                //     ->options(['Enrolled'=>'Enrolled', 'Not Enrolled'=>'Not Enrolled']),
-                // Forms\Components\Select::make('year_level')
-                //     ->required()
-                //     ->options(['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5']),
-                // Forms\Components\TextInput::make('academic_year')
-                //     ->required()
-                //     ->maxLength(255),
-                // Forms\Components\TextInput::make('permanent_address')
-                //     ->required()
-                //     ->maxLength(255),
-                // Forms\Components\TextInput::make('plm_email')
-                //     ->email()
-                //     ->required()
-                //     ->maxLength(255),
-                // Forms\Components\TextInput::make('personal_email')
-                //     ->email()
-                //     ->required()
-                //     ->maxLength(255),
-                // Forms\Components\TextInput::make('mobile_no')
-                //     ->required()
-                //     ->numeric()
-                //     ->maxLength(11),
-                // Forms\Components\TextInput::make('telephone_no')
-                //     ->tel()
-                //     ->maxLength(8),
-                    FormSec::make('Subjects')->schema([
-                        
-                        Select::make('Subjects')
-                        
+                    FormSec::make('Subjects')->schema([    
+                        Select::make('Subjects')   
                         ->multiple()
                         ->options(fn(Get $get): Collection => Subject::query()
                             ->where('department_id', $get('department_id'))
@@ -159,9 +89,6 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('user_id')
-                //     ->label("User Id")
-                //     ->sortable(),
                 Tables\Columns\TextColumn::make('student_no')
                     ->label("Student Number")
                     ->searchable()
@@ -267,7 +194,9 @@ class StudentResource extends Resource
                 // -- you can  actually use this to  return forms 
                 //eto yung keywords sa filament "Filling the form with existing data"
                 Tables\Actions\ViewAction::make()
-                ->label("View Info"),
+                ->label("View Information")
+                ->color('warning')
+                ->icon("heroicon-o-identification"),
                 Action::make('edit-info')
                 ->icon("heroicon-o-pencil-square")
                 ->hidden(!auth()->user()->is_admin())
@@ -277,9 +206,20 @@ class StudentResource extends Resource
                 
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkActionGroup::make(array_filter([
+                    Auth::check() && Auth::user()->hasRole('admin') ? Tables\Actions\DeleteBulkAction::make() : null,
+                    BulkAction::make('export')
+                        ->label('Export to Excel')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success') // Set the color to green
+                        ->action(function (Collection $records) {
+                            $ids = $records->pluck('id')->toArray();
+                            $exportService = new StudentsExportService();
+                            $fileName = $exportService->export($ids);
+                            $filePath = storage_path('app/' . $fileName);
+                            return Response::download($filePath)->deleteFileAfterSend(true);
+                        }),
+                ])), // Use array_filter to remove null values
             ]);
     }
 

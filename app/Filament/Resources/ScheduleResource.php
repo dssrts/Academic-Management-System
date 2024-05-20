@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Schedule;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
@@ -16,67 +17,86 @@ use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\ScheduleResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ScheduleResource\RelationManagers;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL; 
+use App\Services\SchedulesExportService;
+use Filament\Notifications\Collection as NotificationsCollection;
+use Filament\Tables\Actions\BulkAction;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Rules\In;
 
 class ScheduleResource extends Resource
 {
     protected static ?string $model = Schedule::class;
+    protected static ?string $recordTitleAttribute = 'building';
+    protected static int $globalSearchResultsLimit = 20;
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Building' => $record->building,
+            'Room Number' => $record->room_number,
+            'Room Status' => $record->status,
+        ];
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('subject_id')
-                ->label('Subject Code')
-                ->searchable()
-                ->preload()
-                ->relationship(name:'subject',titleAttribute:'subject_code'),
+                    ->label('Subject Code')
+                    ->searchable()
+                    ->preload()
+                    ->relationship(name: 'subject', titleAttribute: 'subject_code'),
 
                 Forms\Components\Select::make('status')
-                ->label('Status')
-                ->options(['Available'=>'Available', 'Taken'=>'Taken'])
-                //->placeholder('Taken')
-                ->required(),
+                    ->label('Status')
+                    ->options(['Available' => 'Available', 'Taken' => 'Taken'])
+                    ->required(),
 
                 Forms\Components\Select::make('building')
-                ->options([
-                    'GV' => 'Gusaling Villegas',
-                    'GK' => 'Gusaling Katipunan',
-                    'GCA' => 'Gusaling Corazon Aquino',
-                    'GEE' => 'Gusaling Emilio Ejercito',
-                    'GL'  => 'Gusaling Lacson',
-                ])
+                    ->options([
+                        'GV' => 'Gusaling Villegas',
+                        'GK' => 'Gusaling Katipunan',
+                        'GCA' => 'Gusaling Corazon Aquino',
+                        'GEE' => 'Gusaling Emilio Ejercito',
+                        'GL' => 'Gusaling Lacson',
+                    ])
                     ->required()
                     ->visible(auth()->user()->hasRole('admin')),
-                    
+
                 Forms\Components\TextInput::make('room_number')
                     ->required()
                     ->maxLength(255)
                     ->visible(auth()->user()->hasRole('admin')),
+
                 Forms\Components\Select::make('type')
-                    ->options(['LAB'=>'LAB', 'LEC'=>'LEC'])
+                    ->options(['LAB' => 'LAB', 'LEC' => 'LEC'])
                     ->required()
                     ->visible(auth()->user()->hasRole('admin')),
-                    
+
                 Forms\Components\Select::make('day')
-                ->options([
-                    'Monday' => 'Monday',
-                    'Tuesday' => 'Tuesday',
-                    'Wednesday' => 'Wednesday',
-                    'Thursday' => 'Thursday',
-                    'Friday' => 'Friday',
-                    'Saturday' => 'Saturday',
-                    'Sunday' => 'Sunday'
-                ])
+                    ->options([
+                        'Monday' => 'Monday',
+                        'Tuesday' => 'Tuesday',
+                        'Wednesday' => 'Wednesday',
+                        'Thursday' => 'Thursday',
+                        'Friday' => 'Friday',
+                        'Saturday' => 'Saturday',
+                        'Sunday' => 'Sunday',
+                    ])
                     ->required()
                     ->visible(auth()->user()->hasRole('admin')),
+
                 Forms\Components\TextInput::make('time')
                     ->required()
                     ->maxLength(255)
                     ->visible(auth()->user()->hasRole('admin')),
-                
-                
             ]);
     }
 
@@ -85,88 +105,101 @@ class ScheduleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('building')
-                ->searchable()
-                ->sortable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('room_number')
-                ->searchable()
-                ->sortable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('type')
-                ->searchable()
-                ->sortable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('day')
-                ->searchable()
-                ->sortable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('time')
-                ->sortable()
-                ->searchable(),
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('subject.subject_title')
-                ->sortable()
-                ->searchable()
-                ->formatStateUsing(function ($state, $record) {
-                    return $record->status == 'Available' ? '' : $state;
-                }),
+                    ->sortable()
+                    ->searchable()
+                    ->formatStateUsing(function ($state, $record) {
+                        return $record->status == 'Available' ? '' : $state;
+                    }),
                 Tables\Columns\TextColumn::make('subject.subject_code')
-                ->sortable()
-                ->label('Code')
-                ->searchable()
-                ->formatStateUsing(function ($state, $record) {
-                    return $record->status == 'Available' ? '' : $state;
-                }),
+                    ->sortable()
+                    ->label('Code')
+                    ->searchable()
+                    ->formatStateUsing(function ($state, $record) {
+                        return $record->status == 'Available' ? '' : $state;
+                    }),
                 Tables\Columns\TextColumn::make('status')
-                ->sortable()
-                ->searchable()
-                ->badge()
-                ->color(fn(string $state): string => match ($state){
-                    'Taken' => 'warning',
-                    'Available' => 'success',
-                })
+                    ->sortable()
+                    ->searchable()
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Taken' => 'warning',
+                        'Available' => 'success',
+                    }),
             ])
             ->filters([
                 Filter::make('Taken')
-                ->query(fn (Builder $query): Builder => $query->where('status', 'Taken')),
+                    ->query(fn (Builder $query): Builder => $query->where('status', 'Taken')),
 
                 Filter::make('Available')
-                ->query(fn (Builder $query): Builder => $query->where('status', 'Available')),
-                
+                    ->query(fn (Builder $query): Builder => $query->where('status', 'Available')),
+
                 Tables\Filters\SelectFilter::make('Building')
-                ->options([
-                    'GV' => 'Gusaling Villegas',
-                    'GK' => 'Gusaling Katipunan',
-                    'GCA' => 'Gusaling Corazon Aquino',
-                    'GEE' => 'Gusaling Emilio Ejercito',
-                    'GL'  => 'Gusaling Lacson',
-                ]),
+                    ->options([
+                        'GV' => 'Gusaling Villegas',
+                        'GK' => 'Gusaling Katipunan',
+                        'GCA' => 'Gusaling Corazon Aquino',
+                        'GEE' => 'Gusaling Emilio Ejercito',
+                        'GL' => 'Gusaling Lacson',
+                    ]),
 
                 Tables\Filters\SelectFilter::make('type')
-                ->options([
-                    'Lab' => 'Laboratory',
-                    'Lec' => 'Lecture'
-                ]),
+                    ->options([
+                        'Lab' => 'Laboratory',
+                        'Lec' => 'Lecture',
+                    ]),
 
                 Tables\Filters\SelectFilter::make('day')
-                ->options([
-                    'Monday' => 'Monday',
-                    'Tuesday' => 'Tuesday',
-                    'Wednesday' => 'Wednesday',
-                    'Thursday' => 'Thursday',
-                    'Friday' => 'Friday',
-                    'Saturday' => 'Saturday',
-                    'Sunday' => 'Sunday'
-                ]),
+                    ->options([
+                        'Monday' => 'Monday',
+                        'Tuesday' => 'Tuesday',
+                        'Wednesday' => 'Wednesday',
+                        'Thursday' => 'Thursday',
+                        'Friday' => 'Friday',
+                        'Saturday' => 'Saturday',
+                        'Sunday' => 'Sunday',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                ->label("Schedule")
-                ->visible(auth()->user()=="admin"),
+                    ->label("Schedule")
+                    ->visible(auth()->user() == "admin"),
 
                 Tables\Actions\ViewAction::make()
-                ->label("Details")
-                ->visible(fn ($record) => $record->status == 'Taken'),
+                    ->label("View Details")
+                    ->icon('heroicon-o-document-text')
+                    ->color('warning')
+                    ->visible(fn ($record) => $record->status == 'Taken'),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkActionGroup::make(array_filter([
+                    Auth::check() && Auth::user()->hasRole('admin') ? Tables\Actions\DeleteBulkAction::make() : null,
+                    BulkAction::make('export')
+                        ->label('Export to Excel')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success') // Set the color to green
+                        ->action(function (Collection $records) {
+                            $ids = $records->pluck('id')->toArray();
+                            $exportService = new SchedulesExportService();
+                            $fileName = $exportService->export($ids);
+                            $filePath = storage_path('app/' . $fileName);
+                            return Response::download($filePath)->deleteFileAfterSend(true);
+                        }),
+                ])), // Use array_filter to remove null values
             ]);
     }
 
@@ -181,14 +214,13 @@ class ScheduleResource extends Resource
                         TextEntry::make('day')->label('Day:')->weight('bold'),
                         TextEntry::make('time')->label('Time:')->weight('bold'),
                     ])->columns(2),
-                    Section::make('Course Information')
+                Section::make('Course Information')
                     ->schema([
                         TextEntry::make('subject.subject_code')->label('Course Code:')->weight('bold'),
                         TextEntry::make('subject.units')->label('Subject Unit:')->weight('bold'),
-                    ])->columns(2)
+                    ])->columns(2),
             ]);
     }
-
 
     public static function getRelations(): array
     {
@@ -208,16 +240,11 @@ class ScheduleResource extends Resource
 
     public static function canCreate(): bool
     {
-        if(auth()->user()->hasRole('admin'))
-        {
-            return true;
-        }
-       return false;
+        return auth()->user()->hasRole('admin');
     }
 
     public static function getNavigationBadge(): ?string
     {
         return number_format(static::getModel()::count());
     }
-    
 }

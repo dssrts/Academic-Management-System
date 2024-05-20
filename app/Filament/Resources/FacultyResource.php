@@ -16,14 +16,33 @@ use App\Filament\Resources\FacultyResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\FacultyResource\RelationManagers;
 use App\Filament\Resources\FacultyResource\RelationManagers\SubjectsRelationManager;
+use App\Services\FacultiesExportService;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL; 
+use App\Services\SchedulesExportService;
+use Filament\Notifications\Collection as NotificationsCollection;
+use Filament\Tables\Actions\BulkAction;
+use Illuminate\Support\Facades\Response;
+use PhpParser\ErrorHandler\Collecting;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Title;
 
 class FacultyResource extends Resource
 {
     protected static ?string $model = Faculty::class;
-
+    protected static ?string $recordTitleAttribute = 'first_name';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Chairperson Controls';
-    
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Faculty Name' => $record->first_name.' '.$record->middle_name.' '.$record->last_name,
+            'College' => $record->college ? $record->college->Title : 'No College',
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -85,16 +104,27 @@ class FacultyResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                
-                
-                
+                Tables\Actions\EditAction::make()
+                ->icon('heroicon-o-document-text')
+                ->label("Edit Information")
+                ->color('warning'),
             ])
             
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkActionGroup::make(array_filter([
+                    Auth::check() && Auth::user()->hasRole('admin') ? Tables\Actions\DeleteBulkAction::make() : null,
+                    BulkAction::make('export')
+                        ->label('Export to Excel')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success') // Set the color to green
+                        ->action(function (Collection $records) {
+                            $ids = $records->pluck('id')->toArray();
+                            $exportService = new FacultiesExportService();
+                            $fileName = $exportService->export($ids);
+                            $filePath = storage_path('app/' . $fileName);
+                            return Response::download($filePath)->deleteFileAfterSend(true);
+                        }),
+                ])), // Use array_filter to remove null values
             ]);
     }
 
