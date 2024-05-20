@@ -628,10 +628,10 @@
                 </div>
                 <!--Inbox Division-->
                 <div x-show="btns.inbox" class="container mx-auto bg-blue font-inter bg-opacity-95 shadow-xl rounded-xl text-[13px]">
-                    <div class="bg-white p-6 rounded-lg shadow-md h-96 w-full overflow-auto">
+                    <div class="bg-white p-6 rounded-lg shadow-md h-128 w-full overflow-auto">
                         <div class="mb-4">
-                            <h2 class="text-[20px] font-bold text-center text-white-10 font-inter italic">STUDENT INBOX</h2>
-                            <input type="text" id="searchInput" placeholder="Search by subject..." class="mb-1 mt-2 px-4 py-2 w-full rounded-xl border-1 border-blue focus:outline-none focus:border-blue-500 transition-colors">
+                            <h2 class="text-[22px] font-bold text-center text-white-10 font-inter italic">STUDENT INBOX</h2>
+                            <input type="text" id="searchInput" placeholder="Search by subject..." class="mb-1 mt-3 px-4 py-2 w-full rounded-xl border-1 border-blue focus:outline-none focus:border-blue-500 transition-colors">
                         </div>
                         <div class="space-y-4">
                             @foreach ($appeals as $appeal)

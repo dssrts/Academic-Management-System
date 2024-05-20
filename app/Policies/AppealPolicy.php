@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Appeal;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class AppealPolicy
 {
@@ -13,11 +12,7 @@ class AppealPolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user->hasRole('admin') || $user->account_type == 'Chairperson') 
-        {
-            return true;
-        }
-        return false;
+        return $user->hasRole('admin') || $user->account_type == 'Chairperson';
     }
 
     /**
@@ -25,11 +20,7 @@ class AppealPolicy
      */
     public function view(User $user, Appeal $appeal): bool
     {
-        if ($user->hasRole('admin') || $user->account_type == 'Chairperson') 
-        {
-            return true;
-        }
-        return false;
+        return $user->hasRole('admin') || $user->account_type == 'Chairperson';
     }
 
     /**
@@ -37,11 +28,7 @@ class AppealPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->hasRole('admin')) 
-        {
-            return true;
-        }
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -49,7 +36,7 @@ class AppealPolicy
      */
     public function update(User $user, Appeal $appeal): bool
     {
-        return true;
+        return $user->hasRole('admin') || $user->account_type == 'Chairperson';
     }
 
     /**
@@ -57,11 +44,7 @@ class AppealPolicy
      */
     public function delete(User $user, Appeal $appeal): bool
     {
-        if ($user->hasRole('admin')) 
-        {
-            return true;
-        }
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -69,11 +52,7 @@ class AppealPolicy
      */
     public function restore(User $user, Appeal $appeal): bool
     {
-        if ($user->hasRole('admin')) 
-        {
-            return true;
-        }
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -81,10 +60,14 @@ class AppealPolicy
      */
     public function forceDelete(User $user, Appeal $appeal): bool
     {
-        if ($user->hasRole('admin')) 
-        {
-            return true;
-        }
-        return false;
+        return $user->hasRole('admin');
+    }
+
+    /**
+     * Determine whether the user can export models.
+     */
+    public function export(User $user): bool
+    {
+        return $user->hasRole('admin') || $user->account_type == 'Chairperson';
     }
 }
