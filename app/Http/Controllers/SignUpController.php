@@ -14,6 +14,7 @@ use App\Models\Grade;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Appeal;
+use Illuminate\Support\Facades\Validator;
 
 
 class SignUpController extends Controller
@@ -27,57 +28,50 @@ class SignUpController extends Controller
 
     public function studentrequest(Request $request, $student_no)
     {
-        $studentNumber = $request->studentnumber; // assuming 'name' is the input name for Student Number
+        $validator = Validator::make($request->all(), [
+            'pdf_file' => 'nullable|mimes:pdf|max:2048', // 2MB Max
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('buttons', 'process');
+            return redirect()->route('student-view.get', $student_no)->with('status', 'error');
+        }
+
+        $studentNumber = $request->studentnumber;
         $recipientEmail = $request->recipientemail;
-        $studentId = Student::where('student_no', $studentNumber)->first()->id;
-        $chairpersonId = User::where('email',$recipientEmail)->first()->id;
-        // $studentId = DB::table('students')->where("student_no",$studentNumber)->value('id');
-        // $chairpersonId = DB::table('users')->where("email",$recipientEmail)->value('id');
+        $student = Student::where('student_no', $studentNumber)->first();
+        $chairperson = User::where('email', $recipientEmail)->first();
+
+        if (!$student || !$chairperson) {
+            return redirect()->back()->with('status', 'error')->with('message', 'Student or Chairperson not found.');
+        }
+
         $subject = $request->subject;
         $message = $request->message;
 
+        $filePath = null;
+        if ($request->hasFile('pdf_file')) {
+            $file = $request->file('pdf_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $filename, 'public');
+        }
+
         DB::table('appeals')->insert([
-            'student_id' => $studentId,
-            'user_id' => $chairpersonId,
+            'student_id' => $student->id,
+            'user_id' => $chairperson->id,
             'subject' => $subject,
             'message' => $message,
+            'filepath' => $filePath ? '/storage/' . $filePath : null,
             'viewed' => "unread",
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
 
-        $student = Student::where('student_no', $student_no)->first();
-
-        $btns = [
-            'information' => false,
-            'grades' => false,
-            'process' => true,
-            'classroom' => false,
-            'services' => false,
-        ];
-
-        $college_id = $student->college_id;
-        $department_id = $student->department_id;
-
-        $college = College::where('id', $college_id)->first();
-        $department = Department::where('id', $department_id)->first();
-
-        $gradesQuery = Grade::where('student_id', $student->id);
-
-        $defaultYear = '20241'; // Default year
-        if ($request->has('year') && $request->year != 'all') {
-            $defaultYear = $request->year;
-            $gradesQuery->where(function ($query) use ($defaultYear) {
-                $query->where('year', $defaultYear)
-                    ->orWhere('year', 'LIKE', $defaultYear.'%');
-            });
-        }
-
-        $grades = $gradesQuery->get();
         session()->flash('buttons', 'process');
 
-        return redirect()->route('student-view.get',$student_no)->with('status', 'success');;
+        return redirect()->route('student-view.get', $student_no)->with('status', 'success');
     }
+
 
     public function studentview(Request $request, $student_no)
     {

@@ -16,6 +16,7 @@ class Appeal extends Model
         'user_id',
         'message',
         'subject',
+        'filepath',
         'viewed',
     ];
 
