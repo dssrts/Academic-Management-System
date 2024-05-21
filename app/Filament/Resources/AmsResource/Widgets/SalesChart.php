@@ -19,7 +19,7 @@ class SalesChart extends ChartWidget
 
     protected function getData(): array
     {
-        $registrations = $this->getStudentRegistrations();
+        $registrations = $this->getStudentRegistrations();  
         $labels = $this->getLabels($registrations);
         $data = $this->getRegistrationCounts($registrations, $labels);
 

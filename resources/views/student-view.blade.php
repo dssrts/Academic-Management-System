@@ -33,17 +33,17 @@
                 ->setDimension(80, 80)
                 ->setFontSize(24)
                 ->toBase64() }}"  style="border: 1px solid #2D349A; border-radius: 50%;"/>
-                <div class = "bg-white-10 flex flex-col justify-center items-center py-2 pb-2 pl-7 pr-7 rounded-lg">
-                    <h2 class = "font-inter text-blue text-[13px]"> <b> Welcome, {{ $students->first_name }} </b> </h2>
-                    <h2 class = "font-inter font-bold text-blue text-[13px] leading-[10px]"> {{ $students->student_no }}
+                <div class = "bg-white-10 flex flex-col justify-center items-center py-2 pb-2 pl-7 pr-7 rounded-lg mt-2">
+                    <h2 class = "font-inter text-blue text-[15]"> <b> Welcome, {{ $students->first_name }} </b> </h2>
+                    <h2 class = "font-inter font-bold text-blue text-[15px] leading-[10px]"> {{ $students->student_no }}
                     </h2>
-                    <h2 class = "font-inter  text-gold-amber text-[13px]"> <b> Undergraduate </b> </h2>
+                    <h2 class = "font-inter  text-gold-amber text-[15px]"> <b> Undergraduate </b> </h2>
                 </div>
             </div>
 
             <div class = "bg-blue flex flex-col font-inter mt-3">
 
-                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
+                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[16px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 hover:text-white-10 group"
                     x-on:click="ButtonClick(btns,'dashboard')"
                     x-bind:class="btns.dashboard ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95' :
@@ -57,7 +57,7 @@
                     <h1 class = "">Dashboard</h1>
                 </div>
 
-                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
+                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[16px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 hover:text-white-10 group"
                     x-on:click="ButtonClick(btns,'information')"
                     x-bind:class="btns.information ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95' :
@@ -76,7 +76,7 @@
                 </div>
 
                 <!-- View Grades -->
-                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
+                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[16px] text-white-10 
                                 duration-150 hover:bg-blue-hover  hover:font-bold hover:text-[16px] hover:gap-5 group"
                     x-on:click="ButtonClick(btns,'grades')"
                     x-bind:class="btns.grades ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95' :
@@ -94,7 +94,7 @@
                 </div>
 
                 <!-- Process Information Student -->
-                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
+                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[16px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
                     x-on:click="ButtonClick(btns,'process')"
                     x-bind:class="btns.process ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95' :
@@ -113,7 +113,7 @@
 
 
                 <!--Inbox Information Student -->
-                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
+                <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[16px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
                     x-on:click="ButtonClick(btns,'inbox')"
                     x-bind:class="btns.inbox ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95' :
@@ -130,7 +130,7 @@
 
                 <!-- Go to Classroom -->
                 <a href='https://www.microsoft.com/en-us/microsoft-teams/log-in'>
-                    <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
+                    <div class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[16px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5 group"
                         x-on:click="ButtonClick(btns,'classroom')"
                         x-bind:class="btns.classroom ? 'bg-gold-amber font-bold hover:bg-gold-amber hover:text-white-10 opacity-95' :
@@ -150,7 +150,7 @@
 
                 <a href="{{ route('sign-in.get') }}">
                     <div
-                        class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[15px] text-white-10 
+                        class = "bg-blue flex flex-row gap-4 items-center justify-start pb-2 py-2 pl-5 text-[16px] text-white-10 
                                 duration-150 hover:bg-blue-hover hover:font-bold hover:text-[16px] hover:gap-5">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout"
                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -249,12 +249,12 @@
                 </div>
                 <!--View Information Division-->
                 <div x-show = "btns.information"
-                    class="bg-white-10 h-[490px] w-[760px] rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
+                    class="bg-white-10 h-[520px] w-2/3 rounded-xl  flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)]">
                     <div class="h-16 bg-blue rounded-tr-xl rounded-tl-xl flex justify-center items-center">
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">STUDENT INFORMATION</h1>
                     </div>
                     <div class="flex rounded my-6 justify-center items-center">
-                        <table class="w-full table-auto text-[12px] border-t">
+                        <table class="w-full table-auto text-[13px] border-t">
                             <thead>
                                 <tr>
                                     <th
@@ -428,7 +428,7 @@
                 </div>
                 <!--View Grades Division-->
                 <div x-show= "btns.grades"
-                    class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
+                    class="bg-white-10 h-[520px] w-2/3 rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
                     <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center">
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">VIEW GRADES</h1>
                     </div>
@@ -443,10 +443,10 @@
                         </form>
                     </div>
                     <div
-                        class="pb-28 mt-3  font-inter text-[11px] text-black-300 table-wrp block max-h-full overflow-y-auto">
+                        class="pb-28 mt-3  font-inter text-[12px] text-black-300 table-wrp block max-h-full overflow-y-auto">
                         <table class="w-full border-collapse text-left">
                             <thead
-                                class="text-white-10 text-[12px] text-left border-b border-t-blue sticky top-[-2px]">
+                                class="text-white-10 text-[13px] text-left border-b border-t-blue sticky top-[-2px]">
                                 <tr class="bg-blue text-white border">
                                     <th class="border-r  border-white-10 py-2 px-4">Subject</th>
                                     <th class="border-r  border-white-10 py-2 px-4">Code</th>
@@ -512,11 +512,11 @@
                 </div>
                 <!--Submit Concerns Division-->
                 <div x-show= "btns.process"
-                    class="bg-white-10 h-[490px] w-[760px] rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
+                    class="bg-white-10 h-10/12 w-2/3 rounded-xl flex-col drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] overflow-hidden">
                     <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center">
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">SUBMIT CONCERNS</h1>
                     </div>
-                    <div class="p-8 font-inter text-[12px]">
+                    <div class="p-8 font-inter text-[14px]">
                         <form action="{{ route('student-view.post-request', ['id' => $students->student_no]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-4">
@@ -627,7 +627,7 @@
                     </div>
                 </div>
                 <!--Inbox Division-->
-                <div x-show="btns.inbox" class="container mx-auto bg-blue font-inter bg-opacity-95 shadow-xl rounded-xl text-[13px]">
+                <div x-show="btns.inbox" class="container mx-auto bg-blue w-5/6 font-inter bg-opacity-95 shadow-xl rounded-xl text-[13px]">
                     <div class="bg-white p-6 rounded-lg shadow-md h-128 w-full overflow-auto">
                         <div class="mb-4">
                             <h2 class="text-[22px] font-bold text-center text-white-10 font-inter italic">STUDENT INBOX</h2>

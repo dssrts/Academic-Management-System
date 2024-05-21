@@ -90,7 +90,7 @@
         <!-- Bottom Nav Bar Division--> 
         <div class = "bg-blue h-1/4 flex-col flex items-center opacity-[.99]"> 
             <!-- MAIN INSTRUCTIONS BUTTON -->
-            <button  onclick="location.href='//plm.edu.ph/images/downloads/manuals/PLM_Student_Manual_v1.pdf'"class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-9 font-inter font-bold mb-4 text-center text-[13px]
+            <button  onclick="location.href='//plm.edu.ph/images/downloads/manuals/PLM_Student_Manual_v1.pdf'"class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-20 font-inter font-bold mb-4 text-center text-[13px]
                              underline decoration-gold-hover underline-offset-4
                              transition duration-100 ease-in-out  hover:bg-white-10 hover:text-blue-hover hover:text-[14px] 
                              hover:no-underline hover:opacity-95" style="opacity: 1;"> 
@@ -98,7 +98,7 @@
             </button>
 
             <!-- FAQS BUTTON -->
-            <button  onclick="window.location='{{ route('faqs.get') }}'" class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-9 font-inter font-bold mb-4 text-center text-[13px]
+            <button  onclick="window.location='{{ route('faqs.get') }}'" class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-20 font-inter font-bold mb-4 text-center text-[13px]
                            underline decoration-gold-hover underline-offset-4
                            transition duration-100 ease-in-out hover:bg-white-10 hover:text-blue-hover hover:text-[14px] hover:no-underline hover:opacity-95 
                            " style="opacity: 1;"> 
@@ -107,8 +107,8 @@
 
             <!-- Inquiries Label -->
             <div class="flex mt-1 flex-col">
-                <p class="ml-6 mt-4 text-white-10 text-[9px] font-inter align-self-end"> 
-                  For more inquiries or concerns, please email: 
+                <p class="ml-1 mt-24 mr-24 mb-2  text-white-10 text-[10px] font-inter align-self-end"> 
+                  For more inquiries or concerns, please email: <br>
                   <b>
                     <a href="https://mail.google.com/"> 
                     <u class="hover:text-gold-hover hover:opacity-95"> ithelp@plm.edu.ph </u> 
@@ -120,9 +120,9 @@
     </div>
 
      <!-- Button Division -->
-    <div class = "h-screen flex-0 menu w-[128px] flex justify-center" >
+    <div class = "h-screen flex-0 menu w-[128px] flex justify-center ml-6 mr-6" >
         <a x-on:click="nav_open = !nav_open; align = justify-center" href="#">   
-            <div class = "transition duration-150 ease-in-out bg-white-10 w-12 h-12 mt-5 flex justify-center items-center rounded-lg drop-shadow-[0px_0px_3px_rgba(0,0,0,0.3)] border-0
+            <div class = "transition duration-150 ease-in-out bg-white-10 w-16 h-16  mt-5 flex justify-center items-center rounded-lg drop-shadow-[0px_0px_3px_rgba(0,0,0,0.3)] border-0
                             hover:scale-75 hover:bg-white-10] "   >
                 <img src="{{url('images/menu-icon.png')}}" class="w-6 h-5 animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1">
             </div>
@@ -130,23 +130,23 @@
     </div>
 
     <!-- Main Division -->
-    <div class= "flex-0 flex flex-col justify-center">   
+    <div class= "flex-0 w-[920px] flex flex-col justify-center">   
 
         <!--PLM TITLE DIVISION-->
-        <div class = "h-12 mr-7 ml-7 flex flex-row justify-start items-center">     
-            <img class="h-14 w-15 mr-1 my-2  animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1"   src="{{url('images/plmlogo.png')}}">
+        <div class = "h-12 mr-7 ml-7 flex flex-row justify-start items-center mb-5">     
+            <img class="h-17 w-20 mr-1 my-2  animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1"   src="{{url('images/plmlogo.png')}}">
             <div class = "leading-tight flex flex-col">
-                    <h1 class="text-[20px]  font-bold font-katibeh text-[#d5a106] animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1" > 
+                    <h1 class="text-[24px]  font-bold font-katibeh text-[#d5a106] animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1" > 
                         PAMANTASAN NG LUNGSOD NG MAYNILA
                      </h1>
-                    <h2 class="text-[10px] font-inter text-black-200 animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1" > 
+                    <h2 class="text-[13px] font-inter text-black-200 animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1" > 
                         UNIVERSITY OF THE CITY OF MANILA 
                     </h2>
             </div>
         </div>
 
         <!--Sign-In and Academic Calendar Division-->
-        <div class = "h-88 flex flex-row justify-around">
+        <div class = "h-88 flex flex-row justify-around mb-5">
             <!-- Log-in Division -->
             <div class ="bg-white-10 h-80 w-5/12 mt-5 rounded-lg drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] opacity-[.98] flex flex-col animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1">  
                 <div class = "bg-wh h-16 flex pl-4 items-center">    
@@ -259,15 +259,15 @@
         </div>
 
         <!-- Announcement Division -->
-        <div class = " flex-none flex flex-col justify-center">        
+        <div class = " flex-none flex flex-col justify-center">     
             <!-- Announcement & Events Label -->                       
-            <div class = "ml-7 mr-7 text-blue-hover font-extrabold text-[20px] italic" style="-webkit-text-stroke: 1px rgba(255,255,255,0.6); "> 
+            <div class = "ml-7 mr-7 text-blue-hover font-extrabold text-[24px] italic" style="-webkit-text-stroke: 1px rgba(255,255,255,0.6); "> 
                 Announcement & Events 
             </div>
             <!-- Announcement 10x2 Banner Image --> 
-            <div class = " cursor-pointer h-[157px] w-[785px] bg-white-10 mt-[12px] ml-7 mr-7 rounded-lg drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] opacity-100 hover:bg-black-300"> 
+            <div class = " cursor-pointer h-[157px] w-[855px] bg-white-10 mt-[12px] ml-7 mr-7 rounded-lg drop-shadow-[0_3px_3px_rgba(0,0,0,0.4)] opacity-100 hover:bg-black-300"> 
                 <a class = "text-opacity-0 text-white-10 hover:text-opacity-100 "> 
-                    <img src = "{{url('images/banner.png')}}" class="object-fill w-fit h-fit rounded-lg opacity-[0.98] hover:opacity-50 animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1" > 
+                    <img src = "{{url('images/banner.png')}}" class="object-fill h-[157px] w-[855px] rounded-lg opacity-[0.98] hover:opacity-50 animate-[pulse_0.15s_ease-in-out_infinite]" style="animation-iteration-count: 1" > 
                     <h1 class="absolute text-[12px] text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold font-inter opacity-90
                                hover:hidden duration-200 ">
                         READ MORE ABOUT THE ARTICLE </h1>
