@@ -9,9 +9,11 @@ export default {
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './app/Filament/**/*.php',
+        './resources/views/filament/**/*.blade.php',
+        './vendor/filament/**/*.blade.php',
     ],
-
-  theme: {
+    theme: {
         screens: {
           sm: '480px',
           md: '768px',
@@ -43,7 +45,6 @@ export default {
             400:  "#000000" ,
             500:  "#000000" ,
           },
-
 
           'blue': {
             hover: '#4F74BB',
@@ -116,5 +117,6 @@ export default {
             }
           }
       }
-    }
-  }
+    },
+    plugins: [forms, typography],
+}

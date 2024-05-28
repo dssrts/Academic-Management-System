@@ -15,12 +15,12 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->integer('class_id');
-            $table->foreign('class_id')->references('id')->on('classes');
+            $table->unsignedBigInteger('class_id');
             $table->decimal('grade', 3, 2);
             $table->decimal('completion_grade', 3, 2);
             $table->string('remarks', 45)->nullable();
             $table->timestamps();
+            $table->foreign('class_id')->references('id')->on('classes');
         });
     }
 
