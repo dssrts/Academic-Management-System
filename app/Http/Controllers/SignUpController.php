@@ -161,12 +161,18 @@ class SignUpController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        if (Auth::attempt(['email' => $email, 'password' => $password, 'account_type' =>"Student"])) { 
-            $userId = Auth::id(); // Get the authenticated user's ID  
-            $student_no = Student::where('user_id',$userId)->first()->student_no;
-            return redirect(route('student-view.get',$student_no))->with([ 'id' => "EMAIL FAILED" ]);
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'account_type' => ['Student', 'Chairperson']])) {
+            $userId = Auth::id(); // Get the authenticated user's ID
+            $user = Auth::user();
+            
+            if ($user->account_type === 'Student') {
+                $student_no = Student::where('user_id', $userId)->first()->student_no;
+                return redirect(route('student-view.get', $student_no))->with(['id' => "EMAIL FAILED"]);
+            } else {
+                return view('Chairperson.cp-dashboard');
+            }
         }
-        return view('sign-in',['error' => "invalid",'btns' => $btns]);
+        return view('sign-in', ['error' => "invalid", 'btns' => $btns]);
 
     }
 
