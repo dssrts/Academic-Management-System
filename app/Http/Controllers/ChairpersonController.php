@@ -7,17 +7,33 @@ use App\Models\Student;
 
 class ChairpersonController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        return view('Chairperson.cp-dashboard');
+        $btns = [
+            'dashboard' => true,
+            'information' => false,
+            'grades' => false,
+            'process' => false,
+            'inbox' => false,
+            'classroom' => false,
+        ];
+        
+        return view('Chairperson.cp-dashboard', compact('btns'));
     }
 
-    public function viewStudents()
+    public function viewStudents(Request $request)
     {
-        // Fetch all students from the database
         $students = Student::all();
-
-        // Pass the students to the view
-        return view('Chairperson.cp-view-students', compact('students'));
+        
+        $btns = [
+            'dashboard' => false,
+            'information' => true,
+            'grades' => false,
+            'process' => false,
+            'inbox' => false,
+            'classroom' => false,
+        ];
+        
+        return view('Chairperson.cp-view-students', compact('students', 'btns'));
     }
 }
