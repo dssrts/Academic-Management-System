@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignUpController;
 use vendor\filament\filament\resources\views\pages;
+use App\Http\Controllers\ChairpersonController;
 
 /*;
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('/faqs', function () {
  })->name('faqs.get');
 Route::get('/',[SignUpController::class,'get'])->name("sign-in.get");
 Route::post('/',[SignUpController::class,'post']);
+
  
 Route::get('/dashboard', function () {
     return view('dashboard'); 
@@ -41,7 +43,9 @@ Route::get('/ams/view-information', function () {
     return view('view-information');
 });
 
-
+# for chairperson routes
+Route::get('/cp-dashboard', [ChairpersonController::class, 'dashboard'])->name('cp-dashboard');
+Route::get('/view-students', [ChairpersonController::class, 'viewStudents'])->name('view-students');
 
 Route::middleware([
     'auth:sanctum',
