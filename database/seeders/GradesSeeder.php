@@ -47,12 +47,12 @@ class GradesSeeder extends Seeder
                 $year .= $suffix; // Combine the year and the suffix
 
                 DB::table('grades')->insert([
-                    'student_id' => $i,
-                    'subject_id' => $subjectId,
+                    // 'student_id' => $i,
+                    'class_id' => $subjectId,
                     'grade' => $grade,
                     'completion_grade' => $completionGrade,
                     'remarks' => $remarks,
-                    'year' => $year,
+                    // 'year' => $year,
                     'created_at' => $createdAt,
                     'updated_at' => $updatedAt,
                 ]);

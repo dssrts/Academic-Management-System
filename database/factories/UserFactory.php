@@ -5,10 +5,9 @@ namespace Database\Factories;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 use App\Models\Department;
-use App\Models\College;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -23,15 +22,17 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $randomDepartmentID = Department::inRandomOrder()->first()->id;
-        // $randomDepartmentCollegeID =  Department::find($randomDepartmentID)->college_id;
-    
+        
         $firstName = $this->faker->firstName();
         $lastName = $this->faker->lastName();
         $name = $firstName . ' ' . $lastName;
-        $email = strtolower(str_replace(' ', '', $name)) . '@example.com';
+
+        // Generate a unique email address
+        $email = strtolower(str_replace(' ', '', $name)) . $this->faker->unique()->numberBetween(1, 1000) . '@example.com';
+
         $password = bcrypt('password');
         $initials = strtoupper(substr($firstName, 0, 1) . substr($lastName, 0, 1)); // Assuming you want the first letter of first name and last name
-        $accountTypes = ['Student', 'Admin', 'Chairperson','Student','Chairperson'];
+        $accountTypes = ['Student', 'Admin', 'Chairperson', 'Student', 'Chairperson'];
         $accountType = $accountTypes[array_rand($accountTypes)];
     
         return [
@@ -41,7 +42,7 @@ class UserFactory extends Factory
             'password' => $password,
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
-            'remember_token' => null,
+            'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
             'created_at' => now(),
