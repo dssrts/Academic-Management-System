@@ -20,7 +20,7 @@ class CreateGradesTable extends Migration
             $table->decimal('completion_grade', 3, 2);
             $table->string('remarks', 45)->nullable();
             $table->timestamps();
-            $table->foreign('class_id')->references('id')->on('subjects');
+            $table->foreign('class_id')->references('id')->on('classes');
         });
     }
 
