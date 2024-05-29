@@ -29,9 +29,9 @@
             </svg>
         </button>
         
-        <img src="{{ url('images/plm-logo.png') }}" alt="PLM Logo" class="mx-auto mb-2"  style="width: 100px; height: 100px;"">
+        <img src="{{ url('images/plm-logo.png') }}" alt="PLM Logo" class="mx-auto mb-2"  style="width: 100px; height: 100px;" x-show="isOpen">
         
-        <div class="p-4 text-center" style="color:rgb(45, 52, 154); ">
+        <div class="p-4 text-center" style="color:rgb(45, 52, 154); " x-show="isOpen">
             <div class="bg-white rounded-lg p-4" style="background-color:white">
                 <p class="text-blue-800 font-bold">{{ $user->name }}</p>
                 <p class="text-blue-600">{{ $departmentName }}</p>
