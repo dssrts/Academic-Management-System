@@ -11,10 +11,10 @@
 
     <!-- Sidebar -->
     <div :class="isOpen ? 'w-64' : 'w-0'" class="bg-blue h-screen transition-width duration-300 overflow-hidden flex flex-col">
-        <div class="text-white p-4">
+        <div class="text-white p-4" style="color: azure;">
             <h1 class="text-2xl font-bold">Chairperson Dashboard</h1>
         </div>
-        <nav class="text-white flex-1">
+        <nav class="text-white flex-1" style="color: azure;">
             <ul class="space-y-2">
                 <li>
                     <a href="{{ route('cp-dashboard') }}" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Dashboard</a>

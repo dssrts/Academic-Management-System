@@ -23,7 +23,8 @@ class ChairpersonController extends Controller
 
     public function viewStudents(Request $request)
     {
-        $students = Student::all();
+        // Fetch students with pagination (20 per page)
+        $students = Student::paginate(20);
         
         $btns = [
             'dashboard' => false,
