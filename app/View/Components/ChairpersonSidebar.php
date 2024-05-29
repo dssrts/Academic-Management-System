@@ -5,15 +5,20 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Auth;
 
 class ChairpersonSidebar extends Component
 {
+    public $user;
+    public $departmentName;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->user = Auth::user();
+        $this->departmentName = $this->user->department ? $this->user->department->title : 'No Department';
     }
 
     /**
@@ -21,6 +26,9 @@ class ChairpersonSidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.chairperson-sidebar');
+        return view('components.chairperson-sidebar', [
+            'user' => $this->user,
+            'departmentName' => $this->departmentName,
+        ]);
     }
 }

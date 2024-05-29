@@ -24,7 +24,18 @@
         <div class="flex-1 p-10">
             <h2 class="text-3xl font-bold">Students List</h2>
             <p class="mt-4">Here you can view and manage students.</p>
-            
+            <form action="{{ route('view-students') }}" method="GET" class="mb-6">
+                <div class="flex items-center">
+                    <input 
+                        type="text" 
+                        name="student_no" 
+                        placeholder="Filter by Student Number" 
+                        value="{{ request('student_no') }}" 
+                        class="px-4 py-2 border rounded-lg"
+                    />
+                    <button type="submit" class="ml-2 px-4 py-2 bg-blue text-white rounded-lg" style="color:white">Filter</button>
+                </div>
+            </form>
             <!-- Students Table -->
             <div class="mt-6 rounded-lg shadow-md p-6 overflow-x-auto" style="background-color: white;">
                 <table class="min-w-full bg-white">
@@ -40,7 +51,11 @@
                     <tbody class="bg-white">
                         @foreach ($students as $student)
                             <tr class="bg-white">
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $student->student_no }}</td>
+                                <td class="py-2 px-4 border-b border-gray-300">
+                                    <a href="{{ route('view-student', $student->id) }}" class="text-blue-500 hover:underline">
+                                        {{ $student->student_no }}
+                                    </a>
+                                </td>
                                 <td class="py-2 px-4 border-b border-gray-300">{{ $student->first_name }}</td>
                                 <td class="py-2 px-4 border-b border-gray-300">{{ $student->last_name }}</td>
                                 <td class="py-2 px-4 border-b border-gray-300">{{ $student->email }}</td>

@@ -44,8 +44,13 @@ Route::get('/ams/view-information', function () {
 });
 
 # for chairperson routes
+Route::middleware(['auth'])->group(function () {
 Route::get('/cp-dashboard', [ChairpersonController::class, 'dashboard'])->name('cp-dashboard');
 Route::get('/view-students', [ChairpersonController::class, 'viewStudents'])->name('view-students');
+Route::get('/students', [ChairpersonController::class, 'viewStudents'])->name('view-students');
+Route::get('/students/{student}', [ChairpersonController::class, 'viewStudent'])->name('view-student');
+Route::get('/appeals', [ChairpersonController::class, 'viewAppeals'])->name('view-appeals');
+});
 
 Route::middleware([
     'auth:sanctum',

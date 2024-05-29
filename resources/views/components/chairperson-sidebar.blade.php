@@ -1,26 +1,74 @@
-<div x-data="{ isOpen: true }" class="flex">
-    <!-- Toggle Button -->
-    <button @click="isOpen = !isOpen" class="p-2 bg-gray-800 text-white focus:outline-none">
-        <svg x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-        </svg>
-        <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-    </button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/dist/app.css">
+    <link rel="icon" type="image/png" href="{{ url('/images/plm-logo.png') }}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Katibeh:wght@400;700&display=swap');
+    </style>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    @vite('resources/css/app.css')
+    <title>CRS</title>
+    <script src="https://unpkg.com/@heroicons/react@v1.0.0/dist/outline.js" defer></script>
+</head>
 
+<div x-data="{ isOpen: true }" class="flex h-screen" style="color:white">
     <!-- Sidebar -->
-    <div :class="isOpen ? 'w-64' : 'w-0'" class="bg-blue h-screen transition-width duration-300 overflow-hidden flex flex-col">
-        <div class="text-white p-4" style="color: azure;">
-            <h1 class="text-2xl font-bold">Chairperson Dashboard</h1>
+    <div :class="isOpen ? 'w-64' : 'w-16'"
+        class="bg-blue h-full transition-all duration-300 overflow-hidden flex flex-col">
+        <!-- Toggle Button -->
+        <button @click="isOpen = !isOpen" class="p-2 text-white focus:outline-none self-end">
+            <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <svg x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+        
+        <img src="{{ url('images/plm-logo.png') }}" alt="PLM Logo" class="mx-auto mb-2"  style="width: 100px; height: 100px;"">
+        
+        <div class="p-4 text-center" style="color:rgb(45, 52, 154); ">
+            <div class="bg-white rounded-lg p-4" style="background-color:white">
+                <p class="text-blue-800 font-bold">{{ $user->name }}</p>
+                <p class="text-blue-600">{{ $departmentName }}</p>
+            </div>
         </div>
-        <nav class="text-white flex-1" style="color: azure;">
+        <nav class="text-white flex-1">
             <ul class="space-y-2">
                 <li>
-                    <a href="{{ route('cp-dashboard') }}" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Dashboard</a>
+                    <a href="{{ route('cp-dashboard') }}"
+                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3h18M3 8h18M3 13h18M3 18h18" />
+                        </svg>
+                        <span class="ml-4" x-show="isOpen">Dashboard</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ route('view-students') }}" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">View Students</a>
+                    <a href="{{ route('view-students') }}"
+                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 13l4 4L19 7M5 7h14" />
+                        </svg>
+                        <span class="ml-4" x-show="isOpen">View Students</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('view-appeals') }}"
+                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M5 13l4 4L19 7M5 7h14" />
+                        </svg>
+                        <span class="ml-4" x-show="isOpen">View Appeals</span>
+                    </a>
                 </li>
                 <!-- Add more sidebar options here -->
             </ul>
