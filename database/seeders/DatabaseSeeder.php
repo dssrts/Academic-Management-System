@@ -13,6 +13,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\Grade;
+use App\Models\Professor;
 use App\Models\StudentRecord;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CollegeSeeder::class);
         $this->call(DepartmentSeeder::class);
         Faculty::factory(100)->create();
+        Professor::factory()->count(100)->create();
         Subject::factory(400)->create();
         ClassModel::factory()->count(100)->create();
         User::factory(700)->create();

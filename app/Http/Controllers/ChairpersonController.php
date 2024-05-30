@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appeal;
+use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentRecord;
@@ -23,6 +24,7 @@ class ChairpersonController extends Controller
             'process' => true,
             'inbox' => true,
             'classroom' => true,
+            'professors' => true,
         ];
         $user = Auth::user();
         return view('Chairperson.cp-dashboard', compact('btns', 'user'));
@@ -47,6 +49,7 @@ class ChairpersonController extends Controller
             'process' => false,
             'inbox' => false,
             'classroom' => false,
+            'professors' => true,
         ];
         $user = Auth::user();
         return view('Chairperson.cp-view-students', compact('students', 'btns', 'user'));
@@ -70,9 +73,28 @@ class ChairpersonController extends Controller
             'inbox' => false,
             'classroom' => false,
             'appeals' => true,
+            'professors' => true,
         ];
         $user = Auth::user();
         return view('Chairperson.cp-view-appeals', compact('appeals', 'btns', 'user'));
     }
-
+    public function viewProfessors(Request $request)
+    {
+        $professors = Professor::paginate(15);
+        
+        $btns = [
+            'dashboard' => false,
+            'information' => false,
+            'grades' => false,
+            'process' => false,
+            'inbox' => false,
+            'classroom' => false,
+            'appeals' => false,
+            'professors' => true,
+        ];
+        $user = Auth::user();
+        return view('Chairperson.cp-view-professors', compact('professors', 'btns', 'user'));
+    }
 }
+
+
