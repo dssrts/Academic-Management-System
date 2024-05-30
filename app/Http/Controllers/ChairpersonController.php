@@ -17,11 +17,11 @@ class ChairpersonController extends Controller
     {
         $btns = [
             'dashboard' => true,
-            'information' => false,
-            'grades' => false,
-            'process' => false,
-            'inbox' => false,
-            'classroom' => false,
+            'information' => true,
+            'grades' => true,
+            'process' => true,
+            'inbox' => true,
+            'classroom' => true,
         ];
         $user = Auth::user();
         return view('Chairperson.cp-dashboard', compact('btns', 'user'));

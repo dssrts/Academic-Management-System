@@ -169,7 +169,7 @@ class SignUpController extends Controller
                 $student_no = Student::where('user_id', $userId)->first()->student_no;
                 return redirect(route('student-view.get', $student_no))->with(['id' => "EMAIL FAILED"]);
             } else {
-                return view('Chairperson.cp-dashboard');
+                return view('Chairperson.cp-dashboard', compact('btns'));
             }
         }
         return view('sign-in', ['error' => "invalid", 'btns' => $btns]);
