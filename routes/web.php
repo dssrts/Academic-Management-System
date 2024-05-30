@@ -51,6 +51,7 @@ Route::get('/students', [ChairpersonController::class, 'viewStudents'])->name('v
 Route::get('/students/{student}', [ChairpersonController::class, 'viewStudent'])->name('view-student');
 Route::get('/appeals', [ChairpersonController::class, 'viewAppeals'])->name('view-appeals');
 Route::get('/professors', [ChairpersonController::class, 'viewProfessors'])->name('view-professors'); 
+Route::get('/classes', [ChairpersonController::class, 'viewClasses'])->name('view-classes');
 });
 
 //logout chairperson
