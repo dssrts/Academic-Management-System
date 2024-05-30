@@ -27,4 +27,8 @@ class ClassModel extends Model
         'created_at',
         'updated_at',
     ] ;
+    public function studentRecord()
+    {
+        return $this->belongsTo(StudentRecord::class);
+    }
 }

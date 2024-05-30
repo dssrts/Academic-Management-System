@@ -69,7 +69,7 @@
                 <p>No records found for this student.</p>
                 @else
                 <table class="w-full table-auto">
-                    <thead>
+                    <thead class="bg-blue" style="color:white">
                         <tr>
                             <th class="px-4 py-2">Control No</th>
                             <th class="px-4 py-2">Status</th>
@@ -93,6 +93,39 @@
                     </tbody>
                 </table>
                 @endif
+            </div>
+            <div class="bg-white rounded-lg mt-6 p-6 shadow-lg" style="background-color:white">
+                <h3 class="text-2xl font-semibold mb-4">Classes</h3>
+                <table class="w-full table-auto">
+                    <thead class="bg-blue" style="color:white">
+                        <tr>
+                            <th class="px-4 py-2">Code</th>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Description</th>
+                            <th class="px-4 py-2">Units</th>
+                            <th class="px-4 py-2">Day</th>
+                            <th class="px-4 py-2">Time</th>
+                            <th class="px-4 py-2">Building</th>
+                            <th class="px-4 py-2">Room</th>
+                            <th class="px-4 py-2">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($classes as $class)
+                            <tr>
+                                <td class="border px-4 py-2">{{ $class->code }}</td>
+                                <td class="border px-4 py-2">{{ $class->name }}</td>
+                                <td class="border px-4 py-2">{{ $class->description }}</td>
+                                <td class="border px-4 py-2">{{ $class->units }}</td>
+                                <td class="border px-4 py-2">{{ $class->day }}</td>
+                                <td class="border px-4 py-2">{{ $class->start_time }} - {{ $class->end_time }}</td>
+                                <td class="border px-4 py-2">{{ $class->building }}</td>
+                                <td class="border px-4 py-2">{{ $class->room }}</td>
+                                <td class="border px-4 py-2">{{ $class->type }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

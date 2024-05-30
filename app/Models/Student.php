@@ -34,6 +34,10 @@ class Student extends Model
         'block',
         'remarks'
     ];
+    public function classes()
+    {
+        return $this->hasMany(ClassModel::class);
+    }
 
     public function user(){
         return $this->belongsTo(User::class)->where('account_type', 'Student');
