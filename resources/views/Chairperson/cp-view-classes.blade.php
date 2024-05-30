@@ -33,7 +33,7 @@
                     <p>No classes found.</p>
                 @else
                     <table class="w-full table-auto">
-                        <thead>
+                        <thead class="bg-blue" style="color:white">
                             <tr>
                                 <th class="px-4 py-2">Code</th>
                                 <th class="px-4 py-2">Name</th>
