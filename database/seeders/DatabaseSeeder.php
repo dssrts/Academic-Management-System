@@ -13,7 +13,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\Grade;
-
+use App\Models\StudentRecord;
 
 class DatabaseSeeder extends Seeder
 {   
@@ -30,7 +30,18 @@ class DatabaseSeeder extends Seeder
         User::factory(700)->create();
         $this->call(RoleSeeder::class);
         $this->call(ModelHasRoleSeeder::class);
-        Student::factory(User::where('account_type', 'Student')->count())->create();    
+        Student::factory(User::where('account_type', 'Student')->count())->create()->each(function ($student) {
+            StudentRecord::factory()->create([
+                'student_id' => $student->id,
+                'control_no' => fake()->unique()->numberBetween(1000, 9999),
+                'status' => fake()->randomElement(['active', 'inactive', 'graduated']),
+                'school_year' => fake()->year . '-' . (fake()->year + 1),
+                'semester' => fake()->numberBetween(1, 2),
+                'date_enrolled' => fake()->dateTimeBetween('-4 years', 'now'),
+                'GWA' => fake()->randomFloat(2, 1.00, 5.00),
+                
+            ]);
+        });
         $this->call(GradesSeeder::class);
         $this->call(ScheduleSeeder::class);
 
