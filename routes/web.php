@@ -52,6 +52,15 @@ Route::get('/students/{student}', [ChairpersonController::class, 'viewStudent'])
 Route::get('/appeals', [ChairpersonController::class, 'viewAppeals'])->name('view-appeals');
 });
 
+//logout chairperson
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
