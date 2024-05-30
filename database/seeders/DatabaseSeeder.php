@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
         Faculty::factory(100)->create();
         Professor::factory()->count(100)->create();
         Subject::factory(400)->create();
-        ClassModel::factory()->count(100)->create();
         User::factory(700)->create();
         $this->call(RoleSeeder::class);
         $this->call(ModelHasRoleSeeder::class);
@@ -44,6 +43,7 @@ class DatabaseSeeder extends Seeder
                 
             ]);
         });
+        ClassModel::factory()->count(100)->create();
         $this->call(GradesSeeder::class);
         $this->call(ScheduleSeeder::class);
 
