@@ -31,4 +31,8 @@ class ClassModel extends Model
     {
         return $this->belongsTo(StudentRecord::class);
     }
+    public function professor()
+    {
+        return $this->belongsTo(Professor::class);
+    }
 }
