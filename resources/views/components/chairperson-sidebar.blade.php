@@ -28,9 +28,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
         </button>
-        
-        <img src="{{ url('images/plm-logo.png') }}" alt="PLM Logo" class="mx-auto mb-2"  style="width: 100px; height: 100px;" x-show="isOpen">
-        
+
+        <img src="{{ url('images/plm-logo.png') }}" alt="PLM Logo" class="mx-auto mb-2"
+            style="width: 100px; height: 100px;" x-show="isOpen">
+
         <div class="p-4 text-center" style="color:rgb(45, 52, 154); " x-show="isOpen">
             <div class="bg-white rounded-lg p-4" style="background-color:white">
                 <p class="text-blue-800 font-bold">{{ $user->name }}</p>
@@ -88,19 +89,23 @@
                         <span class="ml-4" x-show="isOpen">View Schedules</span>
                     </a>
                 </li>
-                <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="w-full text-left flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h2a2 2 0 002-2v-1m0-6V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v1" />
-                            </svg>
-                            <span class="ml-4" x-show="isOpen">Logout</span>
-                        </button>
-                    </form>
-                </li>
+
                 <!-- Add more sidebar options here -->
             </ul>
         </nav>
+        <div class="mt-auto p-4">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit"
+                    class="w-full text-left flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h2a2 2 0 002-2v-1m0-6V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v1" />
+                    </svg>
+                    <span class="ml-4" x-show="isOpen">Logout</span>
+                </button>
+            </form>
+        </div>
     </div>
 </div>
