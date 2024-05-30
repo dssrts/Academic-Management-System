@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,9 @@
     @vite('resources/css/app.css')
     <title>Professors</title>
 </head>
-<body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover" x-data="{ btns: {{ json_encode($btns) }} }">
+
+<body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
+    x-data="{ btns: {{ json_encode($btns) }} }">
     <div class="w-screen h-screen flex flex-row">
         <!-- Sidebar -->
         <x-chairperson-sidebar :btns="$btns" :user="$user" />
@@ -23,41 +26,47 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold">List of Professors in your College</h2>
             </div>
+            <form method="GET" action="{{ route('view-professors') }}">
+                <input type="text" name="search" placeholder="Search by name or email..."
+                    class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
+            </form>
             <div class="bg-white rounded-lg p-6 mt-6 shadow-lg" style="background-color:white">
                 {{-- <h3 class="text-2xl font-semibold mb-4">List of Professors</h3> --}}
                 @if($professors->isEmpty())
-                    <p>No professors found.</p>
+                <p>No professors found.</p>
                 @else
-                    <table class="w-full table-auto">
-                        <thead class="bg-blue" style="color:white">
-                            <tr>
-                                <th class="px-4 py-2">Last Name</th>
-                                <th class="px-4 py-2">First Name</th>
-                                <th class="px-4 py-2">Middle Name</th>
-                                <th class="px-4 py-2">Pronouns</th>
-                                <th class="px-4 py-2">PLM Email</th>
-                                <th class="px-4 py-2">College</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($professors as $professor)
-                                <tr>
-                                    <td class="border px-4 py-2">{{ $professor->last_name }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->first_name }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->college->Code }}</td> <!-- Assuming there is a relationship setup -->
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div class="mt-4">
-                        {{ $professors->links() }}
-                    </div>
+                <table class="w-full table-auto">
+                    <thead class="bg-blue" style="color:white">
+                        <tr>
+                            <th class="px-4 py-2">Last Name</th>
+                            <th class="px-4 py-2">First Name</th>
+                            <th class="px-4 py-2">Middle Name</th>
+                            <th class="px-4 py-2">Pronouns</th>
+                            <th class="px-4 py-2">PLM Email</th>
+                            <th class="px-4 py-2">College</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($professors as $professor)
+                        <tr>
+                            <td class="border px-4 py-2">{{ $professor->last_name }}</td>
+                            <td class="border px-4 py-2">{{ $professor->first_name }}</td>
+                            <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
+                            <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
+                            <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
+                            <td class="border px-4 py-2">{{ $professor->college->Code }}</td>
+                            <!-- Assuming there is a relationship setup -->
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="mt-4">
+                    {{ $professors->links() }}
+                </div>
                 @endif
             </div>
         </div>
     </div>
 </body>
+
 </html>

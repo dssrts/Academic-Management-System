@@ -80,7 +80,22 @@ class ChairpersonController extends Controller
     }
     public function viewProfessors(Request $request)
     {
-        $professors = Professor::paginate(15);
+        $user = Auth::user();
+        $collegeId = $user->college_id;
+
+        $query = Professor::where('college_id', $collegeId);
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('last_name', 'like', '%' . $search . '%')
+                    ->orWhere('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('middle_name', 'like', '%' . $search . '%')
+                    ->orWhere('plm_email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $professors = $query->paginate(15);
         
         $btns = [
             'dashboard' => false,
@@ -92,7 +107,6 @@ class ChairpersonController extends Controller
             'appeals' => false,
             'professors' => true,
         ];
-        $user = Auth::user();
         return view('Chairperson.cp-view-professors', compact('professors', 'btns', 'user'));
     }
 }
