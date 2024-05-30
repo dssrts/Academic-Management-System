@@ -80,7 +80,16 @@
                         <span class="ml-4" x-show="isOpen">View Professors</span>
                     </a>
                 </li>
-                
+                <li>
+                    <a href="{{ route('view-classes') }}"
+                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+                        ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M5 13l4 4L19 7M5 7h14" />
+                        </svg>
+                        <span class="ml-4" x-show="isOpen">View Classes</span>
+                    </a>
+                </li>
 
                 <!-- Add more sidebar options here -->
             </ul>

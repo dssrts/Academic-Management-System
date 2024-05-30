@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appeal;
+use App\Models\ClassModel;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Student;
@@ -58,7 +59,10 @@ class ChairpersonController extends Controller
     {
         $user = Auth::user();
         $studentRecords = StudentRecord::where('student_id', $student->id)->get();
-        return view('Chairperson.cp-view-student-info', compact('student', 'studentRecords', 'user'));
+        $classes = ClassModel::whereHas('studentRecord', function ($query) use ($student) {
+            $query->where('student_id', $student->id);
+        })->get();
+        return view('Chairperson.cp-view-student-info', compact('student', 'studentRecords', 'classes', 'user'));
     }
     public function viewAppeals(Request $request)
     {
@@ -108,6 +112,33 @@ class ChairpersonController extends Controller
             'professors' => true,
         ];
         return view('Chairperson.cp-view-professors', compact('professors', 'btns', 'user'));
+    }
+    public function viewClasses(Request $request)
+    {
+        $query = ClassModel::query();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('code', 'like', '%' . $search . '%')
+                ->orWhere('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        }
+
+        $classes = $query->paginate(15);
+
+        $btns = [
+            'dashboard' => false,
+            'information' => false,
+            'grades' => false,
+            'process' => false,
+            'inbox' => false,
+            'classroom' => false,
+            'appeals' => false,
+            'professors' => false,
+            'classes' => true,
+        ];
+        $user = Auth::user();
+        return view('Chairperson.cp-view-classes', compact('classes', 'btns', 'user'));
     }
 }
 
