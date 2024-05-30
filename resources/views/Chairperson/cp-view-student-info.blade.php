@@ -77,6 +77,7 @@
                             <th class="px-4 py-2">Semester</th>
                             <th class="px-4 py-2">Date Enrolled</th>
                             <th class="px-4 py-2">GWA</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -108,6 +109,7 @@
                             <th class="px-4 py-2">Building</th>
                             <th class="px-4 py-2">Room</th>
                             <th class="px-4 py-2">Type</th>
+                            <th class="px-4 py-2">Professor</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,6 +124,7 @@
                                 <td class="border px-4 py-2">{{ $class->building }}</td>
                                 <td class="border px-4 py-2">{{ $class->room }}</td>
                                 <td class="border px-4 py-2">{{ $class->type }}</td>
+                                <td class="border px-4 py-2">{{ $class->professor ? $class->professor->first_name . ' ' . $class->professor->last_name : 'N/A' }}</td>
                             </tr>
                         @endforeach
                     </tbody>

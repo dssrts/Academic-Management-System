@@ -61,7 +61,7 @@ class ChairpersonController extends Controller
         $studentRecords = StudentRecord::where('student_id', $student->id)->get();
         $classes = ClassModel::whereHas('studentRecord', function ($query) use ($student) {
             $query->where('student_id', $student->id);
-        })->get();
+        })->with('professor')->get();
         return view('Chairperson.cp-view-student-info', compact('student', 'studentRecords', 'classes', 'user'));
     }
     public function viewAppeals(Request $request)
