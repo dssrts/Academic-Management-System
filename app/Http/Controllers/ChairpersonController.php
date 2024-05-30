@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appeal;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\StudentRecord;
 use Illuminate\Support\Facades\Auth;
 
 class ChairpersonController extends Controller
@@ -53,7 +54,8 @@ class ChairpersonController extends Controller
     public function viewStudent(Student $student)
     {
         $user = Auth::user();
-        return view('Chairperson.cp-view-student-info', compact('student', 'user'));
+        $studentRecords = StudentRecord::where('student_id', $student->id)->get();
+        return view('Chairperson.cp-view-student-info', compact('student', 'studentRecords', 'user'));
     }
     public function viewAppeals(Request $request)
     {
