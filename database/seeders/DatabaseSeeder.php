@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\ClassModel;
 use Database\Seeders\CollegeSeeder;
 use Database\Seeders\DepartmentSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentSeeder::class);
         Faculty::factory(100)->create();
         Subject::factory(400)->create();
+        ClassModel::factory()->count(100)->create();
         User::factory(700)->create();
         $this->call(RoleSeeder::class);
         $this->call(ModelHasRoleSeeder::class);

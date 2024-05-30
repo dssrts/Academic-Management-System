@@ -14,10 +14,10 @@ class GradesSeeder extends Seeder
     {
         // Count the number of students and subjects
         $numStudents = DB::table('students')->count();
-        $numSubjects = DB::table('subjects')->count();
+        $numClasses = DB::table('classes')->count();
 
         // Ensure there are students and subjects in the database
-        if ($numStudents === 0 || $numSubjects === 0) {
+        if ($numStudents === 0 || $numClasses === 0) {
             $this->command->info('No students or subjects found in the database.');
             return;
         }
@@ -31,12 +31,12 @@ class GradesSeeder extends Seeder
             $numAssignedSubjects = rand(15, 40);
 
             // Generate an array of unique subject IDs for the current student
-            $subjectIds = range(1, $numSubjects);
+            $subjectIds = range(1, $numClasses);
             shuffle($subjectIds);
             $assignedSubjects = array_slice($subjectIds, 0, $numAssignedSubjects);
 
             // Insert grades for each assigned subject
-            foreach ($assignedSubjects as $subjectId) {
+            foreach ($assignedSubjects as $classId) {
                 $grade = $grades[array_rand($grades)]; // Randomly select a grade from the available options
                 $completionGrade = 3.00; // Set completion grade to 3.00
                 $remarks = ($grade > 3.00) ? 'Failed' : 'Passed'; // Determine remarks based on grade
@@ -48,7 +48,7 @@ class GradesSeeder extends Seeder
 
                 DB::table('grades')->insert([
                     // 'student_id' => $i,
-                    'class_id' => $subjectId,
+                    'class_id' => $classId,
                     'grade' => $grade,
                     'completion_grade' => $completionGrade,
                     'remarks' => $remarks,
@@ -59,6 +59,6 @@ class GradesSeeder extends Seeder
             }
         }
 
-        $this->command->info("Grades seeded successfully for $numStudents students and $numSubjects subjects.");
+        $this->command->info("Grades seeded successfully for $numStudents students and $numClasses subjects.");
     }
 }
