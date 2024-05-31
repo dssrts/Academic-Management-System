@@ -312,7 +312,7 @@
                     </div>
                 </div>
             
-                <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-white-10 bg-opacity-0 font-inter">
+                <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-white-10 bg-opacity-0">
                     <div class="bg-white-10 border-4 border-blue p-8 rounded-lg shadow-xl w-1/3">
                         <h2 class="text-[18px] text-blue font-bold mb-4" x-text="modalContent.name + ' (' + modalContent.code + ')'"></h2>
                         <p class="mb-4 text-[14px]">
