@@ -13,10 +13,10 @@
     <script src="https://unpkg.com/@heroicons/react@v1.0.0/dist/outline.js" defer></script>
 </head>
 
-<div x-data="{ isOpen: true }" class="flex h-screen" style="color:white">
+<div x-data="{ isOpen: true }" class="flex h-screen " style="color:white">
     <!-- Sidebar -->
     <div :class="isOpen ? 'w-64' : 'w-16'"
-        class="bg-blue h-full transition-all duration-300 overflow-hidden flex flex-col">
+        class=" bg-gold h-full transition-all duration-300 overflow-hidden flex flex-col">
         <!-- Toggle Button -->
         <button @click="isOpen = !isOpen" class="p-2 text-white focus:outline-none self-end">
             <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -28,14 +28,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
         </button>
+        <div class="bg-white rounded-lg p-4 text-center">
+            <p class="text-white font-bold">Chairperson AMS</p>
 
-        <img src="{{ url('images/plm-logo.png') }}" alt="PLM Logo" class="mx-auto mb-2"
-            style="width: 100px; height: 100px;" x-show="isOpen">
+        </div>
+        <img src="{{ url('images/user.png') }}" alt="user" class="mx-auto mb-2" style="width: 70px; height: 70px;"
+            x-show="isOpen">
 
-        <div class="p-4 text-center" style="color:rgb(45, 52, 154); " x-show="isOpen">
+        <div class="p-4 text-center bg-gold" " x-show=" isOpen">
             <div class="bg-white rounded-lg p-4" style="background-color:white">
-                <p class="text-blue-800 font-bold">{{ $user->name }}</p>
-                <p class="text-blue-600">{{ $departmentName }}</p>
+                <p class="text-gold"><b>Welcome, </b>{{ $user->name }}!</p>
+                <p class="text-blue font-bold">{{ $departmentName }}</p>
             </div>
         </div>
         <nav class="text-white flex-1">
@@ -54,14 +57,16 @@
                 <li>
                     <a href="{{ route('view-students') }}"
                         class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 13l4 4L19 7M5 7h14" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-6 w-6">
+                            <path
+                                d="M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM3.156 11.763c.16-.629.44-1.21.813-1.72a2.5 2.5 0 0 0-2.725 1.377c-.136.287.102.58.418.58h1.449c.01-.077.025-.156.045-.237ZM12.847 11.763c.02.08.036.16.046.237h1.446c.316 0 .554-.293.417-.579a2.5 2.5 0 0 0-2.722-1.378c.374.51.653 1.09.813 1.72ZM14 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM3.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 13c-.552 0-1.013-.455-.876-.99a4.002 4.002 0 0 1 7.753 0c.136.535-.324.99-.877.99H5Z" />
                         </svg>
-                        <span class="ml-4" x-show="isOpen">View Students</span>
+
+
+                        <span class="ml-4" x-show="isOpen">Students</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="{{ route('view-appeals') }}"
                         class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
@@ -82,10 +87,10 @@
                 </li>
                 <li>
                     <a href="{{ route('view-classes') }}"
-                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
-                        ">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M5 13l4 4L19 7M5 7h14" />
+                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700" ">
+                        <svg xmlns=" http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path d="M5 13l4 4L19 7M5 7h14" />
                         </svg>
                         <span class="ml-4" x-show="isOpen">View Classes</span>
                     </a>
