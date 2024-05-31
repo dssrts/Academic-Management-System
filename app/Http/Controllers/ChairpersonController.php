@@ -163,6 +163,40 @@ public function createProfessor(Request $request)
 
     return redirect()->route('view-professors')->with('success', 'Professor added successfully.');
 }
+public function createClass(Request $request)
+{
+    $request->validate([
+        'code' => 'required|string|max:45',
+        'section' => 'required|integer',
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'units' => 'required|integer',
+        'day' => 'required|string|max:45',
+        'start_time' => 'required',
+        'end_time' => 'required',
+        'building' => 'required|string|max:45',
+        'room' => 'required|string|max:45',
+        'type' => 'required|string|max:56',
+        'professor_id' => 'nullable|exists:professors,id',
+    ]);
+
+    ClassModel::create([
+        'code' => $request->code,
+        'section' => $request->section,
+        'name' => $request->name,
+        'description' => $request->description,
+        'units' => $request->units,
+        'day' => $request->day,
+        'start_time' => $request->start_time,
+        'end_time' => $request->end_time,
+        'building' => $request->building,
+        'room' => $request->room,
+        'type' => $request->type,
+        'professor_id' => $request->professor_id,
+    ]);
+
+    return redirect()->route('view-classes')->with('success', 'Class added successfully!');
+}
 }
 
 
