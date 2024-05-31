@@ -29,7 +29,7 @@ class ClassModel extends Model
     ] ;
     public function studentRecord()
     {
-        return $this->belongsTo(StudentRecord::class);
+        return $this->belongsTo(StudentRecord::class, 'student_record_id');
     }
     public function professor()
     {
