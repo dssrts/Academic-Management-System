@@ -297,7 +297,7 @@
                                                     professor: '{{ $schedule[$day][$i]['professor'] }}',
                                                     type: '{{ $schedule[$day][$i]['type'] }}',
                                                     day: '{{ $day }}',
-                                                    index: {{ $i
+                                                    index: {{ $i }}
                                                 }">
                                                 <div class="text-center">
                                                     <span class="font-bold text-[12px] text-gold-amber">{{ $schedule[$day][$i]['name'] }} ({{$schedule[$day][$i]['building'] ." ".$schedule[$day][$i]['room'] }})</span><br>
