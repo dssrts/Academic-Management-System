@@ -84,9 +84,12 @@
                     <li>
                         <a href="{{ route('view-appeals') }}"
                             class="sidebar-item flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path d="M5 13l4 4L19 7M5 7h14" />
+
+
+                            <svg class="h-6 w-6" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m1750.588 1750.118h-1581.176c-31.172 0-56.47-25.412-56.47-56.47v-295.568l210.183 126.155h1273.75l210.184-126.155v295.567c0 31.059-25.299 56.47-56.47 56.47zm-1298.823-338.824v-1242.353h1016.47v1242.353zm1298.823-677.647h-169.412v-677.647h-1242.352v677.647h-169.412c-93.403 0-169.412 76.01-169.412 169.413v790.588c0 93.402 76.01 169.412 169.412 169.412h1581.176c93.403 0 169.412-76.01 169.412-169.412v-790.588c0-93.403-76.01-169.412-169.412-169.412zm-1129.412-244.743h564.706v-112.942h-564.706zm0 677.647h564.706v-112.942h-564.706zm0-338.824h677.648v-112.941h-677.648z"
+                                    fill-rule="evenodd" fill="#fff" />
                             </svg>
                             <span class="ml-4" x-show="isOpen">View Appeals</span>
                         </a>
@@ -94,9 +97,11 @@
                     <li>
                         <a href="{{ route('view-professors') }}"
                             class="sidebar-item flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path d="M5 13l4 4L19 7M5 7h14" />
+                            <svg fill="#fff" class="h-6 w-6" viewBox="0 0 48 48""
+                                xmlns=" http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd" stroke="#fff"
+                                    d="m5 4h-1v1 25 1h1 25v-2h-24v-23h29v4h2v-5-1h-1zm31 13c1.6569 0 3-1.3431 3-3s-1.3431-3-3-3-3 1.3431-3 3 1.3431 3 3 3zm-2.0867 2.0088c-.0366 0-.0729.0006-.109.0019h-1.8043c-.4557 0-.8866.2072-1.1713.563l-3.5496 4.437h-5.2791c-.8284 0-1.5.6716-1.5 1.5 0 .8285.6716 1.5 1.5 1.5h6c.4557 0 .8866-.2071 1.1713-.5629l1.9118-2.3898v17.8348c0 .899.7356 1.6346 1.6346 1.6346s1.6346-.7356 1.6346-1.6346v-8.1728h3.2691v8.1728c0 .899.7356 1.6346 1.6346 1.6346s1.6346-.7356 1.6346-1.6346v-12.1486c.899 0 3.675-1.7112 3.675-5.9249 0-3.1759-2.776-4.8105-3.675-4.8105z"
+                                    fill="#fff" fill-rule="evenodd" />
                             </svg>
                             <span class="ml-4" x-show="isOpen">View Professors</span>
                         </a>
@@ -104,10 +109,16 @@
                     <li>
                         <a href="{{ route('view-classes') }}"
                             class="sidebar-item flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path d="M5 13l4 4L19 7M5 7h14" />
+
+
+
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                             </svg>
+
                             <span class="ml-4" x-show="isOpen">View Classes</span>
                         </a>
                     </li>
@@ -116,10 +127,14 @@
                             @csrf
                             <button type="submit"
                                 class="sidebar-item w-full text-left flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h2a2 2 0 002-2v-1m0-6V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v1" />
+                                <svg fill="none" viewBox="0 0 48 48" class="h-6 w-6"
+                                    xmlns=" http://www.w3.org/2000/svg">
+                                    <path d="m0 0h48v48h-48z" fill="none" fill-opacity=".01" />
+                                    <g stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                                        <path d="m23.9917 6h-17.9917v36h18" />
+                                        <path d="m33 33 9-9-9-9" />
+                                        <path d="m16 23.9917h26" />
+                                    </g>
                                 </svg>
                                 <span class="ml-4" x-show="isOpen">Logout</span>
                             </button>
