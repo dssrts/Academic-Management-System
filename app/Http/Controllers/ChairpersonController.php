@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appeal;
 use App\Models\ClassModel;
+use App\Models\College;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Student;
@@ -83,36 +84,34 @@ class ChairpersonController extends Controller
         return view('Chairperson.cp-view-appeals', compact('appeals', 'btns', 'user'));
     }
     public function viewProfessors(Request $request)
-    {
-        $user = Auth::user();
-        $collegeId = $user->college_id;
+{
+    $query = Professor::query();
 
-        $query = Professor::where('college_id', $collegeId);
-
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where(function($q) use ($search) {
-                $q->where('last_name', 'like', '%' . $search . '%')
-                    ->orWhere('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('middle_name', 'like', '%' . $search . '%')
-                    ->orWhere('plm_email', 'like', '%' . $search . '%');
-            });
-        }
-
-        $professors = $query->paginate(15);
-        
-        $btns = [
-            'dashboard' => false,
-            'information' => false,
-            'grades' => false,
-            'process' => false,
-            'inbox' => false,
-            'classroom' => false,
-            'appeals' => false,
-            'professors' => true,
-        ];
-        return view('Chairperson.cp-view-professors', compact('professors', 'btns', 'user'));
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->where('last_name', 'like', '%' . $search . '%')
+            ->orWhere('first_name', 'like', '%' . $search . '%')
+            ->orWhere('middle_name', 'like', '%' . $search . '%')
+            ->orWhere('plm_email', 'like', '%' . $search . '%');
     }
+
+    $professors = $query->paginate(15);
+    $colleges = College::all();
+
+    $btns = [
+        'dashboard' => false,
+        'information' => false,
+        'grades' => false,
+        'process' => false,
+        'inbox' => false,
+        'classroom' => false,
+        'appeals' => false,
+        'professors' => true,
+        'classes' => false,
+    ];
+    $user = Auth::user();
+    return view('Chairperson.cp-view-professors', compact('professors', 'colleges', 'btns', 'user'));
+}
     public function viewClasses(Request $request)
 {
     $query = ClassModel::with('professor');
@@ -148,6 +147,21 @@ class ChairpersonController extends Controller
     $class->save();
 
     return redirect()->route('view-classes')->with('success', 'Professor updated successfully.');
+}
+public function createProfessor(Request $request)
+{
+    $request->validate([
+        'college_id' => 'required|exists:colleges,id',
+        'last_name' => 'required|string|max:45',
+        'first_name' => 'required|string|max:45',
+        'middle_name' => 'nullable|string|max:45',
+        'pronouns' => 'nullable|string|max:45',
+        'plm_email' => 'required|string|email|max:255|unique:professors,plm_email',
+    ]);
+
+    Professor::create($request->all());
+
+    return redirect()->route('view-professors')->with('success', 'Professor added successfully.');
 }
 }
 
