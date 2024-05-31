@@ -13,10 +13,10 @@
     <script src="https://unpkg.com/@heroicons/react@v1.0.0/dist/outline.js" defer></script>
 </head>
 
-<div x-data="{ isOpen: true }" class="flex h-screen" style="color:white">
+<div x-data="{ isOpen: true }" class="flex h-screen " style="color:white">
     <!-- Sidebar -->
     <div :class="isOpen ? 'w-64' : 'w-16'"
-        class="bg-blue h-full transition-all duration-300 overflow-hidden flex flex-col">
+        class=" bg-gold h-full transition-all duration-300 overflow-hidden flex flex-col">
         <!-- Toggle Button -->
         <button @click="isOpen = !isOpen" class="p-2 text-white focus:outline-none self-end">
             <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -28,14 +28,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
         </button>
+        <div class="bg-white rounded-lg p-4 text-center">
+            <p class="text-white font-bold">Chairperson AMS</p>
 
-        <img src="{{ url('images/plm-logo.png') }}" alt="PLM Logo" class="mx-auto mb-2"
-            style="width: 100px; height: 100px;" x-show="isOpen">
+        </div>
+        <img src="{{ url('images/user.png') }}" alt="user" class="mx-auto mb-2" style="width: 70px; height: 70px;"
+            x-show="isOpen">
 
-        <div class="p-4 text-center" style="color:rgb(45, 52, 154); " x-show="isOpen">
+        <div class="p-4 text-center bg-gold" " x-show=" isOpen">
             <div class="bg-white rounded-lg p-4" style="background-color:white">
-                <p class="text-blue-800 font-bold">{{ $user->name }}</p>
-                <p class="text-blue-600">{{ $departmentName }}</p>
+                <p class="text-gold"><b>Welcome, </b>{{ $user->name }}!</p>
+                <p class="text-blue font-bold">{{ $departmentName }}</p>
             </div>
         </div>
         <nav class="text-white flex-1">
@@ -54,14 +57,25 @@
                 <li>
                     <a href="{{ route('view-students') }}"
                         class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 13l4 4L19 7M5 7h14" />
+                        <svg width="24" class="h-6 w-6" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M3 9.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V9.4C21 9.73137 20.7314 10 20.4 10H3.6C3.26863 10 3 9.73137 3 9.4Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                            <path
+                                d="M14 20.4V14.6C14 14.2686 14.2686 14 14.6 14H20.4C20.7314 14 21 14.2686 21 14.6V20.4C21 20.7314 20.7314 21 20.4 21H14.6C14.2686 21 14 20.7314 14 20.4Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                            <path
+                                d="M3 20.4V14.6C3 14.2686 3.26863 14 3.6 14H9.4C9.73137 14 10 14.2686 10 14.6V20.4C10 20.7314 9.73137 21 9.4 21H3.6C3.26863 21 3 20.7314 3 20.4Z"
+                                stroke="currentColor" stroke-width="1.5" />
                         </svg>
-                        <span class="ml-4" x-show="isOpen">View Students</span>
+
+
+
+                        <span class="ml-4" x-show="isOpen">Students</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="{{ route('view-appeals') }}"
                         class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
@@ -82,10 +96,10 @@
                 </li>
                 <li>
                     <a href="{{ route('view-classes') }}"
-                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
-                        ">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M5 13l4 4L19 7M5 7h14" />
+                        class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700" ">
+                        <svg xmlns=" http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path d="M5 13l4 4L19 7M5 7h14" />
                         </svg>
                         <span class="ml-4" x-show="isOpen">View Classes</span>
                     </a>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
     @vite('resources/css/app.css')
     <title>View Students</title>
 </head>
+
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
     x-data="{ btns: {{ json_encode($btns) }} }">
     <!-- Whole Container -->
@@ -26,20 +28,16 @@
             <p class="mt-4">Here you can view and manage students.</p>
             <form action="{{ route('view-students') }}" method="GET" class="mb-6">
                 <div class="flex items-center">
-                    <input 
-                        type="text" 
-                        name="student_no" 
-                        placeholder="Filter by Student Number" 
-                        value="{{ request('student_no') }}" 
-                        class="px-4 py-2 border rounded-lg"
-                    />
-                    <button type="submit" class="ml-2 px-4 py-2 bg-blue text-white rounded-lg" style="color:white">Filter</button>
+                    <input type="text" name="student_no" placeholder="Filter by Student Number"
+                        value="{{ request('student_no') }}" class="px-4 py-2 border rounded-lg" />
+                    <button type="submit" class="ml-2 px-4 py-2 bg-gold text-white rounded-lg"
+                        style="color:white">Filter</button>
                 </div>
             </form>
             <!-- Students Table -->
             <div class="mt-6 rounded-lg shadow-md p-6 overflow-x-auto" style="background-color: white;">
                 <table class="min-w-full bg-white">
-                    <thead class="bg-blue" style="color:white">
+                    <thead class="bg-gold" style="color:white">
                         <tr>
                             <th class="py-2 px-4 border-b border-gray-300">Student No</th>
                             <th class="py-2 px-4 border-b border-gray-300">First Name</th>
@@ -50,22 +48,23 @@
                     </thead>
                     <tbody class="bg-white">
                         @foreach ($students as $student)
-                            <tr class="bg-white">
-                                <td class="py-2 px-4 border-b border-gray-300">
-                                    <a href="{{ route('view-student', $student->id) }}" class="text-blue-500 hover:underline">
-                                        {{ $student->student_no }}
-                                    </a>
-                                </td>
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $student->first_name }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $student->last_name }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $student->email }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $student->year_level }}</td>
-                            </tr>
+                        <tr class="bg-white">
+                            <td class="py-2 px-4 border-b border-gray-300">
+                                <a href="{{ route('view-student', $student->id) }}"
+                                    class="text-blue-500 hover:underline">
+                                    {{ $student->student_no }}
+                                </a>
+                            </td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->first_name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->last_name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->email }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->year_level }}</td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            
+
             <!-- Pagination Links -->
             <div class="mt-4">
                 {{ $students->links() }}
@@ -73,4 +72,5 @@
         </div>
     </div>
 </body>
+
 </html>
