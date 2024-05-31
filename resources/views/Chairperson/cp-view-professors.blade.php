@@ -25,7 +25,7 @@
         <div class="flex-1 p-10">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold">List of Professors in your College</h2>
-                <button class="ml-2 px-4 py-2 bg-blue text-white rounded-lg" style="color:white"
+                <button class="ml-2 px-4 py-2 bg-gold text-white rounded-lg" style="color:white"
                     @click="isModalOpen = true" class="mb-4 px-4 py-2 bg-green-500 text-white rounded">Add
                     Professor</button>
             </div>
@@ -39,7 +39,7 @@
                 <p>No professors found.</p>
                 @else
                 <table class="w-full table-auto">
-                    <thead class="bg-blue" style="color:white">
+                    <thead class="bg-gold" style="color:white">
                         <tr>
                             <th class="px-4 py-2">Last Name</th>
                             <th class="px-4 py-2">First Name</th>

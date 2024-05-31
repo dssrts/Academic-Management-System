@@ -28,7 +28,7 @@
             <!-- Appeals Table -->
             <div class="mt-6 bg-white rounded-lg shadow-md p-6 overflow-x-auto" style="color:white; background-color:white">
                 <table class="min-w-full bg-white">
-                    <thead class="bg-blue">
+                    <thead class="bg-gold">
                         <tr>
                             <th class="py-2 px-4 border-b border-gray-300">ID</th>
                             <th class="py-2 px-4 border-b border-gray-300">Student ID</th>
