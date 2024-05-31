@@ -25,4 +25,9 @@ class Professor extends Model
     {
         return $this->hasMany(ClassModel::class);
     }
+    public function professor()
+{
+    return $this->belongsTo(Professor::class);
+}
+
 }
