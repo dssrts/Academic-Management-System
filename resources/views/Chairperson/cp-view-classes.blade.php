@@ -53,7 +53,7 @@
                     </thead>
                     <tbody>
                         @foreach($classes as $class)
-                        <tr>
+                        <tr class="cursor-pointer" onclick="window.location='{{ route('edit-class', $class->id) }}'">
                             <td class="border px-4 py-2">{{ $class->code }}</td>
                             <td class="border px-4 py-2">{{ $class->name }}</td>
                             <td class="border px-4 py-2">{{ $class->description }}</td>

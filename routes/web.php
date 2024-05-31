@@ -55,6 +55,8 @@ Route::post('/professors/create', [ChairpersonController::class, 'createProfesso
 Route::get('/classes', [ChairpersonController::class, 'viewClasses'])->name('view-classes');
 Route::post('/classes/{class}/update-professor', [ChairpersonController::class, 'updateClassProfessor'])->name('update-class-professor');
 Route::post('/create-class', [ChairpersonController::class, 'createClass'])->name('create-class');
+Route::get('/classes/{class}/edit', [ChairpersonController::class, 'editClass'])->name('edit-class');
+Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateClass'])->name('update-class');
 
 });
 
