@@ -301,7 +301,7 @@
                                                 }">
                                                 <div class="text-center">
                                                     <span class="font-bold text-[12px] text-gold-amber">{{ $schedule[$day][$i]['name'] }} ({{$schedule[$day][$i]['building'] ." ".$schedule[$day][$i]['room'] }})</span><br>
-                                                    <span class="text-[11px]">{{ $schedule[$day][$i]['time'] }}</span>
+                                                    <span class="text-[11px] font-bold">{{ $schedule[$day][$i]['time'] }}</span>
                                                 </div> @endif
                                             </td>
                                         @endforeach
@@ -312,7 +312,7 @@
                     </div>
                 </div>
             
-                <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-white-10 bg-opacity-0">
+                <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-white-10 bg-opacity-0 font-inter">
                     <div class="bg-white-10 border-4 border-blue p-8 rounded-lg shadow-xl w-1/3">
                         <h2 class="text-[18px] text-blue font-bold mb-4" x-text="modalContent.name + ' (' + modalContent.code + ')'"></h2>
                         <p class="mb-4 text-[14px]">
