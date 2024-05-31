@@ -23,50 +23,61 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-10">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold">List of Professors in your College</h2>
-                <button class="ml-2 px-4 py-2 bg-gold text-white rounded-lg" style="color:white"
-                    @click="isModalOpen = true" class="mb-4 px-4 py-2 bg-green-500 text-white rounded">Add
-                    Professor</button>
-            </div>
-            <form method="GET" action="{{ route('view-professors') }}">
-                <input type="text" name="search" placeholder="Search by name or email..."
-                    class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
-            </form>
-            <div class="bg-white rounded-lg p-6 mt-6 shadow-lg" style="background-color:white">
-                {{-- <h3 class="text-2xl font-semibold mb-4">List of Professors</h3> --}}
-                @if($professors->isEmpty())
-                <p>No professors found.</p>
-                @else
-                <table class="w-full table-auto">
-                    <thead class="bg-gold" style="color:white">
-                        <tr>
-                            <th class="px-4 py-2">Last Name</th>
-                            <th class="px-4 py-2">First Name</th>
-                            <th class="px-4 py-2">Middle Name</th>
-                            <th class="px-4 py-2">Pronouns</th>
-                            <th class="px-4 py-2">PLM Email</th>
-                            <th class="px-4 py-2">College</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($professors as $professor)
-                        <tr>
-                            <td class="border px-4 py-2">{{ $professor->last_name }}</td>
-                            <td class="border px-4 py-2">{{ $professor->first_name }}</td>
-                            <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
-                            <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
-                            <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
-                            <td class="border px-4 py-2">{{ $professor->college->Code }}</td>
-                            <!-- Assuming there is a relationship setup -->
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="mt-4">
-                    {{ $professors->links() }}
+            <!-- Header Section -->
+            <div class="flex flex-row items-center mb-6">
+                <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
+                <div class="leading-tight flex flex-col">
+                    <h1 class="text-[20px] font-bold font-katibeh text-[#d5a106]">PAMANTASAN NG LUNGSOD NG MAYNILA</h1>
+                    <h2 class="text-[10px] font-inter text-black-200">UNIVERSITY OF THE CITY OF MANILA</h2>
                 </div>
-                @endif
+            </div>
+
+            <!-- Content Section -->
+            <div>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold">List of Professors in your College</h2>
+                    <button class="ml-2 px-4 py-2 bg-gold text-white rounded-lg" style="color:white"
+                        @click="isModalOpen = true">Add Professor</button>
+                </div>
+                <form method="GET" action="{{ route('view-professors') }}">
+                    <input type="text" name="search" placeholder="Search by name or email..."
+                        class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
+                </form>
+                <div class="bg-white rounded-lg p-6 mt-6 shadow-lg" style="background-color:white">
+                    {{-- <h3 class="text-2xl font-semibold mb-4">List of Professors</h3> --}}
+                    @if($professors->isEmpty())
+                    <p>No professors found.</p>
+                    @else
+                    <table class="w-full table-auto">
+                        <thead class="bg-gold" style="color:white">
+                            <tr>
+                                <th class="px-4 py-2">Last Name</th>
+                                <th class="px-4 py-2">First Name</th>
+                                <th class="px-4 py-2">Middle Name</th>
+                                <th class="px-4 py-2">Pronouns</th>
+                                <th class="px-4 py-2">PLM Email</th>
+                                <th class="px-4 py-2">College</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($professors as $professor)
+                            <tr>
+                                <td class="border px-4 py-2">{{ $professor->last_name }}</td>
+                                <td class="border px-4 py-2">{{ $professor->first_name }}</td>
+                                <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
+                                <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
+                                <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
+                                <td class="border px-4 py-2">{{ $professor->college->Code }}</td>
+                                <!-- Assuming there is a relationship setup -->
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-4">
+                        {{ $professors->links() }}
+                    </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -118,10 +129,10 @@
                         required>
                 </div>
                 <div class="flex justify-end">
-                    <button type="button" @click="isModalOpen = false" class="px-4 py-2 text-white rounded mr-2"
-                        style="color:black">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue text-white rounded" style="color:white">Add</button>
-
+                    <button type="button" @click="isModalOpen = false"
+                        class="px-4 py-2 text-black rounded mr-2">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue text-white rounded"
+                        style="background-color:#1E3A8A;">Add</button>
                 </div>
             </form>
         </div>

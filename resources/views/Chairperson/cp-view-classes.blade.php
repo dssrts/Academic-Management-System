@@ -23,68 +23,81 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-10">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold">Classes</h2>
-                <button class="ml-2 px-4 py-2 bg-gold text-white rounded-lg" style="color:white"
-                    @click="isModalOpen = true">Add Class</button>
-            </div>
-            <form method="GET" action="{{ route('view-classes') }}">
-                <input type="text" name="search" placeholder="Search by code, name, or room..."
-                    class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
-            </form>
-            <div class="bg-white rounded-lg p-6 shadow-lg" style="background-color:white">
-                @if($classes->isEmpty())
-                <p>No classes found.</p>
-                @else
-                <table class="w-full table-auto">
-                    <thead class="bg-gold" style="color:white">
-                        <tr>
-                            <th class="px-4 py-2">Code</th>
-                            <th class="px-4 py-2">Name</th>
-                            <th class="px-4 py-2">Description</th>
-                            <th class="px-4 py-2">Units</th>
-                            <th class="px-4 py-2">Start Time</th>
-                            <th class="px-4 py-2">End Time</th>
-                            <th class="px-4 py-2">Building</th>
-                            <th class="px-4 py-2">Room</th>
-                            <th class="px-4 py-2">Type</th>
-                            <th class="px-4 py-2">Professor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($classes as $class)
-                        <tr class="cursor-pointer" onclick="window.location='{{ route('edit-class', $class->id) }}'">
-                            <td class="border px-4 py-2">{{ $class->code }}</td>
-                            <td class="border px-4 py-2">{{ $class->name }}</td>
-                            <td class="border px-4 py-2">{{ $class->description }}</td>
-                            <td class="border px-4 py-2">{{ $class->units }}</td>
-                            <td class="border px-4 py-2">{{ $class->start_time }}</td>
-                            <td class="border px-4 py-2">{{ $class->end_time }}</td>
-                            <td class="border px-4 py-2">{{ $class->building }}</td>
-                            <td class="border px-4 py-2">{{ $class->room }}</td>
-                            <td class="border px-4 py-2">{{ $class->type }}</td>
-                            <td class="border px-4 py-2">
-                                <form method="POST" action="{{ route('update-class-professor', $class->id) }}">
-                                    @csrf
-                                    <select name="professor_id" onchange="this.form.submit()"
-                                        class="form-select block w-full mt-1">
-                                        @foreach($professors as $professor)
-                                        <option value="{{ $professor->id }}" {{ $class->professor_id == $professor->id ?
-                                            'selected' : '' }}>
-                                            {{ $professor->first_name }} {{ $professor->last_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="mt-4">
-                    {{ $classes->links() }}
+            <!-- Header Section -->
+            <div class="flex flex-row items-center mb-6">
+                <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
+                <div class="leading-tight flex flex-col">
+                    <h1 class="text-[20px] font-bold font-katibeh text-[#d5a106]">PAMANTASAN NG LUNGSOD NG MAYNILA</h1>
+                    <h2 class="text-[10px] font-inter text-black-200">UNIVERSITY OF THE CITY OF MANILA</h2>
                 </div>
-                @endif
+            </div>
+
+            <!-- Content Section -->
+            <div>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold">Classes</h2>
+                    <button class="ml-2 px-4 py-2 bg-gold text-white rounded-lg" style="color:white"
+                        @click="isModalOpen = true">Add Class</button>
+                </div>
+                <form method="GET" action="{{ route('view-classes') }}">
+                    <input type="text" name="search" placeholder="Search by code, name, or room..."
+                        class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
+                </form>
+                <div class="bg-white rounded-lg p-6 shadow-lg" style="background-color:white">
+                    @if($classes->isEmpty())
+                    <p>No classes found.</p>
+                    @else
+                    <table class="w-full table-auto">
+                        <thead class="bg-gold" style="color:white">
+                            <tr>
+                                <th class="px-4 py-2">Code</th>
+                                <th class="px-4 py-2">Name</th>
+                                <th class="px-4 py-2">Description</th>
+                                <th class="px-4 py-2">Units</th>
+                                <th class="px-4 py-2">Start Time</th>
+                                <th class="px-4 py-2">End Time</th>
+                                <th class="px-4 py-2">Building</th>
+                                <th class="px-4 py-2">Room</th>
+                                <th class="px-4 py-2">Type</th>
+                                <th class="px-4 py-2">Professor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($classes as $class)
+                            <tr class="cursor-pointer"
+                                onclick="window.location='{{ route('edit-class', $class->id) }}'">
+                                <td class="border px-4 py-2">{{ $class->code }}</td>
+                                <td class="border px-4 py-2">{{ $class->name }}</td>
+                                <td class="border px-4 py-2">{{ $class->description }}</td>
+                                <td class="border px-4 py-2">{{ $class->units }}</td>
+                                <td class="border px-4 py-2">{{ $class->start_time }}</td>
+                                <td class="border px-4 py-2">{{ $class->end_time }}</td>
+                                <td class="border px-4 py-2">{{ $class->building }}</td>
+                                <td class="border px-4 py-2">{{ $class->room }}</td>
+                                <td class="border px-4 py-2">{{ $class->type }}</td>
+                                <td class="border px-4 py-2">
+                                    <form method="POST" action="{{ route('update-class-professor', $class->id) }}">
+                                        @csrf
+                                        <select name="professor_id" onchange="this.form.submit()"
+                                            class="form-select block w-full mt-1">
+                                            @foreach($professors as $professor)
+                                            <option value="{{ $professor->id }}" {{ $class->professor_id ==
+                                                $professor->id ? 'selected' : '' }}>
+                                                {{ $professor->first_name }} {{ $professor->last_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-4">
+                        {{ $classes->links() }}
+                    </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
