@@ -73,20 +73,23 @@ class SignUpController extends Controller
         return redirect()->route('student-view.get', $student_no)->with('status', 'success');
     }
 
-
     public function studentview(Request $request, $student_no)
     {
-        
         $student = Student::where('student_no', $student_no)->first();
+        if (!$student) {
+            // Handle case where student is not found
+            return redirect()->back()->with('error', 'Student not found');
+        }
+    
         $student_id = $student->id;
         $appeals = Appeal::where('student_id', $student_id)
-        ->orderBy('created_at', 'desc') // Add this line to order by created_at descending
-        ->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
         $buttons = session()->get('buttons');
         $panel = $request->panel;
         $send  =  session()->get('status');
         session()->forget('buttons');
-
+    
         $btns = [
             'dashboard' => false,
             'information' => false,
@@ -94,50 +97,47 @@ class SignUpController extends Controller
             'process' => false,
             'classroom' => false,
             'services' => false,
-            'inbox' => false, 
+            'inbox' => false,
         ];
-
-        if ( $buttons ) {
-            if (array_key_exists( $buttons , $btns)) {
+    
+        if ($buttons) {
+            if (array_key_exists($buttons, $btns)) {
                 $btns[$buttons] = true;
             }
         } else {
-            if($panel == "grades"){
+            if ($panel == "grades") {
                 $btns['grades'] = true;
+            } else {
+                $btns['dashboard'] = true;
             }
-            else{
-                $btns['dashboard'] = true; 
-            }  
         }
-
-        if (!$student) {
-
-        }
-
-        $college_id = $student->college_id;
-        $department_id = $student->department_id;
-
+    
+        $college_id = $student->college;
+        $department_id = $student->degree_program;
+    
         $college = College::where('id', $college_id)->first();
-        $department = Department::where('id', $department_id)->first();
-
-        $gradesQuery = Grade::where('student_id', $student->id);
-
-        $defaultYear = '20241'; // Default year
+        $department = Department::where('department_id', $department_id)->first();
+    
+        // Query to get grades related to the student
+        $gradesQuery = Grade::whereHas('class', function ($query) use ($student) {
+            $query->whereHas('studentRecord', function ($query) use ($student) {
+                $query->where('student_id', $student->id);
+            });
+        });
+    
+        $defaultYear = '2024'; // Default year
         if ($request->has('year') && $request->year != 'all') {
             $defaultYear = $request->year;
-            $gradesQuery->where(function ($query) use ($defaultYear) {
-                $query->where('year', $defaultYear)
-                    ->orWhere('year', 'LIKE', $defaultYear.'%');
-            });
+            $gradesQuery->whereYear('created_at', $defaultYear);
         }
-
+    
         $grades = $gradesQuery->get();
-
+    
         return view('student-view', [
             'students' => $student,
             'department' => $department,
             'college' => $college,
-            'grades' => $grades, 
+            'grades' => $grades,
             'defaultYear' => $defaultYear ?? null,
             'buttons' => "information",
             'btns' => $btns,
@@ -145,7 +145,7 @@ class SignUpController extends Controller
             'send' => $send
         ]);
     }
-        
+    
     public function post(Request $request){
         $btns = [
             'information' => true,
