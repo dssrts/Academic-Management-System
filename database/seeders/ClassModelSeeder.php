@@ -157,14 +157,55 @@ class ClassModelSeeder extends Seeder
         // Fetch all professor ids
         $professorIds = Professor::pluck('id')->toArray();
 
+        // Buildings
+        $buildings = ['GV', 'GEE', 'GL', 'GCA', 'GK'];
+
+        // Predefined start and end times with 2-hour gaps
+        $timeSlots = [
+            ['start' => '00:00', 'end' => '02:00'],
+            ['start' => '02:00', 'end' => '04:00'],
+            ['start' => '04:00', 'end' => '06:00'],
+            ['start' => '06:00', 'end' => '08:00'],
+            ['start' => '08:00', 'end' => '10:00'],
+            ['start' => '10:00', 'end' => '12:00'],
+            ['start' => '12:00', 'end' => '14:00'],
+            ['start' => '14:00', 'end' => '16:00'],
+            ['start' => '16:00', 'end' => '18:00'],
+            ['start' => '18:00', 'end' => '20:00'],
+            ['start' => '20:00', 'end' => '22:00'],
+            ['start' => '22:00', 'end' => '00:00']
+        ];
+
+        // Set to keep track of used class codes and subjects per student
+        $usedClassCodes = [];
+        $studentSubjects = [];
+
         // Ensure each student record is used 12-20 times
         foreach ($studentRecords as $studentRecord) {
             $usageCount = rand(12, 20);
 
+            // Initialize the student's subjects set
+            if (!isset($studentSubjects[$studentRecord->id])) {
+                $studentSubjects[$studentRecord->id] = [];
+            }
+
             for ($i = 0; $i < $usageCount; $i++) {
-                $classTitle = $faker->randomElement($this->classTitles);
-                // Generate class code based on class title (example logic)
-                $classCode = strtoupper(substr(str_replace(' ', '', $classTitle), 0, 3)) . $faker->numberBetween(0, 9999);
+                do {
+                    $classTitle = $faker->randomElement($this->classTitles);
+                    $classCode = strtoupper(substr(str_replace(' ', '', $classTitle), 0, 3)) . $faker->numberBetween(0, 9999);
+                } while (in_array($classCode, $usedClassCodes) || in_array($classTitle, $studentSubjects[$studentRecord->id]));
+
+                $usedClassCodes[] = $classCode;
+                $studentSubjects[$studentRecord->id][] = $classTitle;
+
+                $day = $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
+                $units = $faker->numberBetween(1, 5);
+                $room = $faker->numberBetween(100, 500);
+                $building = $faker->randomElement($buildings);
+                $timeSlot = $faker->randomElement($timeSlots);
+
+                // Create a description related to the class title, day, units, room, and building
+                $description = "This $classTitle class is held on $day in room $room of the $building building. The course is worth $units units and provides a comprehensive overview of the subject.";
 
                 ClassModel::create([
                     'student_record_id' => $studentRecord->id,
@@ -172,13 +213,13 @@ class ClassModelSeeder extends Seeder
                     'code' => $classCode,
                     'section' => $faker->randomElement(['1', '2', '3', '4', '5']),
                     'name' => $classTitle,
-                    'description' => $faker->paragraph,
-                    'units' => $faker->numberBetween(1, 5),
-                    'day' => $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
-                    'start_time' => $faker->time(),
-                    'end_time' => $faker->time(),
-                    'building' => $faker->word,
-                    'room' => $faker->numberBetween(100, 500),
+                    'description' => $description,
+                    'units' => $units,
+                    'day' => $day,
+                    'start_time' => $timeSlot['start'],
+                    'end_time' => $timeSlot['end'],
+                    'building' => $building,
+                    'room' => $room,
                     'type' => $faker->randomElement(['Lecture', 'Lab']),
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),

@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('departments', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('department_id'); // Custom primary key column name
             $table->foreignId('college_id')->constrained()->cascadeOnDelete();
+            $table->string('department_name');
             $table->string('code');
-            $table->string('title');
             $table->timestamps();
         });
     }

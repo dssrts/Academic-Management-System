@@ -75,7 +75,7 @@ class User extends Authenticatable
         return $this->belongsTo(College::class);
     }
     public function department(){
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class,'department_id','department_id');
     }
 
     public function is_admin(){
