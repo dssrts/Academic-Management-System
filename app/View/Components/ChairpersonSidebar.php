@@ -18,7 +18,7 @@ class ChairpersonSidebar extends Component
     public function __construct()
     {
         $this->user = Auth::user();
-        $this->departmentName = $this->user->department ? $this->user->department->title : 'No Department';
+        $this->departmentName = $this->user->department ? $this->user->department->department_name : 'No Department';
     }
 
     /**

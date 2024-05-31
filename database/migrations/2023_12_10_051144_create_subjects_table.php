@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('college_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('department_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('department_id'); // Use unsignedBigInteger for the foreign key column
+            $table->foreign('department_id')->references('department_id')->on('departments')->cascadeOnDelete();
             $table->string('subject_code');
             $table->string('subject_title');
             $table->timestamps();

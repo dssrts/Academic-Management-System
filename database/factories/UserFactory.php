@@ -21,7 +21,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $randomDepartmentID = Department::inRandomOrder()->first()->id;
+        $randomDepartmentID = Department::inRandomOrder()->first()->department_id;
         
         $firstName = $this->faker->firstName();
         $lastName = $this->faker->lastName();

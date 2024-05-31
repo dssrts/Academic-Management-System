@@ -89,7 +89,7 @@ class DepartmentSeeder extends Seeder
                 DB::table('departments')->insert([
                     'college_id' => $collegeId,
                     'code' => $departmentCode,
-                    'title' => $departmentTitle,
+                    'department_name' => $departmentTitle,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);

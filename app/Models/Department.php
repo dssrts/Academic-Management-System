@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Department extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'department_id'; // Custom primary key
     protected $fillable = [
         'code',
         'title',

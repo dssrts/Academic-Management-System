@@ -75,7 +75,7 @@ class StudentFactory extends Factory
             'registration_status' => $this->faker->randomElement(['Enrolled', 'Unenrolled']),
             'year_level' => $this->faker->numberBetween(1, 5),
             'entry_aysem' => $this->faker->numberBetween(2020, 2024),
-            'degree_program' => $department ? $department->id : null, // Use department ID
+            'degree_program' => $department ? $department->department_id : null, // Use department ID
             'program_code' => $program_code,
             'college' => $college->id, // Use college ID
             'plm_email' => $plm_email,
