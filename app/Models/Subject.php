@@ -31,15 +31,11 @@ class Subject extends Model
     // public function faculty(){
     //     return $this->hasMany(Faculty::class);
     // }
-    public function faculties(){
-        return $this->belongsToMany(Faculty::class ,'faculty_subject');
-    }
+    
     public function undergradStudents(){
         return $this->belongsToMany(UndergradStudent::class, 'subject_undergrad_student')->withPivot(['grade']);
     }
-    public function gradStudents(){
-        return $this->belongsToMany(GradStudent::class, 'subject_grad_student')->withPivot(['grade']);
-    }
+    
 
 
 }

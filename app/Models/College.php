@@ -19,13 +19,9 @@ class College extends Model
     public function UndergradStudents(){
         return $this->hasMany(UndergradStudent::class);
     }
-    public function GradStudents(){
-        return $this->hasMany(GradStudent::class);
-    }
+    
     public function departments(){
         return $this->hasMany(Department::class);
     }
-    public function faculty(){
-        return $this->hasMany(Faculty::class);
-    }
+    
 }

@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CollegeSeeder::class);
         $this->call(DepartmentSeeder::class);
-        Faculty::factory(100)->create();
+        // Faculty::factory(100)->create();
         Professor::factory()->count(100)->create();
-        Subject::factory(400)->create();
+        // Subject::factory(400)->create();
         User::factory(700)->create();
-        $this->call(RoleSeeder::class);
-        $this->call(ModelHasRoleSeeder::class);
+        // $this->call(RoleSeeder::class);
+        // $this->call(ModelHasRoleSeeder::class);
         Student::factory(User::where('account_type', 'Student')->count())->create()->each(function ($student) {
             StudentRecord::factory()->create([
                 'student_id' => $student->id,
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         });
         ClassModel::factory()->count(100)->create();
         $this->call(GradesSeeder::class);
-        $this->call(ScheduleSeeder::class);
+        // $this->call(ScheduleSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 
