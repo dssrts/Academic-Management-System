@@ -215,7 +215,7 @@
                         </div>
                         <div class ="h-full flex justify-center items-center p-4">
                             <h1 class="font-bold font-inter text-[18px] text-black-300">{{ $department->title }}
-                                {{ $students->year_level }}-{{ $students->block }} </h1>
+                                {{ $students->year_level }}-3 </h1>
                         </div>
                     </div>
                     <div class="bg-white-10 rounded-2xl drop-shadow-[0_5px_5px_rgba(0,0,0,0.03)] flex flex-col">
@@ -312,30 +312,6 @@
                             <tr>
                                 <td
                                     class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">
-                                    Birthdate:</td>
-                                <td
-                                    class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">
-                                    {{ $students->birthdate }}</td>
-                            </tr>
-                            <tr>
-                                <td
-                                    class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">
-                                    Birthplace:</td>
-                                <td
-                                    class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">
-                                    {{ $students->birthdate_city }}</td>
-                            </tr>
-                            <tr>
-                                <td
-                                    class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">
-                                    Religion:</td>
-                                <td
-                                    class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">
-                                    {{ $students->religion }}</td>
-                            </tr>
-                            <tr>
-                                <td
-                                    class="px-24 py-0 border-b border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">
                                     Civil Status:</td>
                                 <td
                                     class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">
@@ -403,7 +379,7 @@
                                     Personal Email:</td>
                                 <td
                                     class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">
-                                    {{ $students->personal_email }}</td>
+                                    {{ $students->email }}</td>
                             </tr>
                             <tr>
                                 <td
@@ -413,15 +389,6 @@
                                     class="px-24 py-0 border-b border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">
                                     {{ $students->mobile_no }}</td>
                             </tr>
-                            <tr>
-                                <td
-                                    class="px-24 py-0  border-opacity-50 border-black-200 font-bold text-black-200 text-center align-middle">
-                                    Telephone Number:</td>
-                                <td
-                                    class="px-24 py-0 border-opacity-50 border-black-200 text-center font-semibold text-black-300 align-middle">
-                                    {{ $students->telephone_no }}</td>
-                            </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -435,7 +402,7 @@
                     <div class="pt-3 flex justify-center items-center">
                         <form action="#" method="GET" class="flex">
                             <input type="hidden" name="panel" value="grades">
-                            <input type="text" name="year" placeholder="Ex. '20231' or 'all'"
+                            <input type="text" name="year" placeholder="Ex. '2023' or 'all'"
                                 class="px-3 h-5 w-36 mr-4 text-[12px] text-black-200 mt-1 border rounded-2xl">
                             <input type="submit"
                                 class="bg-blue px-3 rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 w-20 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95"
@@ -465,9 +432,9 @@
                                         <tr>
                                             <td class="border border-black-200 py-2 px-4">
                                                 @php
-                                                    $subject = \App\Models\Subject::find($grade->subject_id);
-                                                    if ($subject) {
-                                                        echo $subject->subject_title;
+                                                    $class = \App\Models\ClassModel::find($grade->class_id);
+                                                    if ($class) {
+                                                        echo $class->name;
                                                     } else {
                                                         echo 'Subject Not Found';
                                                     }
@@ -475,9 +442,9 @@
                                             </td>
                                             <td class="border border-black-200 py-2 px-4">
                                                 @php
-                                                    $subject = \App\Models\Subject::find($grade->subject_id);
-                                                    if ($subject) {
-                                                        echo $subject->subject_code;
+                                                    $class = \App\Models\ClassModel::find($grade->class_id);
+                                                    if ($class) {
+                                                        echo $class->code;
                                                     } else {
                                                         echo 'Code Not Found';
                                                     }
@@ -536,7 +503,7 @@
                                 <select id="recipientemail" name="recipientemail"
                                     class="pl-1 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                     required>
-                                    @foreach (DB::table('users')->where('department_id', $students->department_id)->where('account_type', 'Chairperson')->get() as $user)
+                                    @foreach (DB::table('users')->where('department_id', $students->degree_program)->where('account_type', 'Chairperson')->get() as $user)
                                         <option value={{ $user->email }}>
                                             {{ $user->email }}
                                         </option>
@@ -581,11 +548,11 @@
                             </div>
                             <div class="mb-4 justify-center flex">
                                 <input type="file" placeholder=".pdf only" name="pdf_file"
-                                    class="font-inter block mr-1 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                                <p class="font-inter mt-1 mr-8 text-sm text-gray-500 dark:text-gray-200"
+                                    class="font-inter block mr-1 text-[12px] text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                                <p class="font-inter mt-2 mr-8 text-[11px] text-gray-500 dark:text-gray-200"
                                     id="file_input_help">.pdf (max 2 mb)</p>
                                 <input type="submit"
-                                    class="bg-blue px-3 w-1/4 text-center rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95"
+                                    class="bg-blue px-3 w-1/5 text-center rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95"
                                     value="Submit">
                                     @if (isset($send) && $send === 'success')
                                     <svg height="20px" class="ml-4 mr-2 mt-[3px]" version="1.1"
@@ -608,8 +575,8 @@
                                             </g>
                                         </g>
                                     </svg>
-                                    <p class="font-inter mt-1 text-sm text-green font-semibold" id="file_input_help">
-                                        Request sent
+                                    <p class="font-inter mt-1 text-[12px] text-green font-semibold" id="file_input_help">
+                                        Sent
                                     </p>
                                 @elseif (isset($send) && $send === 'error')
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="ml-4 mr-2 mt-[3px]" fill="#E63049" class="bi bi-x-circle" viewBox="0 0 16 16">

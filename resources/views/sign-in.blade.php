@@ -98,7 +98,7 @@
             </button>
 
             <!-- FAQS BUTTON -->
-            <button  onclick="window.location='{{ route('faqs.get') }}'" class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-20 font-inter font-bold mb-4 text-center text-[13px]
+            <button  onclick="window.location='{{ route('faqs.get')}}'" class="text-white-10 rounded-xl w-5/6 bg-blue-hover h-20 font-inter font-bold mb-4 text-center text-[13px]
                            underline decoration-gold-hover underline-offset-4
                            transition duration-100 ease-in-out hover:bg-white-10 hover:text-blue-hover hover:text-[14px] hover:no-underline hover:opacity-95 
                            " style="opacity: 1;"> 
@@ -252,7 +252,7 @@
                         <span class="font-inter font-bold text-blue italic">University Calendar</span> 
                         <span class="font-inter text-[11px] leading-[12px] text-blue-hover">Academic year 2023-2024</span> 
                         <span class="font-inter font-bold leading-[20px] text-gold text-[12px]">TRIMESTER</span> 
-                        <a onclick="showEnlargedImage('{{ url('images/calendar.png') }}')" class = "cursor-pointer font-inter text-blue leading-[30px] text-[10px] underline hover:font-bold"> Click here to enlarge image </a>
+                        <a onclick="showEnlargedImage('{{ url('images/calendar.png')}}')" class = "cursor-pointer font-inter text-blue leading-[30px] text-[10px] underline hover:font-bold"> Click here to enlarge image </a>
                     </div>
                 </div>
             </div>

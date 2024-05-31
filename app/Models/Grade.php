@@ -16,11 +16,14 @@ class Grade extends Model
         'completion_grade',
         'remarks' 
     ];
-    public function student(){
-        return $this->belongsTo(Student::class);
-    }
+
     public function subject(){
         return $this->belongsTo(Subject::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(ClassModel::class, 'class_id');
     }
     
 }

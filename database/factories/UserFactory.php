@@ -21,7 +21,8 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $randomDepartmentID = Department::inRandomOrder()->first()->department_id;
+        $randomDepartment = Department::inRandomOrder()->first();
+        $randomDepartmentID = $randomDepartment->department_id;
         
         $firstName = $this->faker->firstName();
         $lastName = $this->faker->lastName();
@@ -49,7 +50,7 @@ class UserFactory extends Factory
             'updated_at' => now(),
             'user_code' => $initials,
             'account_type' => $accountType,
-            'college_id' => Department::find($randomDepartmentID)->college_id,
+            'college_id' => $randomDepartment->college_id,
             'department_id' => $randomDepartmentID,
         ];
     }

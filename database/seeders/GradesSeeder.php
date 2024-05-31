@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\ClassModel;
 use App\Models\Student;
+use Faker\Factory as Faker;
 
 class GradesSeeder extends Seeder
 {
@@ -33,6 +34,9 @@ class GradesSeeder extends Seeder
         // Retrieve all class IDs
         $classIds = ClassModel::pluck('id')->toArray();
 
+        // Create an instance of Faker
+        $faker = Faker::create();
+
         // Loop through each student
         foreach ($studentIds as $studentId) {
             // Get a random number of classes for each student (between 15 and 40)
@@ -47,8 +51,8 @@ class GradesSeeder extends Seeder
                 $grade = $grades[array_rand($grades)]; // Randomly select a grade from the available options
                 $completionGrade = 3.00; // Set completion grade to 3.00
                 $remarks = ($grade > 3.00) ? 'Failed' : 'Passed'; // Determine remarks based on grade
-                $createdAt = now();
-                $updatedAt = now();
+                $createdAt = $faker->dateTimeBetween('2020-01-01', '2024-12-31'); // Randomly select a date between 2020 and 2024
+                $updatedAt = $createdAt; // Set updated_at to the same as created_at
                 $year = rand(2020, 2024); // Randomly select a year between 2020 and 2024
                 $suffix = rand(1, 2); // Randomly select a suffix '1' or '2' for the year
                 $yearWithSuffix = $year . $suffix; // Combine the year and the suffix
