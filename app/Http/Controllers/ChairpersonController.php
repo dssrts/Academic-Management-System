@@ -114,32 +114,41 @@ class ChairpersonController extends Controller
         return view('Chairperson.cp-view-professors', compact('professors', 'btns', 'user'));
     }
     public function viewClasses(Request $request)
-    {
-        $query = ClassModel::query();
+{
+    $query = ClassModel::with('professor');
 
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where('code', 'like', '%' . $search . '%')
-                ->orWhere('name', 'like', '%' . $search . '%')
-                ->orWhere('description', 'like', '%' . $search . '%');
-        }
-
-        $classes = $query->paginate(15);
-
-        $btns = [
-            'dashboard' => false,
-            'information' => false,
-            'grades' => false,
-            'process' => false,
-            'inbox' => false,
-            'classroom' => false,
-            'appeals' => false,
-            'professors' => false,
-            'classes' => true,
-        ];
-        $user = Auth::user();
-        return view('Chairperson.cp-view-classes', compact('classes', 'btns', 'user'));
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->where('code', 'like', '%' . $search . '%')
+            ->orWhere('name', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%');
     }
+
+    $classes = $query->paginate(15);
+    $professors = Professor::all();
+
+    $btns = [
+        'dashboard' => false,
+        'information' => false,
+        'grades' => false,
+        'process' => false,
+        'inbox' => false,
+        'classroom' => false,
+        'appeals' => false,
+        'professors' => false,
+        'classes' => true,
+    ];
+    $user = Auth::user();
+    return view('Chairperson.cp-view-classes', compact('classes', 'professors', 'btns', 'user'));
+}
+
+    public function updateClassProfessor(Request $request, ClassModel $class)
+{
+    $class->professor_id = $request->professor_id;
+    $class->save();
+
+    return redirect()->route('view-classes')->with('success', 'Professor updated successfully.');
+}
 }
 
 

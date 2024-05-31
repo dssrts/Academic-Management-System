@@ -52,6 +52,7 @@ Route::get('/students/{student}', [ChairpersonController::class, 'viewStudent'])
 Route::get('/appeals', [ChairpersonController::class, 'viewAppeals'])->name('view-appeals');
 Route::get('/professors', [ChairpersonController::class, 'viewProfessors'])->name('view-professors'); 
 Route::get('/classes', [ChairpersonController::class, 'viewClasses'])->name('view-classes');
+Route::post('/classes/{class}/update-professor', [ChairpersonController::class, 'updateClassProfessor'])->name('update-class-professor');
 });
 
 //logout chairperson
