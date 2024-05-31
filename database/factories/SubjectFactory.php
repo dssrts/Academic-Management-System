@@ -149,7 +149,6 @@ class SubjectFactory extends Factory
         'Zeitgeist Studies'
     ];
 
-
     /**
      * Define the model's default state.
      *
@@ -160,7 +159,7 @@ class SubjectFactory extends Factory
         $subjectTitle = $this->faker->randomElement($this->subjectTitles);
         // Generate subject code based on subject title (example logic)
         $subjectCode = strtoupper(substr(str_replace(' ', '', $subjectTitle), 0, 3)) . $this->faker->numberBetween(0, 9999);
-        $randomDepartmentID = Department::inRandomOrder()->first()->id;
+        $randomDepartmentID = Department::inRandomOrder()->first()->department_id;
         $randomFacultyID = Faculty::inRandomOrder()->first()->id;
         $randomFaculty = Faculty::find($randomFacultyID)->last_name;
         return [
@@ -170,7 +169,7 @@ class SubjectFactory extends Factory
             'subject_title' => $subjectTitle,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'units' => $this->faker->numberBetween(1,3),
+            'units' => $this->faker->numberBetween(1, 3),
             'faculty' => $randomFaculty,
         ];
     }
