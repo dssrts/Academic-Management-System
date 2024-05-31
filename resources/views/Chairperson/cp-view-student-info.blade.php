@@ -12,62 +12,72 @@
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     @vite('resources/css/app.css')
-    <title>Student Details</title>
+    <title>Student Information</title>
 </head>
 
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover">
-    <!-- Whole Container -->
     <div class="w-screen h-screen flex flex-row">
         <!-- Sidebar -->
         <x-chairperson-sidebar />
 
         <!-- Main Content -->
-        <div class="flex-1 p-10">
+        <div class="flex-1 p-10" x-data="{ tab: 'personal' }">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold">Student Information</h2>
-                <a style="color:white" href="{{ route('view-students') }}" class="bg-blue text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-hover transition duration-200 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <a href="{{ route('view-students') }}" class="text-blue-500 hover:text-blue-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </a>
             </div>
-            {{-- <h2 class="text-3xl font-bold">Student Details</h2>
-            
-            <p class="mt-4">Here you can view the details of the student.</p> --}}
 
-            <!-- Student Information -->
-            <div class="mt-6 bg-white rounded-lg shadow-md p-6" style="background-color: white">
-                <table class="min-w-full bg-white">
+            <div class="mb-6">
+                <ul class="flex border-b">
+                    <li class="-mb-px mr-1">
+                        <a :class="{ 'border-blue-500 text-blue-500': tab === 'personal', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'personal' }"
+                            @click.prevent="tab = 'personal'" href="#"
+                            class="inline-block py-2 px-4 border-b-2 font-semibold">Personal Information</a>
+                    </li>
+                    <li class="-mb-px mr-1">
+                        <a :class="{ 'border-blue-500 text-blue-500': tab === 'records', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'records' }"
+                            @click.prevent="tab = 'records'" href="#"
+                            class="inline-block py-2 px-4 border-b-2 font-semibold">Student Records</a>
+                    </li>
+                    <li class="-mb-px mr-1">
+                        <a :class="{ 'border-blue-500 text-blue-500': tab === 'classes', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'classes' }"
+                            @click.prevent="tab = 'classes'" href="#"
+                            class="inline-block py-2 px-4 border-b-2 font-semibold">Classes</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div x-show="tab === 'personal'" class="bg-white rounded-lg p-6 shadow-lg mb-6"
+                style="background-color: white">
+                <h3 class="text-2xl font-semibold mb-4">Personal Information</h3>
+                <table class="w-full table-auto">
                     <tbody>
                         <tr>
-                            <td class="py-2 px-4 border-b border-gray-300 font-bold">Student No:</td>
-                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->student_no }}</td>
+                            <td class="border px-4 py-2 font-semibold">Student Number</td>
+                            <td class="border px-4 py-2">{{ $student->student_no }}</td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-4 border-b border-gray-300 font-bold">First Name:</td>
-                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->first_name }}</td>
+                            <td class="border px-4 py-2 font-semibold">Name</td>
+                            <td class="border px-4 py-2">{{ $student->first_name }} {{ $student->middle_name }} {{
+                                $student->last_name }}</td>
                         </tr>
                         <tr>
-                            <td class="py-2 px-4 border-b border-gray-300 font-bold">Last Name:</td>
-                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->last_name }}</td>
+                            <td class="border px-4 py-2 font-semibold">Email</td>
+                            <td class="border px-4 py-2">{{ $student->email }}</td>
                         </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b border-gray-300 font-bold">Email:</td>
-                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->email }}</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 px-4 border-b border-gray-300 font-bold">Year Level:</td>
-                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->year_level }}</td>
-                        </tr>
-                        <!-- Add more fields as necessary -->
+                        <!-- Add more personal information fields here -->
                     </tbody>
                 </table>
             </div>
-            <div class="bg-white rounded-lg p-6 mt-6 shadow-lg" style="background-color:white">
+
+            <div x-show="tab === 'records'" class="bg-white rounded-lg p-6 shadow-lg mb-6"
+                style="background-color: white">
                 <h3 class="text-2xl font-semibold mb-4">Student Records</h3>
-                @if($studentRecords->isEmpty())
-                <p>No records found for this student.</p>
-                @else
                 <table class="w-full table-auto">
                     <thead class="bg-blue" style="color:white">
                         <tr>
@@ -77,7 +87,6 @@
                             <th class="px-4 py-2">Semester</th>
                             <th class="px-4 py-2">Date Enrolled</th>
                             <th class="px-4 py-2">GWA</th>
-                            
                         </tr>
                     </thead>
                     <tbody>
@@ -93,9 +102,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                @endif
             </div>
-            <div class="bg-white rounded-lg mt-6 p-6 shadow-lg" style="background-color:white">
+
+            <div x-show="tab === 'classes'" class="bg-white rounded-lg p-6 shadow-lg" style="background-color: white">
                 <h3 class="text-2xl font-semibold mb-4">Classes</h3>
                 <table class="w-full table-auto">
                     <thead class="bg-blue" style="color:white">
@@ -114,18 +123,19 @@
                     </thead>
                     <tbody>
                         @foreach($classes as $class)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $class->code }}</td>
-                                <td class="border px-4 py-2">{{ $class->name }}</td>
-                                <td class="border px-4 py-2">{{ $class->description }}</td>
-                                <td class="border px-4 py-2">{{ $class->units }}</td>
-                                <td class="border px-4 py-2">{{ $class->day }}</td>
-                                <td class="border px-4 py-2">{{ $class->start_time }} - {{ $class->end_time }}</td>
-                                <td class="border px-4 py-2">{{ $class->building }}</td>
-                                <td class="border px-4 py-2">{{ $class->room }}</td>
-                                <td class="border px-4 py-2">{{ $class->type }}</td>
-                                <td class="border px-4 py-2">{{ $class->professor ? $class->professor->first_name . ' ' . $class->professor->last_name : 'N/A' }}</td>
-                            </tr>
+                        <tr>
+                            <td class="border px-4 py-2">{{ $class->code }}</td>
+                            <td class="border px-4 py-2">{{ $class->name }}</td>
+                            <td class="border px-4 py-2">{{ $class->description }}</td>
+                            <td class="border px-4 py-2">{{ $class->units }}</td>
+                            <td class="border px-4 py-2">{{ $class->day }}</td>
+                            <td class="border px-4 py-2">{{ $class->start_time }} - {{ $class->end_time }}</td>
+                            <td class="border px-4 py-2">{{ $class->building }}</td>
+                            <td class="border px-4 py-2">{{ $class->room }}</td>
+                            <td class="border px-4 py-2">{{ $class->type }}</td>
+                            <td class="border px-4 py-2">{{ $class->professor ? $class->professor->first_name . ' ' .
+                                $class->professor->last_name : 'N/A' }}</td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
