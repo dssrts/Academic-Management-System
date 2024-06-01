@@ -14,17 +14,21 @@ use App\Models\Grade;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Appeal;
+use App\Models\ClassModel;
+use App\Models\StudentRecord;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Professor;
 
 
 class SignUpController extends Controller
 {
-    public function get(Request $request){
+    public function get(Request $request)
+    {
         Auth::logout(); // Logs the user out
         $request->session()->invalidate(); // Invalidates the session
         $request->session()->regenerateToken(); // Regenerate the CSRF token
-        return view('sign-in',['error' => "valid"]);
+        return view('sign-in', ['error' => 'valid']);
     }
 
     public function studentrequest(Request $request, $student_no)
@@ -63,9 +67,9 @@ class SignUpController extends Controller
             'subject' => $subject,
             'message' => $message,
             'filepath' => $filePath ? '/storage/' . $filePath : null,
-            'viewed' => "unread",
+            'viewed' => 'unread',
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ]);
 
         session()->flash('buttons', 'process');
@@ -77,21 +81,19 @@ class SignUpController extends Controller
     {
         $student = Student::where('student_no', $student_no)->first();
         if (!$student) {
-            // Handle case where student is not found
             return redirect()->back()->with('error', 'Student not found');
         }
     
         $student_id = $student->id;
-        $appeals = Appeal::where('student_id', $student_id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $appeals = Appeal::where('student_id', $student_id)->orderBy('created_at', 'desc')->get();
         $buttons = session()->get('buttons');
         $panel = $request->panel;
-        $send  =  session()->get('status');
+        $send = session()->get('status');
         session()->forget('buttons');
     
         $btns = [
             'dashboard' => false,
+            'schedule' => false,
             'information' => false,
             'grades' => false,
             'process' => false,
@@ -105,7 +107,7 @@ class SignUpController extends Controller
                 $btns[$buttons] = true;
             }
         } else {
-            if ($panel == "grades") {
+            if ($panel == 'grades') {
                 $btns['grades'] = true;
             } else {
                 $btns['dashboard'] = true;
@@ -133,22 +135,67 @@ class SignUpController extends Controller
     
         $grades = $gradesQuery->get();
     
+        // Fetch the student record and classes
+        $studentRecord = StudentRecord::where('student_id', $student->id)->first();
+        $classes = collect();
+        if ($studentRecord) {
+            $currentYear = now()->year;
+            $classes = ClassModel::where('student_record_id', $studentRecord->id)
+                ->whereYear('created_at', $currentYear)
+                ->orderBy('day')
+                ->orderBy('start_time')
+                ->get();
+        }
+    
+        // Process classes into a schedule format
+        $schedule = [
+            'Monday' => [],
+            'Tuesday' => [],
+            'Wednesday' => [],
+            'Thursday' => [],
+            'Friday' => [],
+            'Saturday' => [],
+        ];
+    
+        foreach ($classes as $class) {
+            $day = $class->day;
+            $startTime = \Carbon\Carbon::parse($class->start_time)->format('g:i A');
+            $endTime = \Carbon\Carbon::parse($class->end_time)->format('g:i A');
+            $professor = Professor::find($class->professor_id);
+            $schedule[$day][] = [
+                'name' => $class->name,
+                'time' => $startTime . ' - ' . $endTime,
+                'building' => $class->building,
+                'room' => $class->room,
+                'professor' => $professor ? $professor->last_name . ' ' . $professor->first_name : 'N/A',
+                'code' => $class->code,
+                'type' => $class->type,
+            ];
+        }
+    
         return view('student-view', [
             'students' => $student,
             'department' => $department,
             'college' => $college,
             'grades' => $grades,
             'defaultYear' => $defaultYear ?? null,
-            'buttons' => "information",
+            'buttons' => 'information',
             'btns' => $btns,
             'appeals' => $appeals,
-            'send' => $send
+            'send' => $send,
+            'schedule' => $schedule,
         ]);
     }
     
-    public function post(Request $request){
+    
+    
+    
+
+    public function post(Request $request)
+    {
         $btns = [
             'information' => true,
+            'schedule' => false,
             'grades' => false,
             'process' => false,
             'classroom' => false,
@@ -164,33 +211,31 @@ class SignUpController extends Controller
         if (Auth::attempt(['email' => $email, 'password' => $password, 'account_type' => ['Student', 'Chairperson']])) {
             $userId = Auth::id(); // Get the authenticated user's ID
             $user = Auth::user();
-            
+
             if ($user->account_type === 'Student') {
                 $student_no = Student::where('user_id', $userId)->first()->student_no;
-                return redirect(route('student-view.get', $student_no))->with(['id' => "EMAIL FAILED"]);
+                return redirect(route('student-view.get', $student_no))->with(['id' => 'EMAIL FAILED']);
             } else {
                 return view('Chairperson.cp-dashboard', compact('btns'));
             }
         }
-        return view('sign-in', ['error' => "invalid", 'btns' => $btns]);
-
+        return view('sign-in', ['error' => 'invalid', 'btns' => $btns]);
     }
 
-    public function resetpassword(Request $request){
+    public function resetpassword(Request $request)
+    {
         $old_password = $request->old_password;
         $new_password = $request->new_password;
         $current_email = $request->current_email;
         $current_student_no = $request->current_student_no;
-    
+
         if ($new_password != $old_password) {
             return view('reset-password');
         }
-    
     }
 
-
-    public function getresetpassword(Request $request){
+    public function getresetpassword(Request $request)
+    {
         return view('reset-password');
     }
-    
 }
