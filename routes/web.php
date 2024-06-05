@@ -58,6 +58,8 @@ Route::post('/classes/{class}/update-professor', [ChairpersonController::class, 
 Route::post('/create-class', [ChairpersonController::class, 'createClass'])->name('create-class');
 Route::get('/classes/{class}/edit', [ChairpersonController::class, 'editClass'])->name('edit-class');
 Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateClass'])->name('update-class');
+Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class, 'saveRemarks']);
+
 
 });
 
