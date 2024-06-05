@@ -17,7 +17,7 @@ class ValidLogin
     {
         // Check if the user is authenticated
         if (!auth()->check()) {
-            return redirect(route("sign-in.get"));
+            return redirect(route("authorize"));
         }
 
         return $next($request);
