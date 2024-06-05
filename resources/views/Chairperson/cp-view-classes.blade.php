@@ -22,7 +22,7 @@
         <x-chairperson-sidebar :btns="$btns" :user="$user" />
 
         <!-- Main Content -->
-        <div class="flex-1 p-10">
+        <div class="flex-1 p-10 overflow-auto">
             <!-- Header Section -->
             <div class="flex flex-row items-center mb-6">
                 <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
@@ -47,52 +47,54 @@
                     @if($classes->isEmpty())
                     <p>No classes found.</p>
                     @else
-                    <table class="w-full table-auto">
-                        <thead class="bg-gold" style="color:white">
-                            <tr>
-                                <th class="px-4 py-2">Code</th>
-                                <th class="px-4 py-2">Name</th>
-                                <th class="px-4 py-2">Description</th>
-                                <th class="px-4 py-2">Units</th>
-                                <th class="px-4 py-2">Start Time</th>
-                                <th class="px-4 py-2">End Time</th>
-                                <th class="px-4 py-2">Building</th>
-                                <th class="px-4 py-2">Room</th>
-                                <th class="px-4 py-2">Type</th>
-                                <th class="px-4 py-2">Professor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($classes as $class)
-                            <tr class="cursor-pointer"
-                                onclick="window.location='{{ route('edit-class', $class->id) }}'">
-                                <td class="border px-4 py-2">{{ $class->code }}</td>
-                                <td class="border px-4 py-2">{{ $class->name }}</td>
-                                <td class="border px-4 py-2">{{ $class->description }}</td>
-                                <td class="border px-4 py-2">{{ $class->units }}</td>
-                                <td class="border px-4 py-2">{{ $class->start_time }}</td>
-                                <td class="border px-4 py-2">{{ $class->end_time }}</td>
-                                <td class="border px-4 py-2">{{ $class->building }}</td>
-                                <td class="border px-4 py-2">{{ $class->room }}</td>
-                                <td class="border px-4 py-2">{{ $class->type }}</td>
-                                <td class="border px-4 py-2">
-                                    <form method="POST" action="{{ route('update-class-professor', $class->id) }}">
-                                        @csrf
-                                        <select name="professor_id" onchange="this.form.submit()"
-                                            class="form-select block w-full mt-1">
-                                            @foreach($professors as $professor)
-                                            <option value="{{ $professor->id }}" {{ $class->professor_id ==
-                                                $professor->id ? 'selected' : '' }}>
-                                                {{ $professor->first_name }} {{ $professor->last_name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead class="bg-gold" style="color:white">
+                                <tr>
+                                    <th class="px-4 py-2">Code</th>
+                                    <th class="px-4 py-2">Name</th>
+                                    <th class="px-4 py-2">Description</th>
+                                    <th class="px-4 py-2">Units</th>
+                                    <th class="px-4 py-2">Start Time</th>
+                                    <th class="px-4 py-2">End Time</th>
+                                    <th class="px-4 py-2">Building</th>
+                                    <th class="px-4 py-2">Room</th>
+                                    <th class="px-4 py-2">Type</th>
+                                    <th class="px-4 py-2">Professor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($classes as $class)
+                                <tr class="cursor-pointer"
+                                    onclick="window.location='{{ route('edit-class', $class->id) }}'">
+                                    <td class="border px-4 py-2">{{ $class->code }}</td>
+                                    <td class="border px-4 py-2">{{ $class->name }}</td>
+                                    <td class="border px-4 py-2">{{ $class->description }}</td>
+                                    <td class="border px-4 py-2">{{ $class->units }}</td>
+                                    <td class="border px-4 py-2">{{ $class->start_time }}</td>
+                                    <td class="border px-4 py-2">{{ $class->end_time }}</td>
+                                    <td class="border px-4 py-2">{{ $class->building }}</td>
+                                    <td class="border px-4 py-2">{{ $class->room }}</td>
+                                    <td class="border px-4 py-2">{{ $class->type }}</td>
+                                    <td class="border px-4 py-2">
+                                        <form method="POST" action="{{ route('update-class-professor', $class->id) }}">
+                                            @csrf
+                                            <select name="professor_id" onchange="this.form.submit()"
+                                                class="form-select block w-full mt-1">
+                                                @foreach($professors as $professor)
+                                                <option value="{{ $professor->id }}" {{ $class->professor_id ==
+                                                    $professor->id ? 'selected' : '' }}>
+                                                    {{ $professor->first_name }} {{ $professor->last_name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="mt-4">
                         {{ $classes->links() }}
                     </div>
@@ -167,7 +169,7 @@
                 </div>
                 <div class="flex justify-end md:col-span-2">
                     <button type="button" @click="isModalOpen = false"
-                        class="px-4 py-2 text-white rounded mr-2">Cancel</button>
+                        class="px-4 py-2 bg-gray-500 text-white rounded mr-2">Cancel</button>
                     <button type="submit" class="px-4 py-2 bg-gold text-white rounded" style="color:white">Add</button>
                 </div>
             </form>

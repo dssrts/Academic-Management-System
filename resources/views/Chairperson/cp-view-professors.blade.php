@@ -22,7 +22,7 @@
         <x-chairperson-sidebar />
 
         <!-- Main Content -->
-        <div class="flex-1 p-10">
+        <div class="flex-1 p-10 overflow-auto">
             <!-- Header Section -->
             <div class="flex flex-row items-center mb-6">
                 <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
@@ -44,35 +44,35 @@
                         class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
                 </form>
                 <div class="bg-white rounded-lg p-6 mt-6 shadow-lg" style="background-color:white">
-                    {{-- <h3 class="text-2xl font-semibold mb-4">List of Professors</h3> --}}
                     @if($professors->isEmpty())
                     <p>No professors found.</p>
                     @else
-                    <table class="w-full table-auto">
-                        <thead class="bg-gold" style="color:white">
-                            <tr>
-                                <th class="px-4 py-2">Last Name</th>
-                                <th class="px-4 py-2">First Name</th>
-                                <th class="px-4 py-2">Middle Name</th>
-                                <th class="px-4 py-2">Pronouns</th>
-                                <th class="px-4 py-2">PLM Email</th>
-                                <th class="px-4 py-2">College</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($professors as $professor)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $professor->last_name }}</td>
-                                <td class="border px-4 py-2">{{ $professor->first_name }}</td>
-                                <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
-                                <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
-                                <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
-                                <td class="border px-4 py-2">{{ $professor->college->Code }}</td>
-                                <!-- Assuming there is a relationship setup -->
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead class="bg-gold" style="color:white">
+                                <tr>
+                                    <th class="px-4 py-2">Last Name</th>
+                                    <th class="px-4 py-2">First Name</th>
+                                    <th class="px-4 py-2">Middle Name</th>
+                                    <th class="px-4 py-2">Pronouns</th>
+                                    <th class="px-4 py-2">PLM Email</th>
+                                    <th class="px-4 py-2">College</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($professors as $professor)
+                                <tr>
+                                    <td class="border px-4 py-2">{{ $professor->last_name }}</td>
+                                    <td class="border px-4 py-2">{{ $professor->first_name }}</td>
+                                    <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
+                                    <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
+                                    <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
+                                    <td class="border px-4 py-2">{{ $professor->college->Code }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="mt-4">
                         {{ $professors->links() }}
                     </div>

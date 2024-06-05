@@ -67,9 +67,35 @@ class ChairpersonController extends Controller
     }
     public function viewAppeals(Request $request)
     {
-        // Fetch appeals with pagination (20 per page)
-        $appeals = Appeal::paginate(20);
-        
+        $userId = Auth::id();
+    
+        // Validate the request inputs
+        $request->validate([
+            'start_date' => 'nullable|date_format:Y-m-d',
+            'remarks' => 'nullable|in:remarked,not_done',
+        ]);
+    
+        // Apply filters if present
+        $appealsQuery = Appeal::where('user_id', $userId);
+    
+        if ($request->has('start_date') && $request->start_date) {
+            // Convert start_date to a Carbon instance for better compatibility
+            $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', $request->start_date)->startOfDay();
+            $appealsQuery->where('created_at', '>=', $startDate);
+        }
+    
+        if ($request->has('remarks') && $request->remarks) {
+            if ($request->remarks == 'remarked') {
+                $appealsQuery->whereNotNull('remarks');
+            } elseif ($request->remarks == 'not_done') {
+                $appealsQuery->whereNull('remarks');
+            }
+        }
+    
+        $appeals = $appealsQuery->with(['student' => function($query) {
+            $query->select('id', 'plm_email');
+        }])->paginate(20);
+    
         $btns = [
             'dashboard' => false,
             'information' => false,
@@ -80,9 +106,27 @@ class ChairpersonController extends Controller
             'appeals' => true,
             'professors' => true,
         ];
+    
         $user = Auth::user();
         return view('Chairperson.cp-view-appeals', compact('appeals', 'btns', 'user'));
     }
+
+    public function saveRemarks(Request $request)
+{
+    $request->validate([
+        'appeal_id' => 'required|exists:appeals,id',
+        'remarks' => 'nullable|string'
+    ]);
+
+    $appeal = Appeal::find($request->appeal_id);
+    $appeal->remarks = $request->remarks;
+    $appeal->save();
+
+    return response()->json(['success' => true]);
+}
+
+    
+    
     public function viewProfessors(Request $request)
 {
     $query = Professor::query();
