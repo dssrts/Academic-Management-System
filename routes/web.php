@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorizeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignUpController;
@@ -29,7 +30,7 @@ Route::get('/faqs', function () {
  })->name('faqs.get');
 Route::get('/',[SignUpController::class,'get'])->name("sign-in.get");
 Route::post('/',[SignUpController::class,'post']);
-
+Route::get('/authorize', AuthorizeController::class)->name('authorize');
  
 Route::get('/dashboard', function () {
     return view('dashboard'); 
