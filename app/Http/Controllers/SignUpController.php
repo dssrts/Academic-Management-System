@@ -77,7 +77,6 @@ class SignUpController extends Controller
     {
         $student = Student::where('student_no', $student_no)->first();
         if (!$student) {
-            // Handle case where student is not found
             return redirect()->back()->with('error', 'Student not found');
         }
     
@@ -85,9 +84,10 @@ class SignUpController extends Controller
         $appeals = Appeal::where('student_id', $student_id)
             ->orderBy('created_at', 'desc')
             ->get();
+        
         $buttons = session()->get('buttons');
         $panel = $request->panel;
-        $send  =  session()->get('status');
+        $send = session()->get('status');
         session()->forget('buttons');
     
         $btns = [
@@ -100,51 +100,98 @@ class SignUpController extends Controller
             'inbox' => false,
         ];
     
-        if ($buttons) {
-            if (array_key_exists($buttons, $btns)) {
-                $btns[$buttons] = true;
-            }
+        if ($buttons && array_key_exists($buttons, $btns)) {
+            $btns[$buttons] = true;
         } else {
-            if ($panel == "grades") {
-                $btns['grades'] = true;
-            } else {
-                $btns['dashboard'] = true;
-            }
+            $btns[$panel === "grades" ? 'grades' : 'dashboard'] = true;
         }
     
-        $college_id = $student->college;
-        $department_id = $student->degree_program;
+        $college = College::find($student->college);
+        $department = Department::find($student->degree_program);
     
-        $college = College::where('id', $college_id)->first();
-        $department = Department::where('department_id', $department_id)->first();
+        $dummyGrades = $this->generateDummyGrades($student_id);
     
-        // Query to get grades related to the student
-        $gradesQuery = Grade::whereHas('class', function ($query) use ($student) {
-            $query->whereHas('studentRecord', function ($query) use ($student) {
-                $query->where('student_id', $student->id);
+        $defaultYear = $request->get('year', '2024'); // Default year is 2024
+        if ($defaultYear !== 'all') {
+            $dummyGrades = array_filter($dummyGrades, function ($grade) use ($defaultYear) {
+                return $grade['year'] == $defaultYear;
             });
-        });
-    
-        $defaultYear = '2024'; // Default year
-        if ($request->has('year') && $request->year != 'all') {
-            $defaultYear = $request->year;
-            $gradesQuery->whereYear('created_at', $defaultYear);
+            $dummyGrades = array_values($dummyGrades); // Reset array keys
         }
-    
-        $grades = $gradesQuery->get();
     
         return view('student-view', [
             'students' => $student,
             'department' => $department,
             'college' => $college,
-            'grades' => $grades,
-            'defaultYear' => $defaultYear ?? null,
+            'grades' => $dummyGrades,
+            'defaultYear' => $defaultYear,
             'buttons' => "information",
             'btns' => $btns,
             'appeals' => $appeals,
             'send' => $send
         ]);
     }
+    
+    private function generateDummyGrades($student_id)
+    {
+        $dummyGrades = [];
+        $gwaValues = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 2.75, 3.00, 5.00];
+    
+        $classTitles = [
+            'Mathematics', 'Physics', 'Biology', 'Chemistry', 'English Literature', 'History',
+            'Computer Science', 'Psychology', 'Architecture', 'Communication Studies', 'Journalism',
+            'Law', 'Criminal Justice', 'Public Administration', 'Social Work', 'Religious Studies',
+            'Physical Education', 'Nutrition', 'Hospitality Management', 'Culinary Arts', 'Astronomy',
+            'Geology', 'Meteorology', 'Oceanography', 'Environmental Science', 'Political Science',
+            'Economics', 'Sociology', 'Anthropology', 'Philosophy', 'Theology', 'Music', 'Dance',
+            'Theater', 'Film', 'Visual Arts', 'Graphic Design', 'Industrial Design', 'Fashion Design',
+        ];
+    
+        $subjects = [];
+        foreach ($classTitles as $index => $title) {
+            $code = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $title), 0, 4)) . str_pad($index + 1, 3, '0', STR_PAD_LEFT);
+            $subjects[$title] = $code;
+        }
+    
+        srand(42);
+    
+        // Ensure the number of subjects is within the range of 2020-2024
+        $years = [];
+        for ($year = 2020; $year <= 2024; $year++) {
+            for ($i = 0; $i < count($subjects) / 5; $i++) {  // Assume roughly equal distribution
+                $years[] = $year;
+            }
+        }
+        shuffle($years);
+    
+        foreach ($subjects as $title => $code) {
+            $year = array_pop($years);
+            $semester = rand(1, 2);
+            $grade = $gwaValues[array_search($title, array_keys($subjects)) % count($gwaValues)];
+            $completion_grade = $gwaValues[(array_search($title, array_keys($subjects)) + 1) % count($gwaValues)];
+            $remarks = $completion_grade <= 3.00 ? 'Passed' : 'Failed';
+            
+            $dummyGrades[] = [
+                'student_id' => $student_id,
+                'subject' => $title,
+                'subject_code' => $code,
+                'grade' => $grade,
+                'completion_grade' => $completion_grade,
+                'remarks' => $remarks,
+                'year' => $year,
+                'semester' => $semester,
+                'created_at' => now()->subYears(2024 - $year),
+            ];
+        }
+    
+        srand();
+    
+        return $dummyGrades;
+    }
+    
+    
+    
+    
     
     public function post(Request $request){
         $btns = [
