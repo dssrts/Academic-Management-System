@@ -10,9 +10,7 @@ class AuthorizeController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $env = env('APP_ENV', 'local');
-
-        if($env == 'production'){
+        
 
             $userId = Session::get('user_id');
             $password = Session::get('password');
@@ -32,9 +30,10 @@ class AuthorizeController extends Controller
                     }
                 }
             }
-        }
+        
 
         // If the environment is not production, you may want to handle this case as well
         return redirect()->route('login'); // or some other route
+    
+        }
     }
-}
