@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Course extends Model
 {
     use HasFactory;
+    protected $table = 'courses';
     protected $fillable = [
         'college_id',
         'department_id',

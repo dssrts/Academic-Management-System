@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('college_id')->cascadeOnDelete();
+            // $table->foreignId('college_id')->cascadeOnDelete();
             $table->foreignId('program_id')->cascadeOnDelete();
         });
     }
@@ -24,6 +24,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn("department_id");
+            $table->dropColumn('college_id');
+
         });
     }
 };

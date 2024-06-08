@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Course;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,8 +22,8 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $randomDepartment = Department::inRandomOrder()->first();
-        $randomDepartmentID = $randomDepartment->department_id;
+        $randomDepartment = Course::inRandomOrder()->first();
+        $randomDepartmentID = $randomDepartment->program_id;
         
         $firstName = $this->faker->firstName();
         $lastName = $this->faker->lastName();
@@ -50,8 +51,8 @@ class UserFactory extends Factory
             'updated_at' => now(),
             'user_code' => $initials,
             'account_type' => $accountType,
-            'college_id' => $randomDepartment->college_id,
-            'department_id' => $randomDepartmentID,
+            // 'college_id' => $randomDepartment->college_id,
+            'program_id' => $randomDepartmentID,
         ];
     }
     

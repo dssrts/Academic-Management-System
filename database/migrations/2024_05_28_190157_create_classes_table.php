@@ -27,9 +27,9 @@ return new class extends Migration
             $table->text('teams_assigned_link')->nullable();
             $table->date('effectivity_dateSL')->nullable();
             $table->timestamps();
-            // $table->foreignId('course_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreignId('aysem_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreignId('block_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('course_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('aysem_id');
+            $table->integer('block_id');
         });
     }
 

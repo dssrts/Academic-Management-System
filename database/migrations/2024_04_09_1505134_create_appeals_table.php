@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('appeals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade'); 
+            // $table->integer('student_no'); 
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->string('subject');
             $table->text('message');
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->string('viewed')->nullable();
             $table->timestamps();
+            $table->foreignId('student_no')->references('student_no')->on('students')->onDelete('cascade');
         });
     }
 

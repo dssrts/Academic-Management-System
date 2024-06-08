@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProfessorsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -27,7 +27,7 @@ class CreateProfessorsTable extends Migration
             $table->string('tin_number', 15)->nullable()->unique();
             $table->string('gsis_number')->nullable()->unique();
             $table->string('street_address')->nullable();
-            $table->string('zip_code', 4)->nullable();
+            $table->string('zip_code')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('faculty_name');
             $table->timestamps();
@@ -56,4 +56,4 @@ class CreateProfessorsTable extends Migration
     {
         Schema::dropIfExists('instructors');
     }
-}
+};

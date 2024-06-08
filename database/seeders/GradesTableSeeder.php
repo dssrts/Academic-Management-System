@@ -17,6 +17,10 @@ class GradesTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        // Fetch all student numbers from the students table
+        $studentNumbers = DB::table('students')->pluck('student_no')->toArray();
+        $classIds = DB::table('classes')->pluck('id')->toArray();
+
         foreach (range(1, 50) as $index) {
             DB::table('grades')->insert([
                 'remarks' => $faker->sentence(3),
@@ -26,8 +30,8 @@ class GradesTableSeeder extends Seeder
                 'finalization_date' => $faker->optional()->date(),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'class_id' => $faker->numberBetween(1, 12), // Assuming you have 12 classes
-                'student_no' => $faker->numberBetween(202300000, 202399999), // Adjust the range based on actual student numbers
+                'class_id' => $faker->randomElement($classIds), // Assuming you have classes
+                'student_no' => $faker->randomElement($studentNumbers), // Get a random student_no from the students table
             ]);
         }
     }

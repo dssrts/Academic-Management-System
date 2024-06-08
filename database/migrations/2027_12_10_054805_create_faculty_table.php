@@ -19,12 +19,12 @@ return new class extends Migration
     {
         Schema::create('class_faculty', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('class_id');
-            $table->unsignedBigInteger('instructor_id');
+            // $table->unsignedBigInteger('class_id');
+            // $table->unsignedBigInteger('instructor_id');
             $table->timestamps();
 
-            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
-            $table->foreign('instructor_id')->references('id')->on('instructors')->onDelete('cascade');
+            $table->foreignId('class_id')->onDelete('cascade');
+            $table->foreignId('instructor_id')->onDelete('cascade');
         });
 
         DB::table('class_faculty')->insert([
