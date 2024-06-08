@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('college_id')->cascadeOnDelete();
-            $table->foreignId('department_id')->cascadeOnDelete();
+            $table->foreignId('program_id')->cascadeOnDelete();
         });
     }
 

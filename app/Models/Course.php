@@ -7,7 +7,7 @@ use App\Models\GradStudent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Subject extends Model
+class Course extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -32,14 +32,9 @@ class Subject extends Model
     //     return $this->hasMany(Faculty::class);
     // }
     public function faculties(){
-        return $this->belongsToMany(Faculty::class ,'faculty_subject');
+        return $this->belongsToMany(Instructor::class ,'faculty_subject');
     }
-    public function undergradStudents(){
-        return $this->belongsToMany(UndergradStudent::class, 'subject_undergrad_student')->withPivot(['grade']);
-    }
-    public function gradStudents(){
-        return $this->belongsToMany(GradStudent::class, 'subject_grad_student')->withPivot(['grade']);
-    }
+    
 
 
 }

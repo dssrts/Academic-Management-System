@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('day');
             $table->string('time');
             $table->string('status');
-            $table->foreignId('subject_id');
+            $table->foreignId('course_id');
             $table->timestamps();
         });
     }
