@@ -28,7 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('block_id')->nullable();
             $table->unsignedBigInteger('registration_status_id')->nullable();
 
-            // $table->foreign('student_no')->references('student_no')->on('students')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('student_no')->references('student_no')->on('students')->onDelete('cascade')->onUpdate('cascade');
             // $table->foreign('aysem_id')->references('id')->on('aysems')->onDelete('cascade')->onUpdate('cascade');
             // $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade')->onUpdate('cascade');
             // $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade')->onUpdate('cascade');

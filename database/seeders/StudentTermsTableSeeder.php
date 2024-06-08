@@ -16,8 +16,17 @@ class StudentTermsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $studentNos = DB::table('students')->pluck('student_no')->toArray();
+        $usedStudentNos = [];
 
         foreach (range(1, 50) as $index) {
+            // Get a unique student_no
+            do {
+                $studentNo = $faker->randomElement($studentNos);
+            } while (in_array($studentNo, $usedStudentNos));
+
+            $usedStudentNos[] = $studentNo;
+
             DB::table('student_terms')->insert([
                 'student_type' => $faker->randomElement(['new', 'continuing', 'transfer']),
                 'graduating' => $faker->boolean(),
@@ -26,7 +35,7 @@ class StudentTermsTableSeeder extends Seeder
                 'year_level' => $faker->numberBetween(1, 5),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'student_no' => $faker->numberBetween(202300000, 202399999),
+                'student_no' => $studentNo,
                 'aysem_id' => $faker->numberBetween(1, 100),
                 'program_id' => $faker->numberBetween(1, 50),
                 'block_id' => $faker->numberBetween(1, 50),
