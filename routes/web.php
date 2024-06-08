@@ -45,7 +45,7 @@ Route::get('/ams/view-information', function () {
 });
 
 # for chairperson routes
-Route::middleware(['auth'])->group(function () {
+
 Route::get('/cp-dashboard', [ChairpersonController::class, 'dashboard'])->name('cp-dashboard');
 Route::get('/view-students', [ChairpersonController::class, 'viewStudents'])->name('view-students');
 Route::get('/students', [ChairpersonController::class, 'viewStudents'])->name('view-students');
@@ -61,7 +61,6 @@ Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateCla
 Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class, 'saveRemarks']);
 
 
-});
 
 //logout chairperson
 Route::post('/logout', function () {
