@@ -16,7 +16,7 @@ class ClassesTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-
+        $courseIds = DB::table('courses')->pluck('id')->toArray();
         foreach (range(1, 12) as $index) {
             DB::table('classes')->insert([
                 'students_qty' => $faker->numberBetween(10, 50),
@@ -32,9 +32,9 @@ class ClassesTableSeeder extends Seeder
                 'effectivity_dateSL' => $faker->optional()->date,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'course_id' => $faker->numberBetween(1, 10),
+                'course_id' => $faker->randomElement($courseIds),
                 'aysem_id' => $faker->numberBetween(1, 10),
-                'block_id' => $faker->numberBetween(1, 10),
+                'block_id' => $faker->numberBetween(1, 5),
             ]);
         }
     }

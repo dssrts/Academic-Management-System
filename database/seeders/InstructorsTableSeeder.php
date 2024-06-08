@@ -11,6 +11,7 @@ class InstructorsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $collegeIds = DB::table('colleges')->pluck('id')->toArray();
 
         foreach (range(1, 50) as $index) {
             DB::table('instructors')->insert([
@@ -35,7 +36,7 @@ class InstructorsTableSeeder extends Seeder
                 'city_id' => $faker->optional()->numberBetween(1, 20),
                 'biological_sex_id' => $faker->numberBetween(1, 2),
                 'civil_status_id' => $faker->numberBetween(1, 2),
-                'college_id' => $faker->numberBetween(1, 5),
+                'college_id' => $faker->randomElement($collegeIds),
                 'citizenship_id' => $faker->numberBetween(1, 5),
             ]);
         }

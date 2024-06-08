@@ -21,11 +21,17 @@ class GradesTableSeeder extends Seeder
         $studentNumbers = DB::table('students')->pluck('student_no')->toArray();
         $classIds = DB::table('classes')->pluck('id')->toArray();
 
+        // Possible grades
+        $grades = [1, 1.25, 1.75, 2, 2.25, 2.5, 2.75, 3, 5];
+
         foreach (range(1, 50) as $index) {
+            $grade = $faker->randomElement($grades);
+            $remarks = ($grade <= 3) ? 'passed' : 'failed';
+
             DB::table('grades')->insert([
-                'remarks' => $faker->sentence(3),
-                'grade' => $faker->randomFloat(2, 1, 4),
-                'completion_grade' => $faker->optional()->randomFloat(2, 1, 4),
+                'remarks' => $remarks,
+                'grade' => $grade,
+                'completion_grade' => $faker->optional()->randomElement($grades),
                 'submitted_date' => $faker->optional()->date(),
                 'finalization_date' => $faker->optional()->date(),
                 'created_at' => now(),

@@ -17,8 +17,8 @@ class Grade extends Model
         'remarks' 
     ];
 
-    public function subject(){
-        return $this->belongsTo(Subject::class);
+    public function course(){
+        return $this->belongsTo(Course::class);
     }
 
     public function class()
