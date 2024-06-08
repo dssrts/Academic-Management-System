@@ -8,36 +8,37 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_record_id')->nullable(); // unsignedBigInteger for foreign key
-            $table->unsignedBigInteger('professor_id')->nullable(); // unsignedBigInteger for foreign key
-            $table->string('code', 45);
-            $table->integer('section');
-            $table->string('name', 255);
-            $table->text('description')->nullable();
-            $table->tinyInteger('units');
-            $table->string('day', 45);
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->string('building', 45);
-            $table->string('room', 45);
-            $table->string('type', 56);
+            $table->integer('students_qty')->nullable();
+            $table->integer('credited_units');
+            $table->unsignedSmallInteger('actual_units')->nullable();
+            $table->integer('slots');
+            $table->string('nstp_activity')->nullable();
+            $table->string('parent_class_code')->nullable();
+            $table->string('link_type')->nullable();
+            $table->string('instruction_language');
+            $table->integer('minimum_year_level')->nullable();
+            $table->text('teams_assigned_link')->nullable();
+            $table->date('effectivity_dateSL')->nullable();
             $table->timestamps();
-
-            // Foreign key constraints
-            $table->foreign('student_record_id')->references('id')->on('student_records')->onDelete('cascade');
-            $table->foreign('professor_id')->references('id')->on('professors')->onDelete('cascade');
+            // $table->foreignId('course_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreignId('aysem_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreignId('block_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('classes');
     }

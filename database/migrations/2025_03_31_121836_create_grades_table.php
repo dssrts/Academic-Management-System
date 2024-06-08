@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateGradesTable extends Migration
 {
-    /**
+   /**
      * Run the migrations.
      *
      * @return void
@@ -15,12 +15,14 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('class_id');
-            $table->decimal('grade', 3, 2);
-            $table->decimal('completion_grade', 3, 2);
-            $table->string('remarks', 45)->nullable();
+            $table->string('remarks');
+            $table->double('grade')->unsigned()->nullable();
+            $table->double('completion_grade')->unsigned()->nullable();
+            $table->date('submitted_date')->nullable();
+            $table->date('finalization_date')->nullable();
             $table->timestamps();
-            $table->foreign('class_id')->references('id')->on('classes');
+            $table->foreignId('class_id')->constrained('classes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('student_no')->constrained('students', 'student_no')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
