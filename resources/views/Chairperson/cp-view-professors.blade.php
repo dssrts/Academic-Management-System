@@ -61,7 +61,7 @@
                                     <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
                                     <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
                                     <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->college->Code }}</td>
+                                    <td class="border px-4 py-2">{{ $professor->college->college_name }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
