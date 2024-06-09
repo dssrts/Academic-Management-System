@@ -43,6 +43,7 @@ class Student extends Model
         return $this->belongsTo(User::class)->where('account_type', 'Student');
     }
     
+    
     public function college(){
         return $this->belongsTo(College::class);
     }
@@ -72,5 +73,10 @@ class Student extends Model
             ["department_id", $departmentId]
         ]);
     }
+
+    public function studentTerm()
+{
+    return $this->hasOne(StudentTerm::class, 'student_no', 'student_no');
+}
 
 }
