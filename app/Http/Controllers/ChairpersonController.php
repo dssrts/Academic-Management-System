@@ -28,9 +28,19 @@ class ChairpersonController extends Controller
             'classroom' => true,
             'professors' => true,
         ];
+    
         $user = Auth::user();
-        return view('Chairperson.cp-dashboard', compact('btns', 'user'));
+        echo "user: ". $user;
+        $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
+        $program = "test";
+    
+        if ($employee) {
+            $program = \App\Models\Program::where('id', $employee->department_id)->first();
+        }
+    
+        return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program'));
     }
+    
 
     public function viewStudents(Request $request)
     {

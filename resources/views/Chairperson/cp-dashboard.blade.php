@@ -15,6 +15,36 @@
     <title>CRS</title>
 </head>
 
+<style>
+    #info {
+        color: #2D349A;
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+        margin-top: 8rem;
+        margin-left: 2rem;
+        background-color: white;
+
+        padding: 2rem;
+        border: 1px solid #ccc;
+        border-radius: 12.3px;
+        /* Optional: to make the box visible */
+    }
+
+    #info-text {
+        font-size: 1.5rem;
+        color: white;
+        padding: 10px;
+        padding-right: 5rem;
+        border: 1px solid #ccc;
+        background-color: #2C56A6;
+        border-radius: 10.26px;
+
+    }
+
+    #box-title {}
+</style>
+
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
     x-data="{ btns: {{ json_encode($btns) }} }">
     <!-- Whole Container -->
@@ -22,6 +52,46 @@
         <!-- Sidebar -->
         <x-chairperson-sidebar />
         <!-- Main Content -->
+        <div id="info">
+            <span class="font-bold mb-3">Department:</span>
+            <div id="info-text">
+                <span class="font-bold">{{ $program->program_code }}</span>
+            </div>
+        </div>
+        <div id="info">
+            <span class="font-bold mb-3">SFE statistics:</span>
+            <div id="info-text">
+                <p class="font-bold">70%</p>
+                <p style="font-size:1rem">1,560 students answered</p>
+            </div>
+        </div>
+        {{-- <div class="mt-6 rounded-lg shadow-md p-6 overflow-x-auto" style="background-color: white;">
+            <table class="min-w-full bg-white">
+                <thead class="bg-gold" style="color:white">
+                    <tr>
+                        <th class="py-2 px-4 border-b border-gray-300">Student No</th>
+                        <th class="py-2 px-4 border-b border-gray-300">First Name</th>
+                        <th class="py-2 px-4 border-b border-gray-300">Last Name</th>
+                        <th class="py-2 px-4 border-b border-gray-300">Email</th>
+                        <th class="py-2 px-4 border-b border-gray-300">Year Level</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+    
+                    <tr class="bg-white">
+                        <td class="py-2 px-4 border-b border-gray-300">data 0</td>
+                        <td class="py-2 px-4 border-b border-gray-300">data 1</td>
+    
+                        <td class="py-2 px-4 border-b border-gray-300">data 2</td>
+                        <td class="py-2 px-4 border-b border-gray-300">data 3</td>
+                        <td class="py-2 px-4 border-b border-gray-300">data 4</td>
+                    </tr>
+    
+                </tbody>
+            </table>
+        </div> --}}
+        <!-- Students Table -->
+
         {{-- <div class="flex-1 flex flex-col p-10" style="margin-top:5rem">
             <div class="flex flex-row items-center mb-6">
                 <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
@@ -37,6 +107,7 @@
             </div>
         </div> --}}
     </div>
+    
 </body>
 
 </html>
