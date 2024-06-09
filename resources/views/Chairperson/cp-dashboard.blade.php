@@ -58,6 +58,13 @@
                 <span class="font-bold">{{ $program->program_code }}</span>
             </div>
         </div>
+        <div id="info">
+            <span class="font-bold mb-3">SFE statistics:</span>
+            <div id="info-text">
+                <p class="font-bold">70%</p>
+                <p style="font-size:1rem">1,560 students answered</p>
+            </div>
+        </div>
         {{-- <div class="flex-1 flex flex-col p-10" style="margin-top:5rem">
             <div class="flex flex-row items-center mb-6">
                 <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
