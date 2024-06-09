@@ -142,7 +142,8 @@
                                 <td class="py-2 px-4 border-b border-gray-300">{{ $student->first_name }}</td>
                                 <td class="py-2 px-4 border-b border-gray-300">{{ $student->last_name }}</td>
                                 {{-- <td class="py-2 px-4 border-b border-gray-300">{{ $student->email }}</td> --}}
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $student->year_level }}</td>
+                                <td class="py-2 px-4 border-b border-gray-300">{{ $student->studentTerm->year_level }}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
