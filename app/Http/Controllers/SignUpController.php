@@ -243,11 +243,28 @@ class SignUpController extends Controller
                     
                     // Fetch students with the same student numbers
                     $students = \App\Models\Student::whereIn('student_no', $studentNos)->paginate(15);
-                } else {
-                    $students = collect(); // Empty collection if no employee found
-                }
+                    $grades = Grade::whereIn('grades.student_no', $studentNos)
+                    ->join('student_terms', 'grades.student_no', '=', 'student_terms.student_no')
+                    ->select('student_terms.year_level', DB::raw('AVG(grades.grade) as average_grade'))
+                    ->groupBy('student_terms.year_level')
+                    ->get();
             
-                return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students'));
+            // Preparing data for Chart.js
+            $yearLevels = $grades->pluck('year_level')->toArray();
+            $averageGrades = $grades->pluck('average_grade')->toArray();
+            
+                    // Preparing data for Chart.js
+                    $yearLevels = $grades->pluck('year_level')->toArray();
+                    $averageGrades = $grades->pluck('average_grade')->toArray();
+                    } else {
+                        $students = collect(); // Empty collection if no employee found
+                        $yearLevels = [];
+                    $averageGrades = [];
+                    }
+                
+                    return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students', 'yearLevels', 'averageGrades'));
+            
+                // return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students'));
                 // return view('Chairperson.cp-dashboard', compact('btns', 'program'));
             }
         }
