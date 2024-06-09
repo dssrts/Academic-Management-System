@@ -73,7 +73,7 @@
         </div>
     </nav>
 
-    <div x-data="{ isOpen: true }" class="flex h-screen content" style="color:white">
+    <div x-data="{ isOpen: true }" class="flex pt-16" style="color:white">
         <!-- Sidebar -->
         <div :class="isOpen ? 'w-64' : 'w-16'"
             class="bg-blue h-full transition-all duration-300 overflow-hidden flex flex-col">
