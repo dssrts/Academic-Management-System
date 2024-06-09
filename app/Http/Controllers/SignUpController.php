@@ -230,7 +230,25 @@ class SignUpController extends Controller
                         $program = \App\Models\Program::where('id', $departmentId)->first();
                     }
                 }
-                return view('Chairperson.cp-dashboard', compact('btns', 'program'));
+                if ($employee) {
+                    $departmentIds = json_decode($employee->department_id, true);
+                    // Assuming you need the first department ID
+                    $departmentId = $departmentIds[0] ?? null;
+                    
+                    // Fetch student terms that belong to the same department
+                    $studentTerms = \App\Models\StudentTerm::where('program_id', $departmentId)->get();
+                    
+                    // Get student numbers from student terms
+                    $studentNos = $studentTerms->pluck('student_no')->toArray();
+                    
+                    // Fetch students with the same student numbers
+                    $students = \App\Models\Student::whereIn('student_no', $studentNos)->paginate(15);
+                } else {
+                    $students = collect(); // Empty collection if no employee found
+                }
+            
+                return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students'));
+                // return view('Chairperson.cp-dashboard', compact('btns', 'program'));
             }
         }
         return view('sign-in', ['error' => 'invalid', 'btns' => $btns]);

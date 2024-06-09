@@ -16,19 +16,24 @@
 </head>
 
 <style>
+    #info-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        margin-top: 8rem;
+        margin-left: 2rem;
+        gap: 2rem;
+    }
+
     #info {
         color: #2D349A;
         display: flex;
         flex-direction: column;
         height: max-content;
-        margin-top: 8rem;
-        margin-left: 2rem;
         background-color: white;
-
         padding: 2rem;
         border: 1px solid #ccc;
         border-radius: 12.3px;
-        /* Optional: to make the box visible */
     }
 
     #info-text {
@@ -39,10 +44,7 @@
         border: 1px solid #ccc;
         background-color: #2C56A6;
         border-radius: 10.26px;
-
     }
-
-    #box-title {}
 </style>
 
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
@@ -52,62 +54,56 @@
         <!-- Sidebar -->
         <x-chairperson-sidebar />
         <!-- Main Content -->
-        <div id="info">
-            <span class="font-bold mb-3">Department:</span>
-            <div id="info-text">
-                <span class="font-bold">{{ $program->program_code }}</span>
-            </div>
-        </div>
-        <div id="info">
-            <span class="font-bold mb-3">SFE statistics:</span>
-            <div id="info-text">
-                <p class="font-bold">70%</p>
-                <p style="font-size:1rem">1,560 students answered</p>
-            </div>
-        </div>
-        {{-- <div class="mt-6 rounded-lg shadow-md p-6 overflow-x-auto" style="background-color: white;">
-            <table class="min-w-full bg-white">
-                <thead class="bg-gold" style="color:white">
-                    <tr>
-                        <th class="py-2 px-4 border-b border-gray-300">Student No</th>
-                        <th class="py-2 px-4 border-b border-gray-300">First Name</th>
-                        <th class="py-2 px-4 border-b border-gray-300">Last Name</th>
-                        <th class="py-2 px-4 border-b border-gray-300">Email</th>
-                        <th class="py-2 px-4 border-b border-gray-300">Year Level</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-    
-                    <tr class="bg-white">
-                        <td class="py-2 px-4 border-b border-gray-300">data 0</td>
-                        <td class="py-2 px-4 border-b border-gray-300">data 1</td>
-    
-                        <td class="py-2 px-4 border-b border-gray-300">data 2</td>
-                        <td class="py-2 px-4 border-b border-gray-300">data 3</td>
-                        <td class="py-2 px-4 border-b border-gray-300">data 4</td>
-                    </tr>
-    
-                </tbody>
-            </table>
-        </div> --}}
-        <!-- Students Table -->
 
-        {{-- <div class="flex-1 flex flex-col p-10" style="margin-top:5rem">
-            <div class="flex flex-row items-center mb-6">
-                <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
-                <div class="leading-tight flex flex-col">
-                    <h1 class="text-[20px] font-bold font-katibeh text-[#d5a106]">PAMANTASAN NG LUNGSOD NG MAYNILA</h1>
-                    <h2 class="text-[10px] font-inter text-black-200">UNIVERSITY OF THE CITY OF MANILA</h2>
+        <div class="flex-1 flex flex-col p-10">
+            <!-- Info Boxes -->
+            <div id="info-container">
+                <div id="info">
+                    <span class="font-bold mb-3">Department:</span>
+                    <div id="info-text">
+                        <span class="font-bold">{{ $program->program_code }}</span>
+                    </div>
+                </div>
+                <div id="info">
+                    <span class="font-bold mb-3">SFE statistics:</span>
+                    <div id="info-text">
+                        <p class="font-bold">70%</p>
+                        <p style="font-size:1rem">1,560 students answered</p>
+                    </div>
                 </div>
             </div>
-            <div>
-                <h2 class="text-3xl font-bold">Welcome, Chairperson</h2>
-                <p class="mt-4">This is your dashboard. You can view and manage students from here.</p>
-                <!-- Add more content here -->
+
+            <!-- Students Table -->
+            <div class="table-container rounded-lg shadow-md p-6 overflow-x-auto mt-8">
+                <table class="min-w-full bg-white-10">
+                    <thead class="bg-blue" style="color:white">
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-300">Student No</th>
+                            <th class="py-2 px-4 border-b border-gray-300">First Name</th>
+                            <th class="py-2 px-4 border-b border-gray-300">Last Name</th>
+                            <th class="py-2 px-4 border-b border-gray-300">Email</th>
+                            <th class="py-2 px-4 border-b border-gray-300">Year Level</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        @foreach ($students as $student)
+                        <tr class="bg-white">
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->student_no }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->first_name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->last_name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->email }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ $student->year_level }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        </div> --}}
+            <div class="mt-4">
+                {{ $students->links() }}
+            </div>
+        </div>
+
     </div>
-    
 </body>
 
 </html>
