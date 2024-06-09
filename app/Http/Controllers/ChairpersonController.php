@@ -6,6 +6,7 @@ use App\Models\Appeal;
 use App\Models\ClassModel;
 use App\Models\College;
 use App\Models\Grade;
+use App\Models\Instructor;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Student;
@@ -183,7 +184,7 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
     
     public function viewProfessors(Request $request)
 {
-    $query = Professor::query();
+    $query = Instructor::query();
 
     if ($request->filled('search')) {
         $search = $request->input('search');
