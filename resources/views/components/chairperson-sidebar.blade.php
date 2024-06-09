@@ -35,7 +35,7 @@
         }
 
         .content {
-            margin-top: 4rem;
+            margin-top: 4.5rem;
             /* Adjust this value as needed */
         }
     </style>
@@ -46,34 +46,11 @@
 </head>
 
 <body>
-
-
-    <nav class="bg-white-10 border-gray-200 dark:bg-gray-900 fixed top-0 left-0 w-full z-50">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="{{ url('/images/plm-logo.png') }}" class="h-8" alt="PLM Logo" />
-                <span class="self-center font-bold whitespace-nowrap dark:text-blue" style="font-size: 1.5rem;">PLM
-                    AMS</span>
-            </a>
-            <button data-collapse-toggle="navbar-default" type="button"
-                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="navbar-default" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
-            </button>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul
-                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                </ul>
-            </div>
-        </div>
+    <nav class="navbar">
+        <img src="{{ url('/images/plm-logo.png') }}" alt="PLM Logo" style="width: 40px; height:40px">
+        <span class="text-blue" style="font-weight: bold; font-size: 1.5em">PLM AMS</span>
     </nav>
-
-    <div x-data="{ isOpen: true }" class="flex pt-16" style="color:white">
+    <div x-data="{ isOpen: true }" class="flex content" style="color:white">
         <!-- Sidebar -->
         <div :class="isOpen ? 'w-64' : 'w-16'"
             class="bg-blue h-full transition-all duration-300 overflow-hidden flex flex-col">
@@ -88,18 +65,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
             </button>
-            <div class="bg-white rounded-lg p-4 text-center">
-                <p class="text-white font-bold">Chairperson AMS</p>
-            </div>
-            <img src="{{ url('images/user.png') }}" alt="user" class="mx-auto mb-2" style="width: 70px; height: 70px;"
-                x-show="isOpen">
 
-            <div class="p-4 text-center bg-blue" x-show="isOpen">
-                <div class="bg-white rounded-lg p-4" style="background-color:white">
-                    <p class="text-gold"><b>Welcome, </b>{{ $user->name }}!</p>
-                    <p class="text-blue font-bold">{{ $departmentName }}</p>
-                </div>
-            </div>
 
             <nav class="text-white flex-1">
                 <ul class="space-y-2">
@@ -111,7 +77,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 3h18M3 8h18M3 13h18M3 18h18" />
                             </svg>
-                            <span class="ml-4" x-show="isOpen">Dashboard</span>
+                            <span class="ml-4" x-show="isOpen">Department</span>
                         </a>
                     </li>
                     <li>
