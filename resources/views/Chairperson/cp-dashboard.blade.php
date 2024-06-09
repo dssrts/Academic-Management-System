@@ -22,7 +22,7 @@
         <!-- Sidebar -->
         <x-chairperson-sidebar />
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col p-10" style="margin-top: 4rem">
+        {{-- <div class="flex-1 flex flex-col p-10" style="margin-top:5rem">
             <div class="flex flex-row items-center mb-6">
                 <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
                 <div class="leading-tight flex flex-col">
@@ -35,7 +35,7 @@
                 <p class="mt-4">This is your dashboard. You can view and manage students from here.</p>
                 <!-- Add more content here -->
             </div>
-        </div>
+        </div> --}}
     </div>
 </body>
 
