@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Appeal;
 use App\Models\ClassModel;
 use App\Models\College;
+use App\Models\Grade;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ChairpersonController extends Controller
 {
@@ -57,11 +59,28 @@ class ChairpersonController extends Controller
             
             // Fetch students with the same student numbers
             $students = \App\Models\Student::whereIn('student_no', $studentNos)->paginate(15);
+
+            // Fetch grades for these students and group by year level
+        $grades = Grade::whereIn('grades.student_no', $studentNos)
+        ->join('student_terms', 'grades.student_no', '=', 'student_terms.student_no')
+        ->select('student_terms.year_level', DB::raw('AVG(grades.grade) as average_grade'))
+        ->groupBy('student_terms.year_level')
+        ->get();
+
+// Preparing data for Chart.js
+$yearLevels = $grades->pluck('year_level')->toArray();
+$averageGrades = $grades->pluck('average_grade')->toArray();
+
+        // Preparing data for Chart.js
+        $yearLevels = $grades->pluck('year_level')->toArray();
+        $averageGrades = $grades->pluck('average_grade')->toArray();
         } else {
             $students = collect(); // Empty collection if no employee found
+            $yearLevels = [];
+        $averageGrades = [];
         }
     
-        return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students'));
+        return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students', 'yearLevels', 'averageGrades'));
     
         // return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program'));
     }
