@@ -25,14 +25,15 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(CollegeSeeder::class);
         // $this->call(DepartmentSeeder::class);
-        $this->call(InstructorsTableSeeder::class);
         $this->call(LoginUsersSeeder::class);
+        $this->call(InstructorsTableSeeder::class);
+        $this->call(EmployeesTableSeeder::class);
         // Faculty::factory(100)->create();
         
         // Professor::factory()->count(300)->create();
-        User::factory(100)->create();
-        $this->call(RoleSeeder::class);
-        $this->call(ModelHasRoleSeeder::class);
+        // User::factory(100)->create();
+        // $this->call(RoleSeeder::class);
+        // $this->call(ModelHasRoleSeeder::class);
         $this->call(StudentsTableSeeder::class);
         $this->call(StudentTermsTableSeeder::class);
        
