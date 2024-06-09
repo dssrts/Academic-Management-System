@@ -65,6 +65,33 @@
                 <p style="font-size:1rem">1,560 students answered</p>
             </div>
         </div>
+        {{-- <div class="mt-6 rounded-lg shadow-md p-6 overflow-x-auto" style="background-color: white;">
+            <table class="min-w-full bg-white">
+                <thead class="bg-gold" style="color:white">
+                    <tr>
+                        <th class="py-2 px-4 border-b border-gray-300">Student No</th>
+                        <th class="py-2 px-4 border-b border-gray-300">First Name</th>
+                        <th class="py-2 px-4 border-b border-gray-300">Last Name</th>
+                        <th class="py-2 px-4 border-b border-gray-300">Email</th>
+                        <th class="py-2 px-4 border-b border-gray-300">Year Level</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+    
+                    <tr class="bg-white">
+                        <td class="py-2 px-4 border-b border-gray-300">data 0</td>
+                        <td class="py-2 px-4 border-b border-gray-300">data 1</td>
+    
+                        <td class="py-2 px-4 border-b border-gray-300">data 2</td>
+                        <td class="py-2 px-4 border-b border-gray-300">data 3</td>
+                        <td class="py-2 px-4 border-b border-gray-300">data 4</td>
+                    </tr>
+    
+                </tbody>
+            </table>
+        </div> --}}
+        <!-- Students Table -->
+
         {{-- <div class="flex-1 flex flex-col p-10" style="margin-top:5rem">
             <div class="flex flex-row items-center mb-6">
                 <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
@@ -80,6 +107,7 @@
             </div>
         </div> --}}
     </div>
+    
 </body>
 
 </html>
