@@ -202,17 +202,18 @@ class SignUpController extends Controller
             'services' => false,
         ];
         $request->validate([
-            'email' => 'required|email',
+            'user_id' => 'required',
             'password' => 'required',
         ]);
-        $email = $request->email;
+        $user_id = $request->user_id;
         $password = $request->password;
 
-        if (Auth::attempt(['email' => $email, 'password' => $password, 'account_type' => ['Student', 'Chairperson']])) {
+        if (Auth::attempt(['id' => $user_id, 'password' => $password])) {
+            
             $userId = Auth::id(); // Get the authenticated user's ID
             $user = Auth::user();
 
-            if ($user->account_type === 'Student') {
+            if ($user->role_id == 0) {
                 $student_no = Student::where('user_id', $userId)->first()->student_no;
                 return redirect(route('student-view.get', $student_no))->with(['id' => 'EMAIL FAILED']);
             } else {

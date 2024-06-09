@@ -17,7 +17,7 @@ class LoginUsersSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-
+        
         foreach (range(1, 100) as $index) {
             DB::table('login_users')->insert([
                 'id' => $faker->unique()->numberBetween(202300001, 202400100),
