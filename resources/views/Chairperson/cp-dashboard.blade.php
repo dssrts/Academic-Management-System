@@ -15,6 +15,36 @@
     <title>CRS</title>
 </head>
 
+<style>
+    #info {
+        color: #2D349A;
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+        margin-top: 8rem;
+        margin-left: 2rem;
+        background-color: white;
+
+        padding: 2rem;
+        border: 1px solid #ccc;
+        border-radius: 12.3px;
+        /* Optional: to make the box visible */
+    }
+
+    #info-text {
+        font-size: 1.5rem;
+        color: white;
+        padding: 10px;
+        padding-right: 5rem;
+        border: 1px solid #ccc;
+        background-color: #2C56A6;
+        border-radius: 10.26px;
+
+    }
+
+    #box-title {}
+</style>
+
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
     x-data="{ btns: {{ json_encode($btns) }} }">
     <!-- Whole Container -->
@@ -22,6 +52,12 @@
         <!-- Sidebar -->
         <x-chairperson-sidebar />
         <!-- Main Content -->
+        <div id="info">
+            <span class="font-bold mb-3">Department:</span>
+            <div id="info-text">
+                <span class="font-bold">{{ $program }}</span>
+            </div>
+        </div>
         {{-- <div class="flex-1 flex flex-col p-10" style="margin-top:5rem">
             <div class="flex flex-row items-center mb-6">
                 <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
