@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appeal;
 use App\Models\ClassModel;
 use App\Models\College;
+use App\Models\Employee;
 use App\Models\Grade;
 use App\Models\Instructor;
 use App\Models\Professor;
@@ -182,21 +183,50 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
 
     
     
-    public function viewProfessors(Request $request)
+public function viewProfessors(Request $request)
 {
-    $query = Instructor::query();
+    // Get the current logged-in user
+    $user = Auth::user();
+    
+    // Get the employee record of the current user
+    $employee = Employee::where('employee_id', $user->id)->first();
+    
+    if ($employee) {
+        // Get the department ID of the current user's employee record
+        $departmentId = json_decode($employee->department_id)[0];
 
-    if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where('last_name', 'like', '%' . $search . '%')
-            ->orWhere('first_name', 'like', '%' . $search . '%')
-            ->orWhere('middle_name', 'like', '%' . $search . '%')
-            ->orWhere('plm_email', 'like', '%' . $search . '%');
+        // Get all employees with the same department ID
+        $employeeIds = Employee::whereJsonContains('department_id', $departmentId)
+                               ->pluck('employee_id')
+                               ->toArray();
+
+        // Filter instructors based on the IDs of these employees
+        $query = Instructor::whereIn('id', $employeeIds);
+        
+        // Add search functionality
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('last_name', 'like', '%' . $search . '%')
+                  ->orWhere('first_name', 'like', '%' . $search . '%')
+                  ->orWhere('middle_name', 'like', '%' . $search . '%')
+                  ->orWhere('plm_email', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Paginate the results
+        $professors = $query->paginate(15);
+        
+    } else {
+        // If no employee record is found, return an empty collection
+        echo "no prof found";
+        $professors = collect();
     }
 
-    $professors = $query->paginate(15);
+    // Get all colleges
     $colleges = College::all();
 
+    // Define button states
     $btns = [
         'dashboard' => false,
         'information' => false,
@@ -208,9 +238,11 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
         'professors' => true,
         'classes' => false,
     ];
-    $user = Auth::user();
+
+    // Return the view with the relevant data
     return view('Chairperson.cp-view-professors', compact('professors', 'colleges', 'btns', 'user'));
 }
+
     public function viewClasses(Request $request)
 {
     $query = ClassModel::with('professor');

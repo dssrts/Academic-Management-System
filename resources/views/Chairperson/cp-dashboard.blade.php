@@ -175,6 +175,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('gradesChart').getContext('2d');
+
             const gradesChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -203,7 +204,7 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            display: false,
+                            display: true,
                             position: 'bottom',
                         },
                         title: {
