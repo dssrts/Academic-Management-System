@@ -16,10 +16,19 @@ class EmployeesTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $loginUsersIds = DB::table('login_users')->pluck('id')->toArray();
+        $usedEmployeeIds = [];
 
         foreach (range(1, 50) as $index) {
+            // Get a unique employee_id
+            do {
+                $employeeId = $faker->randomElement($loginUsersIds);
+            } while (in_array($employeeId, $usedEmployeeIds));
+
+            $usedEmployeeIds[] = $employeeId;
+
             DB::table('employees')->insert([
-                'employee_id' => $index,
+                'employee_id' => $employeeId,
                 'job_id' => $faker->numberBetween(1, 10),
                 'employee_type' => $faker->word,
                 'school_email' => $faker->unique()->safeEmail,
