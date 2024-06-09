@@ -217,7 +217,20 @@ class SignUpController extends Controller
                 $student_no = Student::where('user_id', $userId)->first()->student_no;
                 return redirect(route('student-view.get', $student_no))->with(['id' => 'EMAIL FAILED']);
             } else {
-                return view('Chairperson.cp-dashboard', compact('btns'));
+                $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
+                $program = null;
+            
+                if ($employee) {
+                    // Decode the JSON-encoded department_id
+                    $departmentIds = json_decode($employee->department_id, true);
+                    // Assuming you need the first department ID
+                    $departmentId = $departmentIds[0] ?? null;
+            
+                    if ($departmentId) {
+                        $program = \App\Models\Program::where('id', $departmentId)->first();
+                    }
+                }
+                return view('Chairperson.cp-dashboard', compact('btns', 'program'));
             }
         }
         return view('sign-in', ['error' => 'invalid', 'btns' => $btns]);

@@ -55,7 +55,7 @@
         <div id="info">
             <span class="font-bold mb-3">Department:</span>
             <div id="info-text">
-                <span class="font-bold">{{ $program }}</span>
+                <span class="font-bold">{{ $program->program_code }}</span>
             </div>
         </div>
         {{-- <div class="flex-1 flex flex-col p-10" style="margin-top:5rem">

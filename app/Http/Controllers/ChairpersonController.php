@@ -30,9 +30,9 @@ class ChairpersonController extends Controller
         ];
     
         $user = Auth::user();
-        // echo "user: ". $user;
+        echo "user: ". $user;
         $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
-        $program = null;
+        $program = "test";
     
         if ($employee) {
             $program = \App\Models\Program::where('id', $employee->department_id)->first();
