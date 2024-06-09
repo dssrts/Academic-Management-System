@@ -11,155 +11,186 @@
         @import url('https://fonts.googleapis.com/css2?family=Katibeh:wght@400;700&display=swap');
         @import url('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
 
-        .flatpickr-calendar {
-            position: fixed !important;
-            top: 50px !important;
-            right: 20px !important;
-            z-index: 9999 !important;
+        body {
+            background-image: url('/images/PLM.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Inter', sans-serif;
         }
 
-        .table-cell {
-            white-space: normal;
-            word-wrap: break-word;
+        .container {
+            max-width: 800px;
+            margin: 10rem;
+            background-color: #1a237e;
+            /* dark blue background */
+            border-radius: 12px;
+            /* padding: 20px; */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white;
+            margin-top: 10rem;
         }
 
-        .time-cell {
-            white-space: nowrap;
+        .title-box {
+            font-size: 1.5em;
+            margin-bottom: 0;
+            text-align: center;
+            background-color: white;
+            color: #1a237e;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title-box svg {
+            margin-right: 10px;
+        }
+
+        .search-bar-container {
+            position: relative;
+            width: 85%;
+            margin-top: 1rem;
+            margin-left: 5rem;
+            margin-right: 5rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            /* Adjusted padding to make space for icon on the left */
+            border: none;
+            border-radius: 5px;
+            color: black;
+        }
+
+        .search-bar-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: gray;
+        }
+
+        .appeal-item {
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .appeal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .appeal-subject {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .appeal-from {
+            color: gray;
+            font-size: 0.9em;
+        }
+
+        .appeal-message {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status-select {
+            width: 150px;
+            padding: 5px;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        .view-full {
+            display: flex;
+            align-items: center;
+            color: black;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .view-full i {
+            margin-left: 0px;
         }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @vite('resources/css/app.css')
-    <title>View Appeals</title>
+    <title>Appeals Inbox</title>
 </head>
 
-<body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover"
-    x-data="{ btns: {{ json_encode($btns) }}, startDate: '{{ request('start_date') }}', remarks: '{{ request('remarks') }}', open: false, appealId: null, modalRemarks: '' }"
-    x-init="$watch('startDate', value => window.location.search = new URLSearchParams({start_date: value, remarks: remarks}).toString()); 
-             flatpickr('#start_date', { defaultDate: startDate, onChange: function(selectedDates, dateStr, instance) { startDate = dateStr; } });">
-    <!-- Whole Container -->
+<body x-data="{ appeals: {{ json_encode($appeals) }}, search: '' }">
     <div class="w-screen h-screen flex flex-row">
         <!-- Sidebar -->
         <x-chairperson-sidebar />
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col p-10">
-            <div class="flex flex-row items-center mb-6">
-                <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
-                <div class="leading-tight flex flex-col">
-                    <h1 class="text-[20px] font-bold font-katibeh text-[#d5a106]">PAMANTASAN NG LUNGSOD NG MAYNILA</h1>
-                    <h2 class="text-[10px] font-inter text-black-200">UNIVERSITY OF THE CITY OF MANILA</h2>
-                </div>
-            </div>
-            <div>
-                <h1 class="text-[18px] mb-4 font-bold">Student Requests</h1>
-
-     <!-- Filter Form -->
-<form method="GET" class="mb-4 flex space-x-4" @submit.prevent>
-    <div>
-        <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
-        <input type="text" name="start_date" id="start_date" class="mt-1 block w-full" x-model="startDate">
-    </div>
-    <div>
-        <label for="remarks" class="block text-sm font-medium">Remarks</label>
-        <select name="remarks" id="remarks" class="appearance-none mt-1 block w-full bg-white-10 text-gray-700" x-model="remarks"
-                @change="window.location.search = new URLSearchParams({start_date: startDate, remarks: remarks}).toString()">
-            <option value="" class="bg-white-10">All</option>
-            <option value="remarked" class="bg-white-10 " :selected="remarks == 'remarked'">Remarked</option>
-            <option value="not_done" class="bg-white-10" :selected="remarks == 'not_done'">Not Done</option>
-        </select>
-    </div>
-</form>
-
-                <!-- Appeals Table -->
-                <div class="mt-6 bg-white rounded-lg shadow-md p-6 overflow-x-auto" style="color:black; background-color:white">
-                    <table class="min-w-full bg-white">
-                        <thead class="bg-gold text-white-10">
-                            <tr>
-                                <th class="py-2 px-4 border-b border-gray-300">Student ID</th>
-                                <th class="py-2 px-4 border-b border-gray-300">PLM Email</th>
-                                <th class="py-2 px-4 border-b border-gray-300">Subject</th>
-                                <th class="py-2 px-4 border-b border-gray-300">Message</th>
-                                <th class="py-2 px-4 border-b border-gray-300">Attachment</th>
-                                <th class="py-2 px-4 border-b border-gray-300">Remarks</th>
-                                <th class="py-2 px-4 border-b border-gray-300 time-cell">Time</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white">
-                            @foreach ($appeals as $appeal)
-                            <tr class="bg-white cursor-pointer hover:opacity-50" @click="open = true; appealId = {{ $appeal->id }}; modalRemarks = '{{ $appeal->remarks }}'">
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $appeal->student_id }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300">{{ $appeal->student->plm_email }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300 table-cell">{{ $appeal->subject }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300 table-cell">{{ $appeal->message }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300">
-                                    @if($appeal->filepath)
-                                    <a href="{{ asset('' . $appeal->filepath) }}" class="text-blue hover:underline" target="_blank">View File</a>
-                                    @else
-                                    No File
-                                    @endif
-                                </td>
-                                <td class="py-2 px-4 border-b border-gray-300 table-cell">{{ $appeal->remarks ?? 'Not Done' }}</td>
-                                <td class="py-2 px-4 border-b border-gray-300 time-cell">{{ \Carbon\Carbon::parse($appeal->created_at)->format('F j, Y') }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination Links -->
-                <div class="mt-4">
-                    {{ $appeals->links() }}
-                </div>
+        <div class="flex-1 flex justify-center items-center">
+            <div class="container">
+                <table style="width: 100%;">
+                    <tr>
+                        <td class="title-box font-bold">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6" width="24" height="24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                            Appeals Inbox
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="search-bar-container">
+                                <input type="text" class="search-bar" placeholder="Search by Subject..."
+                                    x-model="search">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" class="search-bar-icon" width="24" height="24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+                                </svg>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <template
+                                x-for="appeal in appeals.filter(a => a.subject.toLowerCase().includes(search.toLowerCase()))">
+                                <div class="appeal-item">
+                                    <div class="appeal-header">
+                                        <div>
+                                            <div class="appeal-subject" x-text="appeal.subject"></div>
+                                            <div class="appeal-from" x-text="'From: ' + appeal.student.plm_email"></div>
+                                        </div>
+                                        <a href="#" class="view-full">👁️ View Full Concern</a>
+                                    </div>
+                                    <div class="appeal-message" x-text="appeal.message"></div>
+                                    <div>
+                                        <label for="status" class="block text-sm font-medium">Select Status:</label>
+                                        <select name="status" class="status-select">
+                                            <option value="pending" :selected="appeal.remarks == 'pending'">Pending
+                                            </option>
+                                            <option value="approved" :selected="appeal.remarks == 'approved'">Approved
+                                            </option>
+                                            <option value="denied" :selected="appeal.remarks == 'denied'">Denied
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </template>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white-10  rounded-lg shadow-xl border-gold border-2 p-6 w-1/2" @click.away="open = false">
-            <h2 class="text-xl font-bold mb-4 text-gold ">Enter Remarks</h2>
-            <form @submit.prevent="saveRemarks">
-                <textarea class="w-full p-2 border rounded" x-model="modalRemarks" placeholder="Enter your remarks here"></textarea>
-                <div class="mt-4 flex justify-end">
-                    <button type="button" class="bg-gold text-white-10 px-4 py-2 rounded mr-2" @click="open = false">Cancel</button>
-                    <button type="submit" class="bg-gold text-white-10 px-4 py-2 rounded">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        function saveRemarks() {
-            fetch('/save-remarks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    appeal_id: this.appealId,
-                    remarks: this.modalRemarks
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Close the modal
-                    this.open = false;
-                    // Optionally, refresh the page or update the table row with the new remarks
-                    location.reload();
-                } else {
-                    alert('Failed to save remarks. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Failed to save remarks. Please try again.');
-            });
-        }
-    </script>
-
 </body>
 
 </html>
