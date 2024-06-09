@@ -17,6 +17,8 @@ class EmployeesTableSeeder extends Seeder
     {
         $faker = Faker::create();
         $loginUsersIds = DB::table('login_users')->pluck('id')->toArray();
+        $departments = DB::table('programs')->pluck('id')->toArray();
+        $colleges = DB::table('colleges')->pluck('id')->toArray();
         $usedEmployeeIds = [];
 
         foreach (range(1, 50) as $index) {
@@ -34,8 +36,8 @@ class EmployeesTableSeeder extends Seeder
                 'school_email' => $faker->unique()->safeEmail,
                 'religion' => $faker->randomElement(['Christianity', 'Islam', 'Hinduism', 'Buddhism', 'Other']),
                 'civil_status' => $faker->randomElement(['Single', 'Married', 'Divorced', 'Widowed']),
-                'college_id' => json_encode([$faker->numberBetween(1, 10), $faker->numberBetween(1, 10)]),
-                'department_id' => json_encode([$faker->numberBetween(1, 10)]),
+                'college_id' => json_encode([$faker->randomElement($colleges), $faker->randomElement($colleges)]),
+                'department_id' => json_encode([$faker->randomElement($departments)]),
                 'is_college_head' => json_encode([0, 0, 0]),
                 'is_department_head' => json_encode([$faker->boolean]),
                 'first_name' => $faker->firstName,
