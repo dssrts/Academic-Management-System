@@ -210,17 +210,23 @@ public function viewProfessors(Request $request)
                 $q->where('last_name', 'like', '%' . $search . '%')
                   ->orWhere('first_name', 'like', '%' . $search . '%')
                   ->orWhere('middle_name', 'like', '%' . $search . '%')
-                  ->orWhere('plm_email', 'like', '%' . $search . '%');
+                  ->orWhere('email_address', 'like', '%' . $search . '%');
             });
         }
 
         // Paginate the results
         $professors = $query->paginate(15);
-        
+
+        // Get course distribution data
+        $courseDistribution = $query->with('courses')->get()->groupBy(function($instructor) {
+            return $instructor->courses->count();
+        })->map(function($group) {
+            return $group->count();
+        })->toArray();
     } else {
         // If no employee record is found, return an empty collection
-        echo "no prof found";
         $professors = collect();
+        $courseDistribution = [];
     }
 
     // Get all colleges
@@ -240,37 +246,10 @@ public function viewProfessors(Request $request)
     ];
 
     // Return the view with the relevant data
-    return view('Chairperson.cp-view-professors', compact('professors', 'colleges', 'btns', 'user'));
+    return view('Chairperson.cp-view-professors', compact('professors', 'colleges', 'btns', 'user', 'courseDistribution'));
 }
 
-    public function viewClasses(Request $request)
-{
-    $query = ClassModel::with('professor');
 
-    if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where('code', 'like', '%' . $search . '%')
-            ->orWhere('name', 'like', '%' . $search . '%')
-            ->orWhere('description', 'like', '%' . $search . '%');
-    }
-
-    $classes = $query->paginate(15);
-    $professors = Professor::all();
-
-    $btns = [
-        'dashboard' => false,
-        'information' => false,
-        'grades' => false,
-        'process' => false,
-        'inbox' => false,
-        'classroom' => false,
-        'appeals' => false,
-        'professors' => false,
-        'classes' => true,
-    ];
-    $user = Auth::user();
-    return view('Chairperson.cp-view-classes', compact('classes', 'professors', 'btns', 'user'));
-}
 
     public function updateClassProfessor(Request $request, ClassModel $class)
 {

@@ -30,4 +30,16 @@ class Professor extends Model
     return $this->belongsTo(Professor::class);
 }
 
+public function courses()
+{
+    return $this->hasManyThrough(
+        Course::class,
+        ClassFaculty::class,
+        'instructor_id', // Foreign key on ClassFaculty table
+        'id', // Foreign key on Course table
+        'id', // Local key on Instructor table
+        'course_id' // Local key on ClassFaculty table
+    );
+}
+
 }

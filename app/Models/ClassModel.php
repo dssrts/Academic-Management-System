@@ -35,4 +35,16 @@ class ClassModel extends Model
     {
         return $this->belongsTo(Professor::class);
     }
+    
+
+    public function course()
+{
+    return $this->belongsTo(Course::class, 'course_id');
+}
+
+public function classFaculties()
+{
+    return $this->hasMany(ClassFaculty::class, 'class_id');
+}
+
 }
