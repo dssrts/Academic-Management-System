@@ -193,15 +193,17 @@ public function viewProfessors(Request $request)
     
     if ($employee) {
         // Get the department ID of the current user's employee record
-        $departmentId = json_decode($employee->department_id)[0];
+        $departmentIds = json_decode($employee->department_id, true);
 
-        // Get all employees with the same department ID
-        $employeeIds = Employee::whereJsonContains('department_id', $departmentId)
-                               ->pluck('employee_id')
-                               ->toArray();
+        // Get all employees with the same department ID(s)
+        $employeeIds = Employee::where(function($query) use ($departmentIds) {
+            foreach ($departmentIds as $departmentId) {
+                $query->orWhereJsonContains('department_id', $departmentId);
+            }
+        })->pluck('employee_id')->toArray();
 
         // Filter instructors based on the IDs of these employees
-        $query = Instructor::whereIn('id', $employeeIds);
+        $query = Instructor::whereIn('id', $employeeIds)->with(['courses.course']);
         
         // Add search functionality
         if ($request->filled('search')) {
@@ -210,7 +212,7 @@ public function viewProfessors(Request $request)
                 $q->where('last_name', 'like', '%' . $search . '%')
                   ->orWhere('first_name', 'like', '%' . $search . '%')
                   ->orWhere('middle_name', 'like', '%' . $search . '%')
-                  ->orWhere('plm_email', 'like', '%' . $search . '%');
+                  ->orWhere('email_address', 'like', '%' . $search . '%');
             });
         }
 
@@ -219,7 +221,6 @@ public function viewProfessors(Request $request)
         
     } else {
         // If no employee record is found, return an empty collection
-        echo "no prof found";
         $professors = collect();
     }
 
@@ -243,34 +244,6 @@ public function viewProfessors(Request $request)
     return view('Chairperson.cp-view-professors', compact('professors', 'colleges', 'btns', 'user'));
 }
 
-    public function viewClasses(Request $request)
-{
-    $query = ClassModel::with('professor');
-
-    if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where('code', 'like', '%' . $search . '%')
-            ->orWhere('name', 'like', '%' . $search . '%')
-            ->orWhere('description', 'like', '%' . $search . '%');
-    }
-
-    $classes = $query->paginate(15);
-    $professors = Professor::all();
-
-    $btns = [
-        'dashboard' => false,
-        'information' => false,
-        'grades' => false,
-        'process' => false,
-        'inbox' => false,
-        'classroom' => false,
-        'appeals' => false,
-        'professors' => false,
-        'classes' => true,
-    ];
-    $user = Auth::user();
-    return view('Chairperson.cp-view-classes', compact('classes', 'professors', 'btns', 'user'));
-}
 
     public function updateClassProfessor(Request $request, ClassModel $class)
 {

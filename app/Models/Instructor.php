@@ -27,15 +27,28 @@ class Instructor extends Model
     public function subjects(){
         return $this->belongsToMany(Course::class ,'faculty_subject');
     }
-    public function classes()
-    {
-        return $this->belongsToMany(ClassModel::class, 'class_faculty', 'instructor_id', 'class_id');
-    }
+    
 
-    public function courses()
-    {
-        return $this->hasManyThrough(Course::class, ClassModel::class, 'id', 'id', 'id', 'course_id')
-                    ->join('class_faculty', 'class_faculty.class_id', '=', 'classes.id')
-                    ->where('class_faculty.instructor_id', $this->id);
-    }
+    public function classFaculties()
+{
+    return $this->hasMany(ClassFaculty::class, 'instructor_id');
+}
+
+public function classes()
+{
+    return $this->hasManyThrough(
+        ClassModel::class,
+        ClassFaculty::class,
+        'instructor_id', // Foreign key on ClassFaculty table
+        'id', // Foreign key on ClassModel table
+        'id', // Local key on Instructor table
+        'class_id' // Local key on ClassFaculty table
+    );
+}
+
+public function courses()
+{
+    return $this->classes()->with('course');
+}
+
 }

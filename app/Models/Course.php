@@ -37,9 +37,27 @@ class Course extends Model
     }
     
     public function classes()
-    {
-        return $this->hasMany(ClassModel::class, 'course_id', 'id');
-    }
+{
+    return $this->hasMany(ClassModel::class, 'course_id');
+}
+
+
+    public function classFaculties()
+{
+    return $this->hasMany(ClassFaculty::class, 'course_id');
+}
+
+public function instructors()
+{
+    return $this->hasManyThrough(
+        Instructor::class,
+        ClassFaculty::class,
+        'course_id', // Foreign key on ClassFaculty table
+        'id', // Foreign key on Instructor table
+        'id', // Local key on Course table
+        'instructor_id' // Local key on ClassFaculty table
+    );
+}
 
 
 }

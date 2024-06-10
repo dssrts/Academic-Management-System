@@ -30,8 +30,7 @@
             <div>
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-3xl font-bold">List of Professors in your Department</h2>
-                    <button class="ml-2 px-4 py-2 bg-blue text-white rounded-lg" style="color:white"
-                        @click="isModalOpen = true">Add Professor</button>
+
                 </div>
                 <form method="GET" action="{{ route('view-professors') }}">
                     <input type="text" name="search" placeholder="Search by name or email..."
@@ -48,9 +47,8 @@
                                     <th class="px-4 py-2">Last Name</th>
                                     <th class="px-4 py-2">First Name</th>
                                     <th class="px-4 py-2">Middle Name</th>
-                                    {{-- <th class="px-4 py-2">Pronouns</th> --}}
                                     <th class="px-4 py-2">Email</th>
-                                    {{-- <th class="px-4 py-2">College</th> --}}
+                                    <th class="px-4 py-2">Courses</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,9 +57,14 @@
                                     <td class="border px-4 py-2">{{ $professor->last_name }}</td>
                                     <td class="border px-4 py-2">{{ $professor->first_name }}</td>
                                     <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
-                                    {{-- <td class="border px-4 py-2">{{ $professor->pronouns }}</td> --}}
                                     <td class="border px-4 py-2">{{ $professor->email_address }}</td>
-                                    {{-- <td class="border px-4 py-2">{{ $professor->college->college_name }}</td> --}}
+                                    <td class="border px-4 py-2">
+                                        <ul>
+                                            @foreach($professor->courses as $class)
+                                            <li>{{ $class->course->subject_code }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
