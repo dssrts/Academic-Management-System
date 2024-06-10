@@ -370,7 +370,7 @@ public function viewClasses(Request $request)
     }
 
     if (!$programId) {
-        return view('your_view_file', ['days' => [], 'data' => []]); // No program found, return empty result
+        return view('your_view_file', ['days' => [], 'yearData' => []]); // No program found, return empty result
     }
 
     // Get the student numbers from student terms in the current user's program
@@ -392,24 +392,26 @@ public function viewClasses(Request $request)
         ->orderBy('student_terms.year_level')
         ->orderBy('class_schedules.day')
         ->get();
-echo "result: ";
-echo $result;
+
     // Organize data for the chart
     $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    $data = [];
+    $yearData = [
+        1 => array_fill_keys($days, 0),
+        2 => array_fill_keys($days, 0),
+        3 => array_fill_keys($days, 0),
+        4 => array_fill_keys($days, 0)
+    ];
 
     foreach ($result as $row) {
         $yearLevel = $row->year_level;
         $day = $row->day;
         $numberOfClasses = $row->number_of_classes;
 
-        if (!isset($data[$yearLevel])) {
-            $data[$yearLevel] = array_fill_keys($days, 0);
+        if (isset($yearData[$yearLevel])) {
+            $yearData[$yearLevel][$day] = $numberOfClasses;
         }
-
-        $data[$yearLevel][$day] = $numberOfClasses;
     }
-    return view('Chairperson.cp-view-classes', compact('days', 'data'));
+    return view('Chairperson.cp-view-classes', compact('days', 'yearData'));
 }
 
 

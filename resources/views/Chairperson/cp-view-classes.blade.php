@@ -24,61 +24,95 @@
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
             <h2 class="text-3xl font-bold">Class Schedule by Year Level</h2>
-            <div class="w-full p-4">
-                <canvas id="classScheduleChart"></canvas>
+
+            <!-- First Year Chart -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold">First Year</h3>
+                <div class="w-full p-4">
+                    <canvas id="firstYearChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Second Year Chart -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold">Second Year</h3>
+                <div class="w-full p-4">
+                    <canvas id="secondYearChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Third Year Chart -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold">Third Year</h3>
+                <div class="w-full p-4">
+                    <canvas id="thirdYearChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Fourth Year Chart -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold">Fourth Year</h3>
+                <div class="w-full p-4">
+                    <canvas id="fourthYearChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const ctx = document.getElementById('classScheduleChart').getContext('2d');
-            const data = {
-                labels: {!! json_encode($days) !!},
-                datasets: [
-                    @foreach($data as $yearLevel => $yearLevelData)
-                    {
-                        label: 'Year Level {{ $yearLevel }}',
-                        data: {!! json_encode(array_values($yearLevelData)) !!},
-                        backgroundColor: `rgba(0, 0, {{ 255 - $yearLevel * 50 }}, 0.5)`,
-                        borderColor: `rgba(0, 0, {{ 255 - $yearLevel * 50 }}, 1)`,
-                        borderWidth: 1
+            const createChart = (ctx, data, label) => {
+                return new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: {!! json_encode($days) !!},
+                        datasets: [{
+                            label: label,
+                            data: data,
+                            backgroundColor: `rgba(0, 0, 255, 0.5)`,
+                            borderColor: `rgba(0, 0, 255, 1)`,
+                            borderWidth: 1
+                        }]
                     },
-                    @endforeach
-                ]
-            };
-
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            stacked: true
-                        },
-                        y: {
-                            stacked: true
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                usePointStyle: true,
-                                padding: 20,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true
                             }
                         },
-                        title: {
-                            display: true,
-                            text: 'Number of Classes Each Day per Year Level',
-                            color: '#2D349A'
-                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    usePointStyle: true,
+                                    padding: 20,
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: label + ' - Number of Classes Each Day',
+                                color: '#2D349A'
+                            },
+                        }
                     }
-                }
+                });
             };
 
-            new Chart(ctx, config);
+            const firstYearCtx = document.getElementById('firstYearChart').getContext('2d');
+            createChart(firstYearCtx, {!! json_encode(array_values($yearData[1])) !!}, 'First Year');
+
+            const secondYearCtx = document.getElementById('secondYearChart').getContext('2d');
+            createChart(secondYearCtx, {!! json_encode(array_values($yearData[2])) !!}, 'Second Year');
+
+            const thirdYearCtx = document.getElementById('thirdYearChart').getContext('2d');
+            createChart(thirdYearCtx, {!! json_encode(array_values($yearData[3])) !!}, 'Third Year');
+
+            const fourthYearCtx = document.getElementById('fourthYearChart').getContext('2d');
+            createChart(fourthYearCtx, {!! json_encode(array_values($yearData[4])) !!}, 'Fourth Year');
         });
     </script>
 </body>
