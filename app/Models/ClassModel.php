@@ -46,5 +46,23 @@ public function classFaculties()
 {
     return $this->hasMany(ClassFaculty::class, 'class_id');
 }
+public function studentTerm()
+{
+    return $this->belongsTo(StudentTerm::class, 'program_id', 'program_id');
+}
 
+
+public function classSchedules()
+{
+    return $this->hasMany(ClassSchedule::class, 'class_id', 'id');
+}
+
+public function students()
+{
+    return $this->belongsToMany(StudentTerm::class, 'class_student', 'class_id', 'student_no', 'id', 'student_no');
+}
+public function schedules()
+    {
+        return $this->hasMany(ClassSchedule::class, 'class_id', 'id');
+    }
 }
