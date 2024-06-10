@@ -69,7 +69,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const createChart = (ctx, data, label) => {
+            const createChart = (ctx, data, label, color) => {
                 return new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -77,8 +77,8 @@
                         datasets: [{
                             label: label,
                             data: data,
-                            backgroundColor: `rgba(0, 0, 255, 0.5)`,
-                            borderColor: `rgba(0, 0, 255, 1)`,
+                            backgroundColor: color,
+                            borderColor: color,
                             borderWidth: 1
                         }]
                     },
@@ -113,16 +113,16 @@
             };
 
             const firstYearCtx = document.getElementById('firstYearChart').getContext('2d');
-            createChart(firstYearCtx, {!! json_encode(array_values($yearData[1])) !!}, 'First Year');
+            createChart(firstYearCtx, {!! json_encode(array_values($yearData[1])) !!}, 'First Year', 'rgba(173, 216, 230, 0.5)');
 
             const secondYearCtx = document.getElementById('secondYearChart').getContext('2d');
-            createChart(secondYearCtx, {!! json_encode(array_values($yearData[2])) !!}, 'Second Year');
+            createChart(secondYearCtx, {!! json_encode(array_values($yearData[2])) !!}, 'Second Year', 'rgba(135, 206, 235, 0.5)');
 
             const thirdYearCtx = document.getElementById('thirdYearChart').getContext('2d');
-            createChart(thirdYearCtx, {!! json_encode(array_values($yearData[3])) !!}, 'Third Year');
+            createChart(thirdYearCtx, {!! json_encode(array_values($yearData[3])) !!}, 'Third Year', 'rgba(0, 191, 255, 0.5)');
 
             const fourthYearCtx = document.getElementById('fourthYearChart').getContext('2d');
-            createChart(fourthYearCtx, {!! json_encode(array_values($yearData[4])) !!}, 'Fourth Year');
+            createChart(fourthYearCtx, {!! json_encode(array_values($yearData[4])) !!}, 'Fourth Year', 'rgba(30, 144, 255, 0.5)');
 
             const totalUnitsCtx = document.getElementById('totalUnitsChart').getContext('2d');
 
@@ -172,6 +172,20 @@
                             labels: {
                                 usePointStyle: true,
                                 padding: 20,
+                                generateLabels: function (chart) {
+                                    const data = chart.data;
+                                    return data.labels.map((label, i) => {
+                                        const dataset = data.datasets[0];
+                                        const backgroundColor = dataset.backgroundColor[i];
+                                        return {
+                                            text: `${label}`,
+                                            fillStyle: backgroundColor,
+                                            strokeStyle: backgroundColor,
+                                            hidden: false,
+                                            index: i
+                                        };
+                                    });
+                                }
                             }
                         },
                         title: {
