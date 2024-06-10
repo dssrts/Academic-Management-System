@@ -29,11 +29,11 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
-            <h2 class="text-3xl font-bold mb-8">Class Schedule by Year Level</h2>
+
             <div class="grid grid-cols-2 gap-8">
                 <!-- First Year Chart -->
                 <div class="chart-container">
-                    <h3 class="text-2xl font-bold">First Year</h3>
+
                     <div class="w-full p-4">
                         <canvas id="firstYearChart"></canvas>
                     </div>
@@ -41,7 +41,7 @@
 
                 <!-- Second Year Chart -->
                 <div class="chart-container">
-                    <h3 class="text-2xl font-bold">Second Year</h3>
+
                     <div class="w-full p-4">
                         <canvas id="secondYearChart"></canvas>
                     </div>
@@ -49,7 +49,7 @@
 
                 <!-- Third Year Chart -->
                 <div class="chart-container">
-                    <h3 class="text-2xl font-bold">Third Year</h3>
+
                     <div class="w-full p-4">
                         <canvas id="thirdYearChart"></canvas>
                     </div>
@@ -57,7 +57,7 @@
 
                 <!-- Fourth Year Chart -->
                 <div class="chart-container">
-                    <h3 class="text-2xl font-bold">Fourth Year</h3>
+
                     <div class="w-full p-4">
                         <canvas id="fourthYearChart"></canvas>
                     </div>
@@ -93,6 +93,7 @@
                         },
                         plugins: {
                             legend: {
+                                display: false,
                                 position: 'top',
                                 labels: {
                                     usePointStyle: true,
