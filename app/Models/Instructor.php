@@ -27,4 +27,15 @@ class Instructor extends Model
     public function subjects(){
         return $this->belongsToMany(Course::class ,'faculty_subject');
     }
+    public function classes()
+    {
+        return $this->belongsToMany(ClassModel::class, 'class_faculty', 'instructor_id', 'class_id');
+    }
+
+    public function courses()
+    {
+        return $this->hasManyThrough(Course::class, ClassModel::class, 'id', 'id', 'id', 'course_id')
+                    ->join('class_faculty', 'class_faculty.class_id', '=', 'classes.id')
+                    ->where('class_faculty.instructor_id', $this->id);
+    }
 }

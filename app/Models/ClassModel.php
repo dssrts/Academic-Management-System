@@ -35,4 +35,10 @@ class ClassModel extends Model
     {
         return $this->belongsTo(Professor::class);
     }
+    
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
