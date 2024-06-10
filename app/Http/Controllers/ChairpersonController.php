@@ -392,7 +392,8 @@ public function viewClasses(Request $request)
         ->orderBy('student_terms.year_level')
         ->orderBy('class_schedules.day')
         ->get();
-
+echo "result: ";
+echo $result;
     // Organize data for the chart
     $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $data = [];
