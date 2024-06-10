@@ -78,7 +78,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="w-1/3 p-4">
+                <div class="w-1/3 p-4" style="margin-top: 10rem;">
                     <canvas id="courseChart"></canvas>
                 </div>
             </div>
@@ -169,7 +169,6 @@
                             }
                         },
                         title: {
-                            
                             display: true,
                             position:'bottom',
                             text: 'Course Distribution Among Professors',
