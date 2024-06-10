@@ -12,6 +12,7 @@
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     @vite('resources/css/app.css')
     <title>Professors</title>
 </head>
@@ -147,15 +148,27 @@
             }));
         });
 
+        function getRandomBlueShade() {
+            const shades = [
+                '#ADD8E6', '#87CEEB', '#4682B4', '#5F9EA0', '#B0C4DE', 
+                '#1E90FF', '#00BFFF', '#6495ED', '#7B68EE', '#4169E1'
+            ];
+            return shades[Math.floor(Math.random() * shades.length)];
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('courseChart').getContext('2d');
+            const labels = {!! json_encode(array_keys($courseDistribution)) !!};
+            const dataValues = {!! json_encode(array_values($courseDistribution)) !!};
+            const backgroundColors = labels.map(() => getRandomBlueShade());
+
             const data = {
-                labels: {!! json_encode(array_keys($courseDistribution)) !!},
+                labels: labels,
                 datasets: [{
                     label: 'Number of Professors',
-                    data: {!! json_encode(array_values($courseDistribution)) !!},
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    data: dataValues,
+                    backgroundColor: backgroundColors,
+                    borderColor: backgroundColors,
                     borderWidth: 1
                 }]
             };
@@ -172,9 +185,22 @@
                         title: {
                             display: true,
                             text: 'Course Distribution Among Professors'
+                        },
+                        datalabels: {
+                            formatter: (value, ctx) => {
+                                const total = ctx.chart.data.datasets[0].data.reduce((acc, val) => acc + val, 0);
+                                const percentage = ((value / total) * 100).toFixed(2);
+                                return `${percentage}%`;
+                            },
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 14
+                            }
                         }
                     }
                 },
+                plugins: [ChartDataLabels]
             };
 
             new Chart(ctx, config);
