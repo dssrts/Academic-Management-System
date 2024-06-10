@@ -102,7 +102,8 @@
                             title: {
                                 display: true,
                                 text: label + ' - Number of Classes Each Day',
-                                color: '#2D349A'
+                                color: '#2D349A',
+                                position:'bottom'
                             },
                         }
                     }
