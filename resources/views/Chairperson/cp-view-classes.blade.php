@@ -16,8 +16,8 @@
     <title>Class Schedule by Year Level</title>
     <style>
         .chart-container {
-
             background-color: white;
+            padding: 10px;
         }
     </style>
 </head>
@@ -29,38 +29,38 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
+            <div class="flex">
+                <div class="w-2/3 grid grid-cols-2 gap-8">
+                    <!-- First Year Chart -->
+                    <div class="chart-container">
+                        <div class="w-full p-4">
+                            <canvas id="firstYearChart"></canvas>
+                        </div>
+                    </div>
 
-            <div class="grid grid-cols-2 gap-8">
-                <!-- First Year Chart -->
-                <div class="chart-container">
+                    <!-- Second Year Chart -->
+                    <div class="chart-container">
+                        <div class="w-full p-4">
+                            <canvas id="secondYearChart"></canvas>
+                        </div>
+                    </div>
 
-                    <div class="w-full p-4">
-                        <canvas id="firstYearChart"></canvas>
+                    <!-- Third Year Chart -->
+                    <div class="chart-container">
+                        <div class="w-full p-4">
+                            <canvas id="thirdYearChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Fourth Year Chart -->
+                    <div class="chart-container">
+                        <div class="w-full p-4">
+                            <canvas id="fourthYearChart"></canvas>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Second Year Chart -->
-                <div class="chart-container">
-
-                    <div class="w-full p-4">
-                        <canvas id="secondYearChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Third Year Chart -->
-                <div class="chart-container">
-
-                    <div class="w-full p-4">
-                        <canvas id="thirdYearChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Fourth Year Chart -->
-                <div class="chart-container">
-
-                    <div class="w-full p-4">
-                        <canvas id="fourthYearChart"></canvas>
-                    </div>
+                <div class="w-1/3 p-4">
+                    <canvas id="totalUnitsChart"></canvas>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
                                 display: true,
                                 text: label + ' - Number of Classes Each Day',
                                 color: '#2D349A',
-                                position:'bottom'
+                                position: 'bottom'
                             },
                         }
                     }
@@ -122,6 +122,47 @@
 
             const fourthYearCtx = document.getElementById('fourthYearChart').getContext('2d');
             createChart(fourthYearCtx, {!! json_encode(array_values($yearData[4])) !!}, 'Fourth Year');
+
+            const totalUnitsCtx = document.getElementById('totalUnitsChart').getContext('2d');
+            new Chart(totalUnitsCtx, {
+                type: 'pie',
+                data: {
+                    labels: {!! json_encode(array_keys($totalUnitsPerYear)) !!},
+                    datasets: [{
+                        data: {!! json_encode(array_values($totalUnitsPerYear)) !!},
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Total Units by Year Level',
+                            color: '#2D349A'
+                        },
+                    }
+                }
+            });
         });
     </script>
 </body>
