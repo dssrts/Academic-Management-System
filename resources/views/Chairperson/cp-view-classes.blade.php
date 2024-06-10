@@ -12,6 +12,7 @@
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     @vite('resources/css/app.css')
     <title>Class Schedule by Year Level</title>
     <style>
@@ -124,23 +125,41 @@
             createChart(fourthYearCtx, {!! json_encode(array_values($yearData[4])) !!}, 'Fourth Year');
 
             const totalUnitsCtx = document.getElementById('totalUnitsChart').getContext('2d');
+
+            const legendBackgroundPlugin = {
+                id: 'legendBackground',
+                beforeDraw: function (chart, args, options) {
+                    const ctx = chart.ctx;
+                    const legend = chart.legend;
+                    const legendBoxWidth = legend.width + 10;
+                    const legendBoxHeight = legend.height + 50;
+                    const legendBoxX = (chart.width - legendBoxWidth) / 2;
+                    const legendBoxY = legend.top - 10; // Adjust the position as needed
+
+                    ctx.save();
+                    ctx.fillStyle = options.color || 'white';
+                    ctx.fillRect(legendBoxX, legendBoxY, legendBoxWidth, legendBoxHeight);
+                    ctx.restore();
+                }
+            };
+
             new Chart(totalUnitsCtx, {
                 type: 'pie',
                 data: {
-                    labels: {!! json_encode(array_keys($totalUnitsPerYear)) !!},
+                    labels: ['1st Year', '2nd Year', '3rd Year', '4th Year'],
                     datasets: [{
                         data: {!! json_encode(array_values($totalUnitsPerYear)) !!},
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)'
+                            'rgba(173, 216, 230, 0.5)', // light blue
+                            'rgba(135, 206, 235, 0.5)', // sky blue
+                            'rgba(0, 191, 255, 0.5)',   // deep sky blue
+                            'rgba(30, 144, 255, 0.5)'   // dodger blue
                         ],
                         borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)'
+                            'rgba(173, 216, 230, 1)',
+                            'rgba(135, 206, 235, 1)',
+                            'rgba(0, 191, 255, 1)',
+                            'rgba(30, 144, 255, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -149,7 +168,7 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'top',
+                            position: 'bottom',
                             labels: {
                                 usePointStyle: true,
                                 padding: 20,
@@ -161,7 +180,8 @@
                             color: '#2D349A'
                         },
                     }
-                }
+                },
+                plugins: [legendBackgroundPlugin]
             });
         });
     </script>
