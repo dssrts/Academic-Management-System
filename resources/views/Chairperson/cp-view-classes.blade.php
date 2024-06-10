@@ -14,6 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @vite('resources/css/app.css')
     <title>Class Schedule by Year Level</title>
+    <style>
+        .chart-container {
+
+            background-color: white;
+        }
+    </style>
 </head>
 
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover">
