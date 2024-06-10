@@ -23,37 +23,38 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
-            <h2 class="text-3xl font-bold">Class Schedule by Year Level</h2>
-
-            <!-- First Year Chart -->
-            <div class="mt-8">
-                <h3 class="text-2xl font-bold">First Year</h3>
-                <div class="w-full p-4">
-                    <canvas id="firstYearChart"></canvas>
+            <h2 class="text-3xl font-bold mb-8">Class Schedule by Year Level</h2>
+            <div class="grid grid-cols-2 gap-8">
+                <!-- First Year Chart -->
+                <div class="chart-container">
+                    <h3 class="text-2xl font-bold">First Year</h3>
+                    <div class="w-full p-4">
+                        <canvas id="firstYearChart"></canvas>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Second Year Chart -->
-            <div class="mt-8">
-                <h3 class="text-2xl font-bold">Second Year</h3>
-                <div class="w-full p-4">
-                    <canvas id="secondYearChart"></canvas>
+                <!-- Second Year Chart -->
+                <div class="chart-container">
+                    <h3 class="text-2xl font-bold">Second Year</h3>
+                    <div class="w-full p-4">
+                        <canvas id="secondYearChart"></canvas>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Third Year Chart -->
-            <div class="mt-8">
-                <h3 class="text-2xl font-bold">Third Year</h3>
-                <div class="w-full p-4">
-                    <canvas id="thirdYearChart"></canvas>
+                <!-- Third Year Chart -->
+                <div class="chart-container">
+                    <h3 class="text-2xl font-bold">Third Year</h3>
+                    <div class="w-full p-4">
+                        <canvas id="thirdYearChart"></canvas>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Fourth Year Chart -->
-            <div class="mt-8">
-                <h3 class="text-2xl font-bold">Fourth Year</h3>
-                <div class="w-full p-4">
-                    <canvas id="fourthYearChart"></canvas>
+                <!-- Fourth Year Chart -->
+                <div class="chart-container">
+                    <h3 class="text-2xl font-bold">Fourth Year</h3>
+                    <div class="w-full p-4">
+                        <canvas id="fourthYearChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
