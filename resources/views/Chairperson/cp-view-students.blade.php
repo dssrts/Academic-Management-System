@@ -62,10 +62,9 @@
                             @foreach ($students as $student)
                             <tr class="bg-white">
                                 <td class="py-2 px-4 border-b border-gray-300">
-                                    <a href="{{ route('view-student', $student->id) }}"
-                                        class="text-blue-500 hover:underline">
+                                    
                                         {{ $student->student_no }}
-                                    </a>
+                                    
                                 </td>
                                 <td class="py-2 px-4 border-b border-gray-300">{{ $student->first_name }}</td>
                                 <td class="py-2 px-4 border-b border-gray-300">{{ $student->last_name }}</td>

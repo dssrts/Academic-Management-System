@@ -12,9 +12,15 @@ class InstructorsTableSeeder extends Seeder
     {
         $faker = Faker::create();
         $collegeIds = DB::table('colleges')->pluck('id')->toArray();
+        $loginUsersIds = DB::table('login_users')->pluck('id')->toArray();
 
         foreach (range(1, 50) as $index) {
+            // Ensure unique id by removing the used id from the array
+            $id = $faker->unique()->randomElement($loginUsersIds);
+            $loginUsersIds = array_diff($loginUsersIds, [$id]);
+
             DB::table('instructors')->insert([
+                'id' => $id,
                 'last_name' => $faker->lastName,
                 'first_name' => $faker->firstName,
                 'middle_name' => $faker->lastName,

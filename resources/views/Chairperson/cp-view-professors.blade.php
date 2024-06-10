@@ -22,21 +22,15 @@
         <x-chairperson-sidebar />
 
         <!-- Main Content -->
-        <div class="flex-1 p-10 overflow-auto">
+        <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
             <!-- Header Section -->
-            <div class="flex flex-row items-center mb-6">
-                <img class="h-14 w-15 mr-4" src="{{ url('images/plm-logo.png') }}">
-                <div class="leading-tight flex flex-col">
-                    <h1 class="text-[20px] font-bold font-katibeh text-[#d5a106]">PAMANTASAN NG LUNGSOD NG MAYNILA</h1>
-                    <h2 class="text-[10px] font-inter text-black-200">UNIVERSITY OF THE CITY OF MANILA</h2>
-                </div>
-            </div>
+
 
             <!-- Content Section -->
             <div>
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-3xl font-bold">List of Professors in your College</h2>
-                    <button class="ml-2 px-4 py-2 bg-gold text-white rounded-lg" style="color:white"
+                    <h2 class="text-3xl font-bold">List of Professors in your Department</h2>
+                    <button class="ml-2 px-4 py-2 bg-blue text-white rounded-lg" style="color:white"
                         @click="isModalOpen = true">Add Professor</button>
                 </div>
                 <form method="GET" action="{{ route('view-professors') }}">
@@ -49,14 +43,14 @@
                     @else
                     <div class="overflow-x-auto">
                         <table class="w-full table-auto">
-                            <thead class="bg-gold" style="color:white">
+                            <thead class="bg-blue" style="color:white">
                                 <tr>
                                     <th class="px-4 py-2">Last Name</th>
                                     <th class="px-4 py-2">First Name</th>
                                     <th class="px-4 py-2">Middle Name</th>
-                                    <th class="px-4 py-2">Pronouns</th>
-                                    <th class="px-4 py-2">PLM Email</th>
-                                    <th class="px-4 py-2">College</th>
+                                    {{-- <th class="px-4 py-2">Pronouns</th> --}}
+                                    <th class="px-4 py-2">Email</th>
+                                    {{-- <th class="px-4 py-2">College</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,9 +59,9 @@
                                     <td class="border px-4 py-2">{{ $professor->last_name }}</td>
                                     <td class="border px-4 py-2">{{ $professor->first_name }}</td>
                                     <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->pronouns }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->plm_email }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->college->Code }}</td>
+                                    {{-- <td class="border px-4 py-2">{{ $professor->pronouns }}</td> --}}
+                                    <td class="border px-4 py-2">{{ $professor->email_address }}</td>
+                                    {{-- <td class="border px-4 py-2">{{ $professor->college->college_name }}</td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
