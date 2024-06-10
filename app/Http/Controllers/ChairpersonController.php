@@ -193,17 +193,15 @@ public function viewProfessors(Request $request)
     
     if ($employee) {
         // Get the department ID of the current user's employee record
-        $departmentIds = json_decode($employee->department_id, true);
+        $departmentId = json_decode($employee->department_id)[0];
 
-        // Get all employees with the same department ID(s)
-        $employeeIds = Employee::where(function($query) use ($departmentIds) {
-            foreach ($departmentIds as $departmentId) {
-                $query->orWhereJsonContains('department_id', $departmentId);
-            }
-        })->pluck('employee_id')->toArray();
+        // Get all employees with the same department ID
+        $employeeIds = Employee::whereJsonContains('department_id', $departmentId)
+                               ->pluck('employee_id')
+                               ->toArray();
 
         // Filter instructors based on the IDs of these employees
-        $query = Instructor::whereIn('id', $employeeIds)->with(['courses.course']);
+        $query = Instructor::whereIn('id', $employeeIds);
         
         // Add search functionality
         if ($request->filled('search')) {
@@ -218,10 +216,17 @@ public function viewProfessors(Request $request)
 
         // Paginate the results
         $professors = $query->paginate(15);
-        
+
+        // Get course distribution data
+        $courseDistribution = $query->with('courses')->get()->groupBy(function($instructor) {
+            return $instructor->courses->count();
+        })->map(function($group) {
+            return $group->count();
+        })->toArray();
     } else {
         // If no employee record is found, return an empty collection
         $professors = collect();
+        $courseDistribution = [];
     }
 
     // Get all colleges
@@ -241,8 +246,9 @@ public function viewProfessors(Request $request)
     ];
 
     // Return the view with the relevant data
-    return view('Chairperson.cp-view-professors', compact('professors', 'colleges', 'btns', 'user'));
+    return view('Chairperson.cp-view-professors', compact('professors', 'colleges', 'btns', 'user', 'courseDistribution'));
 }
+
 
 
     public function updateClassProfessor(Request $request, ClassModel $class)

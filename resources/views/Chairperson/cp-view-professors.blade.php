@@ -11,6 +11,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Katibeh:wght@400;700&display=swap');
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @vite('resources/css/app.css')
     <title>Professors</title>
 </head>
@@ -25,55 +26,59 @@
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
             <!-- Header Section -->
 
-
             <!-- Content Section -->
-            <div>
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-3xl font-bold">List of Professors in your Department</h2>
+            <div class="flex">
+                <div class="flex-1">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-bold">List of Professors in your Department</h2>
 
+                    </div>
+                    <form method="GET" action="{{ route('view-professors') }}">
+                        <input type="text" name="search" placeholder="Search by name or email..."
+                            class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
+                    </form>
+                    <div class="bg-white rounded-lg p-6 mt-6 shadow-lg" style="background-color:white">
+                        @if($professors->isEmpty())
+                        <p>No professors found.</p>
+                        @else
+                        <div class="overflow-x-auto">
+                            <table class="w-full table-auto">
+                                <thead class="bg-blue" style="color:white">
+                                    <tr>
+                                        <th class="px-4 py-2">Last Name</th>
+                                        <th class="px-4 py-2">First Name</th>
+                                        <th class="px-4 py-2">Middle Name</th>
+                                        <th class="px-4 py-2">Email</th>
+                                        <th class="px-4 py-2">Courses</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($professors as $professor)
+                                    <tr>
+                                        <td class="border px-4 py-2">{{ $professor->last_name }}</td>
+                                        <td class="border px-4 py-2">{{ $professor->first_name }}</td>
+                                        <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
+                                        <td class="border px-4 py-2">{{ $professor->email_address }}</td>
+                                        <td class="border px-4 py-2">
+                                            <ul>
+                                                @foreach($professor->courses as $class)
+                                                <li>{{ $class->course->subject_code }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-4">
+                            {{ $professors->links() }}
+                        </div>
+                        @endif
+                    </div>
                 </div>
-                <form method="GET" action="{{ route('view-professors') }}">
-                    <input type="text" name="search" placeholder="Search by name or email..."
-                        class="px-3 py-2 mb-4 border rounded w-full" value="{{ request('search') }}">
-                </form>
-                <div class="bg-white rounded-lg p-6 mt-6 shadow-lg" style="background-color:white">
-                    @if($professors->isEmpty())
-                    <p>No professors found.</p>
-                    @else
-                    <div class="overflow-x-auto">
-                        <table class="w-full table-auto">
-                            <thead class="bg-blue" style="color:white">
-                                <tr>
-                                    <th class="px-4 py-2">Last Name</th>
-                                    <th class="px-4 py-2">First Name</th>
-                                    <th class="px-4 py-2">Middle Name</th>
-                                    <th class="px-4 py-2">Email</th>
-                                    <th class="px-4 py-2">Courses</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($professors as $professor)
-                                <tr>
-                                    <td class="border px-4 py-2">{{ $professor->last_name }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->first_name }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
-                                    <td class="border px-4 py-2">{{ $professor->email_address }}</td>
-                                    <td class="border px-4 py-2">
-                                        <ul>
-                                            @foreach($professor->courses as $class)
-                                            <li>{{ $class->course->subject_code }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4">
-                        {{ $professors->links() }}
-                    </div>
-                    @endif
+                <div class="w-1/3 p-4">
+                    <canvas id="courseChart"></canvas>
                 </div>
             </div>
         </div>
@@ -140,6 +145,39 @@
             Alpine.data('professorModal', () => ({
                 isModalOpen: false
             }));
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('courseChart').getContext('2d');
+            const data = {
+                labels: {!! json_encode(array_keys($courseDistribution)) !!},
+                datasets: [{
+                    label: 'Number of Professors',
+                    data: {!! json_encode(array_values($courseDistribution)) !!},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const config = {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Course Distribution Among Professors'
+                        }
+                    }
+                },
+            };
+
+            new Chart(ctx, config);
         });
     </script>
 </body>
