@@ -172,7 +172,8 @@
                             
                             display: true,
                             position:'bottom',
-                            text: 'Course Distribution Among Professors'
+                            text: 'Course Distribution Among Professors',
+                            color: '#2D349A'
                         },
                         datalabels: {
                             color: '#fff',
