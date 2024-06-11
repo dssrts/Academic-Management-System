@@ -48,14 +48,39 @@
         }
 
         .chart-container {
-            background-color: white;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: transparent;
+            text-align: center;
+        }
+
+        .legend-box {
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .legend-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2D349A;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 4px;
         }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     @vite('resources/css/app.css')
     <title>Students</title>
 </head>
@@ -104,6 +129,14 @@
                 </div>
                 <div class="chart-container w-1/3 ml-4">
                     <canvas id="yearLevelChart"></canvas>
+                    <div class="legend-box">
+                        <div class="legend-title">Legends:</div>
+                        <p><span class="legend-color" style="background-color: #1E3A8A;"></span>1st Year Students</p>
+                        <p><span class="legend-color" style="background-color: #3B82F6;"></span>2nd Year Students</p>
+                        <p><span class="legend-color" style="background-color: #60A5FA;"></span>3rd Year Students</p>
+                        <p><span class="legend-color" style="background-color: #93C5FD;"></span>4th Year Students</p>
+                        <p class="font-bold mt-2" style="color: #2D349A">Number of Students Per Year Level</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,34 +170,24 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                boxWidth: 20,
-                                padding: 15,
-                                font: {
-                                    size: 14,
-                                    weight: 'bold',
-                                    family: 'Inter'
-                                }
-                            }
+                            display: false,
                         },
                         title: {
-                            display: true,
-                            text: 'Number of Students Per Year Level',
-                            color: '#2D349A',
-                            font: {
-                                size: 16,
-                                weight: 'bold',
-                                family: 'Inter'
+                            display: false,
+                        },
+                        datalabels: {
+                            color: 'white',
+                            formatter: (value, context) => {
+                                return value;
                             },
-                            padding: {
-                                top: 20,
-                                bottom: 10
+                            font: {
+                                weight: 'bold',
+                                size: 14
                             }
                         }
                     }
-                }
+                },
+                plugins: [ChartDataLabels]
             });
         });
     </script>
