@@ -36,7 +36,6 @@
             padding: 20px;
             margin-top: 10px;
             text-align: left;
-            /* Align text to the left */
         }
 
         .card-body h1 {
@@ -116,20 +115,20 @@
             new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['1st Year', '2nd Year', '3rd Year', '4th Year'],
+                    labels: ['1st Year Students', '2nd Year Students', '3rd Year Students', '4th Year Students'],
                     datasets: [{
                         data: {!! json_encode(array_values($studentsPerYearLevel)) !!},
                         backgroundColor: [
-                            'rgba(54, 162, 235, 0.6)',
-                            'rgba(75, 192, 192, 0.6)',
-                            'rgba(153, 102, 255, 0.6)',
-                            'rgba(255, 159, 64, 0.6)'
+                            '#1E3A8A', // Dark Blue for 1st Year
+                            '#3B82F6', // Light Blue for 2nd Year
+                            '#60A5FA', // Lighter Blue for 3rd Year
+                            '#93C5FD'  // Lightest Blue for 4th Year
                         ],
                         borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
+                            '#1E3A8A',
+                            '#3B82F6',
+                            '#60A5FA',
+                            '#93C5FD'
                         ],
                         borderWidth: 1
                     }]
@@ -138,12 +137,31 @@
                     responsive: true,
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 20,
+                                padding: 15,
+                                font: {
+                                    size: 14,
+                                    weight: 'bold',
+                                    family: 'Inter'
+                                }
+                            }
                         },
                         title: {
                             display: true,
                             text: 'Number of Students Per Year Level',
-                            color: '#2D349A'
+                            color: '#2D349A',
+                            font: {
+                                size: 16,
+                                weight: 'bold',
+                                family: 'Inter'
+                            },
+                            padding: {
+                                top: 20,
+                                bottom: 10
+                            }
                         }
                     }
                 }
