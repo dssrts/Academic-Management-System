@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GradesTableSeeder::class);
         $this->call(ClassSchedulesSeeder::class);
         // $this->call(ScheduleSeeder::class);
+        $this->call(StudentClassesSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

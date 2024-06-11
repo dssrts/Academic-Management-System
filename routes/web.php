@@ -18,10 +18,8 @@ use App\Http\Controllers\ChairpersonController;
 |
 */
 
-Route::middleware(['validlogin', 'preventBackHistory'])->group(function () {
-    Route::get('/student-view/{id}',[SignUpController::class,'studentview']) -> name('student-view.get');
-    Route::post('/student-view/{id}',[SignUpController::class,'studentrequest']) -> name('student-view.post-request');
-});
+Route::get('/student-view/{id}',[SignUpController::class,'studentview']) -> name('student-view.get');
+Route::post('/student-view/{id}',[SignUpController::class,'studentrequest']) -> name('student-view.post-request');
 
 Route::post('/reset-password',[SignUpController::class,'resetpassword'] )->name('reset-password.post');
 Route::get('/reset-password',[SignUpController::class,'getresetpassword'] )->name('reset-password.get');
@@ -59,8 +57,16 @@ Route::post('/create-class', [ChairpersonController::class, 'createClass'])->nam
 Route::get('/classes/{class}/edit', [ChairpersonController::class, 'editClass'])->name('edit-class');
 Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateClass'])->name('update-class');
 Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class, 'saveRemarks']);
-Route::get('/assign-classes', [ChairpersonController::class, 'showAssignClassesForm'])->name('assign-classes.form');
-Route::post('/assign-classes', [ChairpersonController::class, 'assignClasses'])->name('assign-classes.store');
+
+Route::get('/student-concerns', function () { return view('Student.student-concerns'); });
+Route::get('/student-evaluation', function () { return view('Student.student-evaluation'); });
+Route::get('/student-grades', function () { return view('Student.student-grades'); });
+Route::get('/student-inbox', function () { return view('Student.student-inbox'); });
+Route::get('/student-information', function () { return view('Student.student-information'); });
+Route::get('/student-schedules', function () { return view('Student.student-schedules'); });
+Route::get('/student-services', function () { return view('Student.student-services'); });
+Route::get('/student-ogts-appoinment', function () { return view('Student.student-ogts-appoinment'); });
+
 
 
 
