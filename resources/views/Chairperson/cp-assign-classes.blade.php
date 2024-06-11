@@ -88,7 +88,8 @@
                         <div>
                             <label for="class_subject" class="block text-sm font-medium text-gray-700">Class
                                 Subject</label>
-                            <select id="class_subject" name="class_id" class="mt-1 block w-full" required>
+                            <select id="class_subject" name="class_id" class="mt-1 block w-full"
+                                style="background-color:#d9dadb;">
                                 @foreach($classes as $class)
                                 <option value="{{ $class->id }}">{{ $class->id }}</option>
                                 @endforeach
@@ -98,7 +99,8 @@
                         <div>
                             <label for="instructor" class="block text-sm font-medium text-gray-700">Teaching
                                 Professor</label>
-                            <select id="instructor" name="instructor_id" class="mt-1 block w-full" required>
+                            <select id="instructor" name="instructor_id" class="mt-1 block w-full"
+                                style="background-color:#d9dadb;" required>
                                 @foreach($instructors as $instructor)
                                 <option value="{{ $instructor->id }}">{{ $instructor->last_name }}, {{
                                     $instructor->first_name }}</option>
