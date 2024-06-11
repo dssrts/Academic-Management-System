@@ -22,7 +22,7 @@ class ClassSchedulesSeeder extends Seeder
         foreach ($classIds as $classId) {
             foreach (range(1, 5) as $index) {
                 DB::table('class_schedules')->insert([
-                    'day' => $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
+                    'day' => $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
                     'start_time' => $faker->time(),
                     'end_time' => $faker->time(),
                     'schedule_name' => $faker->word,
