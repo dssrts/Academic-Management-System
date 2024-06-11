@@ -26,11 +26,11 @@
                 <div class="flex justify-between items-center mb-4 w-full max-w-[950px]">
                     <div class="text-[20px] font-bold text-blue">
                     </div>
-                    <div class="flex space-x-5">
+                    <div class="flex space-x-5 text-[14px]">
                         <button class="bg-blue hover:bg-blue-hover text-white font-bold py-2 px-4 rounded">
                             Academic Calendar
                         </button>
-                        <button class="bg-blue hover:bg-blue-hover text-white font-bold py-2 px-4 rounded">
+                        <button class="bg-blue hover:bg-blue-hover text-white font-bold py-2 px-4 rounded text-[14px]">
                             Go to Classroom
                         </button>
                     </div>
@@ -38,10 +38,10 @@
                 <!-- Status Table -->
                 <div class="bg-white rounded-lg shadow-md w-full max-w-[950px]">
                     <div class="flex items-center justify-center bg-blue text-white p-4 rounded-t-lg">
-                        <h2 class="font-bold text-[20px]">Class Schedule</h2>
+                        <h2 class="font-bold text-[20px] italic">Class Schedule</h2>
                     </div>
                     <div class="p-4 overflow-x-auto ">
-                        <table class="min-w-full bg-white border border-gray-200">
+                        <table class=" text-[14px] min-w-full bg-white border border-gray-200">
                             <thead>
                                 <tr>
                                     <th class="py-2 px-4 border-b">Course Subject</th>

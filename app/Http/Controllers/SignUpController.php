@@ -213,10 +213,20 @@ class SignUpController extends Controller
             $userId = Auth::id(); // Get the authenticated user's ID
             $user = Auth::user();
 
-            if ($user->role_id == 0) {
-                $student_no = Student::where('user_id', $userId)->first()->student_no;
-                return redirect(route('student-view.get', $student_no))->with(['id' => 'EMAIL FAILED']);
-            } else {
+            if ($user->usertype == "student") {
+                $student = Student::where('student_no', $userId)->first();
+                $studentTerms = DB::table('student_terms')->where('student_no', $student->student_no)->first();
+                $program = DB::table('programs')->where('id', $studentTerms->program_id)->first();
+                $college = DB::table('colleges')->where('id', $program->college_id)->first();
+
+                return view('Student.student-information', [
+                    'student' => $student,
+                    'studentTerms' => $studentTerms,
+                    'program' => $program,
+                    'college' => $college
+                ]);
+            }                   
+            else {
                 $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
                 $program = null;
             

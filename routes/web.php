@@ -6,6 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignUpController;
 use vendor\filament\filament\resources\views\pages;
 use App\Http\Controllers\ChairpersonController;
+use App\Http\Controllers\StudentEvaluationController;
+use App\Http\Controllers\StudentGradesController;
+use App\Http\Controllers\StudentInboxController;
+use App\Http\Controllers\StudentInformationController;
+use App\Http\Controllers\StudentSchedulesController;
+use App\Http\Controllers\StudentServicesController;
 
 /*;
 |--------------------------------------------------------------------------
@@ -59,13 +65,13 @@ Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateCla
 Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class, 'saveRemarks']);
 
 Route::get('/student-concerns', function () { return view('Student.student-concerns'); });
-Route::get('/student-evaluation', function () { return view('Student.student-evaluation'); });
-Route::get('/student-grades', function () { return view('Student.student-grades'); });
-Route::get('/student-inbox', function () { return view('Student.student-inbox'); });
-Route::get('/student-information', function () { return view('Student.student-information'); });
-Route::get('/student-schedules', function () { return view('Student.student-schedules'); });
-Route::get('/student-services', function () { return view('Student.student-services'); });
-Route::get('/student-ogts-appoinment', function () { return view('Student.student-ogts-appoinment'); });
+Route::get('/student-evaluation',[StudentEvaluationController::class, 'get']);
+Route::get('/student-grades',[StudentGradesController::class, 'get']);
+Route::get('/student-inbox',[StudentInboxController::class, 'get']);
+Route::get('/student-information',[StudentInformationController::class, 'get']);
+Route::get('/student-schedules',[StudentSchedulesController::class, 'get']);
+Route::get('/student-services',[StudentServicesController::class, 'get']);
+Route::get('/student-ogts-appoinment',[StudentServicesController::class, 'get']);
 
 
 
