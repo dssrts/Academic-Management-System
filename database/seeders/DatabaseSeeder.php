@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(DepartmentSeeder::class);
         $this->call(LoginUsersSeeder::class);
         $this->call(InstructorsTableSeeder::class);
-        $this->call(EmployeesTableSeeder::class);
+        // $this->call(EmployeesTableSeeder::class);
         // Faculty::factory(100)->create();
         
         // Professor::factory()->count(300)->create();
@@ -35,11 +35,13 @@ class DatabaseSeeder extends Seeder
         // $this->call(RoleSeeder::class);
         // $this->call(ModelHasRoleSeeder::class);
         $this->call(StudentsTableSeeder::class);
-        $this->call(StudentTermsTableSeeder::class);
+        // $this->call(StudentTermsTableSeeder::class);
        
         $this->call(ClassesTableSeeder::class);
         // ClassModel::factory()->count(100)->create();
         $this->call(GradesTableSeeder::class);
+        $this->call(StudentClassesSeeder::class);
+        $this->call(ClassSchedulesSeeder::class);
         // $this->call(ScheduleSeeder::class);
 
         // \App\Models\User::factory(10)->create();

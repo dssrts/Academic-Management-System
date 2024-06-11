@@ -13,9 +13,17 @@ class StudentsTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 50) as $index) {
+        // Get student login users
+        $studentLoginUsers = DB::table('login_users')->where('usertype', 'student')->pluck('id')->toArray();
+        $usedStudentNos = [];
+
+        foreach ($studentLoginUsers as $studentLoginUser) {
+            $studentNo = $studentLoginUser;
+            $usedStudentNos[] = $studentNo;
+
+            // Create students from login_users
             DB::table('students')->insert([
-                'student_no' => $faker->unique()->numberBetween(202310001, 202310050),
+                'student_no' => $studentNo,
                 'last_name' => $faker->lastName,
                 'first_name' => $faker->firstName,
                 'middle_name' => $faker->lastName,
@@ -89,6 +97,40 @@ class StudentsTableSeeder extends Seeder
                 'aysem_id' => $faker->numberBetween(117, 120),
                 'degree_program_id' => $faker->optional()->randomElement(['BSCS', 'BSIT', 'BSECE']),
                 'registration_status_id' => $faker->optional()->randomElement(['Regular', 'Irregular']),
+            ]);
+        }
+
+        // Generate student terms for the generated students
+        $employeeDepartments = DB::table('employees')->pluck('department_id')->toArray();
+        $programIds = [];
+
+        foreach ($employeeDepartments as $departments) {
+            $departmentIds = json_decode($departments, true);
+            if (is_array($departmentIds)) {
+                $programIds = array_merge($programIds, DB::table('programs')->whereIn('id', $departmentIds)->pluck('id')->toArray());
+            }
+        }
+
+        $programIds = array_unique($programIds);
+
+        // Debug: Print the program IDs
+        echo "Program IDs: ";
+        print_r($programIds);
+
+        foreach ($usedStudentNos as $studentNo) {
+            DB::table('student_terms')->insert([
+                'student_type' => $faker->randomElement(['new', 'continuing', 'transfer']),
+                'graduating' => $faker->boolean(),
+                'graduated' => $faker->boolean(),
+                'enrolled' => $faker->boolean(),
+                'year_level' => $faker->numberBetween(1, 5),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'student_no' => $studentNo,
+                'aysem_id' => $faker->numberBetween(1, 100),
+                'program_id' => !empty($programIds) ? $faker->randomElement($programIds) : null,
+                'block_id' => $faker->numberBetween(1, 50),
+                'registration_status_id' => $faker->numberBetween(1, 10),
             ]);
         }
     }

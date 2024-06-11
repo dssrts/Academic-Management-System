@@ -13,22 +13,14 @@ class EmployeesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run($employeeIds)
     {
         $faker = Faker::create();
-        $loginUsersIds = DB::table('login_users')->pluck('id')->toArray();
+
         $departments = DB::table('programs')->pluck('id')->toArray();
         $colleges = DB::table('colleges')->pluck('id')->toArray();
-        $usedEmployeeIds = [];
 
-        foreach (range(1, 50) as $index) {
-            // Get a unique employee_id
-            do {
-                $employeeId = $faker->randomElement($loginUsersIds);
-            } while (in_array($employeeId, $usedEmployeeIds));
-
-            $usedEmployeeIds[] = $employeeId;
-
+        foreach ($employeeIds as $employeeId) {
             DB::table('employees')->insert([
                 'employee_id' => $employeeId,
                 'job_id' => $faker->numberBetween(1, 10),

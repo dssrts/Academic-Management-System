@@ -31,12 +31,7 @@ class CreateClassSchedulesTable extends Migration
         });
 
         // Insert data
-        DB::table('class_schedules')->insert([
-            ['id' => 65, 'day' => 'Friday', 'start_time' => '16:00:00', 'end_time' => '17:30:00', 'schedule_name' => 'Lecture', 'created_at' => '2024-06-09 09:40:08', 'updated_at' => '2024-06-09 09:40:08', 'class_id' => 5, 'class_mode_id' => 1, 'room_id' => 2],
-            ['id' => 68, 'day' => 'Saturday', 'start_time' => '07:00:00', 'end_time' => '08:00:00', 'schedule_name' => 'Lab', 'created_at' => '2024-06-09 09:40:08', 'updated_at' => '2024-06-09 09:40:08', 'class_id' => 3, 'class_mode_id' => 1, 'room_id' => 4],
-            ['id' => 69, 'day' => 'Friday', 'start_time' => '14:00:00', 'end_time' => '16:00:00', 'schedule_name' => 'Lecture', 'created_at' => '2024-06-09 09:40:08', 'updated_at' => '2024-06-09 09:40:08', 'class_id' => 4, 'class_mode_id' => 2, 'room_id' => 1],
-            ['id' => 70, 'day' => 'Friday', 'start_time' => '13:00:00', 'end_time' => '15:00:00', 'schedule_name' => 'Lab', 'created_at' => '2024-06-09 09:40:08', 'updated_at' => '2024-06-09 09:40:08', 'class_id' => 6, 'class_mode_id' => 1, 'room_id' => 4],
-        ]);
+        
     }
 
     /**
