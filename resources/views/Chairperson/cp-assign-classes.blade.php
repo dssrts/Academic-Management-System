@@ -10,6 +10,20 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Katibeh:wght@400;700&display=swap');
 
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #38a169;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
         .modal {
             background-color: white;
             border-radius: 10px;
@@ -71,16 +85,29 @@
 </head>
 
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover">
+    <div class="alert" id="alertBox">{{ session('success') }}</div>
     <div class="w-screen h-screen flex flex-row">
         <!-- Sidebar -->
         <x-chairperson-sidebar />
 
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
+            @if(session('success'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var alertBox = document.getElementById('alertBox');
+                    alertBox.style.display = 'block';
+                    setTimeout(function() {
+                        alertBox.style.display = 'none';
+                    }, 5000);
+                });
+            </script>
+            @endif
+
             <div class="modal">
                 <div class="modal-header">
                     <h2>Assign Classes to Instructors</h2>
-                    <button>&times;</button>
+
                 </div>
                 <form method="POST" action="{{ route('assign-classes.store') }}">
                     @csrf
