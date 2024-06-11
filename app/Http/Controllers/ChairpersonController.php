@@ -93,7 +93,7 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
     public function viewStudents()
 {
     $enrolledStudents = StudentTerm::where('enrolled', 1)->count();
-    $enlistedStudents = StudentTerm::where('enrolled', 2)->count();
+    $enlistedStudents = StudentTerm::where('enrolled', 0)->count();
     $regularStudents = StudentTerm::where('registration_status_id', 1)->count();
     $irregularStudents = StudentTerm::where('registration_status_id', 2)->count();
 
