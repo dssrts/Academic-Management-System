@@ -35,7 +35,8 @@
             border-radius: 8px;
             padding: 20px;
             margin-top: 10px;
-            position: relative;
+            text-align: left;
+            /* Align text to the left */
         }
 
         .card-body h1 {
