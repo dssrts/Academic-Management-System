@@ -90,30 +90,20 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
     }
     
 
-    public function viewStudents(Request $request)
-    {
-        // Fetch students with pagination (20 per page)
-        $query = Student::query();
+    public function viewStudents()
+{
+    $enrolledStudents = StudentTerm::where('enrolled', 1)->count();
+    $enlistedStudents = StudentTerm::where('enrolled', 2)->count();
+    $regularStudents = StudentTerm::where('registration_status_id', 1)->count();
+    $irregularStudents = StudentTerm::where('registration_status_id', 2)->count();
 
-        if ($request->filled('student_no')) {
-            $query->where('student_no', 'like', '%' . $request->input('student_no') . '%');
-        }
+    $studentsPerYearLevel = StudentTerm::select('year_level', DB::raw('count(*) as total'))
+        ->groupBy('year_level')
+        ->pluck('total', 'year_level')->toArray();
 
-        // Fetch students with pagination (20 per page)
-        $students = $query->paginate(15);
-        
-        $btns = [
-            'dashboard' => false,
-            'information' => true,
-            'grades' => false,
-            'process' => false,
-            'inbox' => false,
-            'classroom' => false,
-            'professors' => true,
-        ];
-        $user = Auth::user();
-        return view('Chairperson.cp-view-students', compact('students', 'btns', 'user'));
-    }
+    return view('Chairperson.cp-view-students', compact('enrolledStudents', 'enlistedStudents', 'regularStudents', 'irregularStudents', 'studentsPerYearLevel'));
+}
+
     public function viewStudent(Student $student)
     {
         $user = Auth::user();
