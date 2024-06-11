@@ -15,6 +15,7 @@ use App\Models\StudentRecord;
 use App\Models\StudentTerm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ChairpersonController extends Controller
 {
@@ -468,6 +469,27 @@ public function assignClasses(Request $request)
     ]);
 
     return redirect()->route('assign-classes.form')->with('success', 'Class assigned to instructor successfully.');
+}
+public function showSendEmailForm()
+{
+    return view('Chairperson.cp-laboratory');
+}
+
+public function sendEmail(Request $request)
+{
+    $validated = $request->validate([
+        'recipient_email' => 'required|email',
+        'subject' => 'required|string|max:255',
+        'message' => 'required|string',
+    ]);
+    
+    // Send the email
+    Mail::raw($validated['message'], function ($message) use ($validated) {
+        $message->to($validated['recipient_email'])
+                ->subject($validated['subject']);
+    });
+
+    return redirect()->route('send-email.form')->with('success', 'Email sent successfully.');
 }
 
 }
