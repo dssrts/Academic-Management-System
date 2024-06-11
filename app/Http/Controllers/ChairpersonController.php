@@ -12,6 +12,7 @@ use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentRecord;
+use App\Models\StudentTerm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -348,6 +349,82 @@ public function updateClass(Request $request, ClassModel $class)
 
     return redirect()->route('view-classes')->with('success', 'Class updated successfully!');
 }
+
+
+public function viewClasses(Request $request){
+    $user = Auth::user();
+    $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
+    $programId = null;
+
+    if ($employee) {
+        $departmentIds = json_decode($employee->department_id, true);
+        $departmentId = $departmentIds[0] ?? null;
+
+        if ($departmentId) {
+            $program = \App\Models\Program::where('id', $departmentId)->first();
+            if ($program) {
+                $programId = $program->id;
+            }
+        }
+    }
+
+    if (!$programId) {
+        return []; // No program found, return empty result
+    }
+
+    // Get the student numbers from student terms in the current user's program
+    $studentNos = \App\Models\StudentTerm::where('program_id', $programId)
+        ->pluck('student_no')
+        ->toArray();
+
+    // Fetch the number of classes each day per year level
+    $classSchedules = DB::table('class_schedules')
+        ->join('student_classes', 'class_schedules.class_id', '=', 'student_classes.class_id')
+        ->join('student_terms', 'student_classes.student_no', '=', 'student_terms.student_no')
+        ->whereIn('student_terms.student_no', $studentNos)
+        ->select(
+            'student_terms.year_level',
+            'class_schedules.day',
+            DB::raw('COUNT(*) as number_of_classes')
+        )
+        ->groupBy('student_terms.year_level', 'class_schedules.day')
+        ->orderBy('student_terms.year_level')
+        ->orderBy('class_schedules.day')
+        ->get();
+
+    // Prepare data for bar charts
+    $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    $yearData = [
+        1 => array_fill_keys($days, 0),
+        2 => array_fill_keys($days, 0),
+        3 => array_fill_keys($days, 0),
+        4 => array_fill_keys($days, 0),
+    ];
+
+    foreach ($classSchedules as $schedule) {
+        $yearData[$schedule->year_level][$schedule->day] = $schedule->number_of_classes;
+    }
+
+    // Calculate total units per year level
+    $totalUnits = DB::table('student_terms')
+        ->join('student_classes', 'student_terms.student_no', '=', 'student_classes.student_no')
+        ->join('classes', 'student_classes.class_id', '=', 'classes.id')
+        ->whereIn('student_terms.student_no', $studentNos)
+        ->select('student_terms.year_level', DB::raw('SUM(classes.actual_units) as total_units'))
+        ->groupBy('student_terms.year_level')
+        ->get();
+
+    $totalUnitsPerYear = [];
+    foreach ($totalUnits as $unit) {
+        $totalUnitsPerYear[$unit->year_level] = $unit->total_units;
+    }
+
+    return view('Chairperson.cp-view-classes', compact('yearData', 'days', 'totalUnitsPerYear'));
+}
+
+
+
+
 }
 
 
