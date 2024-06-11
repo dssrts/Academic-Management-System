@@ -92,17 +92,43 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
 
     public function viewStudents()
 {
-    $enrolledStudents = StudentTerm::where('enrolled', 1)->count();
-    $enlistedStudents = StudentTerm::where('enrolled', 0)->count();
-    $regularStudents = StudentTerm::where('registration_status_id', 1)->count();
-    $irregularStudents = StudentTerm::where('registration_status_id', 2)->count();
+    $user = Auth::user();
+    $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
+    $program = "test";
 
-    $studentsPerYearLevel = StudentTerm::select('year_level', DB::raw('count(*) as total'))
-        ->groupBy('year_level')
-        ->pluck('total', 'year_level')->toArray();
+    if ($employee) {
+        // Decode the JSON-encoded department_id
+        $departmentIds = json_decode($employee->department_id, true);
+        // Assuming you need the first department ID
+        $departmentId = $departmentIds[0] ?? null;
+
+        if ($departmentId) {
+            $program = \App\Models\Program::where('id', $departmentId)->first();
+        }
+    }
+    if ($employee) {
+        $departmentIds = json_decode($employee->department_id, true);
+        // Assuming you need the first department ID
+        $departmentId = $departmentIds[0] ?? null;
+
+        // Fetch student terms that belong to the same department
+        $studentTerms = \App\Models\StudentTerm::where('program_id', $departmentId)->get();
+    } else {
+        $studentTerms = collect(); // Empty collection if no employee found
+    }
+
+    $enrolledStudents = $studentTerms->where('enrolled', 1)->count();
+    $enlistedStudents = $studentTerms->where('enrolled', 0)->count();
+    $regularStudents = $studentTerms->where('registration_status_id', 1)->count();
+    $irregularStudents = $studentTerms->where('registration_status_id', 2)->count();
+
+    $studentsPerYearLevel = $studentTerms->groupBy('year_level')->map(function ($group) {
+        return $group->count();
+    })->toArray();
 
     return view('Chairperson.cp-view-students', compact('enrolledStudents', 'enlistedStudents', 'regularStudents', 'irregularStudents', 'studentsPerYearLevel'));
 }
+
 
     public function viewStudent(Student $student)
     {
