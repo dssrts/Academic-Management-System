@@ -59,6 +59,8 @@ Route::post('/create-class', [ChairpersonController::class, 'createClass'])->nam
 Route::get('/classes/{class}/edit', [ChairpersonController::class, 'editClass'])->name('edit-class');
 Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateClass'])->name('update-class');
 Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class, 'saveRemarks']);
+Route::get('/assign-classes', [ChairpersonController::class, 'showAssignClassesForm'])->name('assign-classes.form');
+Route::post('/assign-classes', [ChairpersonController::class, 'assignClasses'])->name('assign-classes.store');
 
 
 

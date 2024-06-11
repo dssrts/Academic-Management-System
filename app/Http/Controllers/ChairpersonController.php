@@ -423,7 +423,52 @@ public function viewClasses(Request $request){
 }
 
 
+public function showAssignClassesForm()
+{
+    // Get the current logged-in user
+    $user = Auth::user();
+    
+    // Get the employee record of the current user
+    $employee = Employee::where('employee_id', $user->id)->first();
+    
+    if ($employee) {
+        // Get the department ID of the current user's employee record
+        $departmentId = json_decode($employee->department_id)[0];
 
+        // Get all employees with the same department ID
+        $employeeIds = Employee::whereJsonContains('department_id', $departmentId)
+                               ->pluck('employee_id')
+                               ->toArray();
+
+        // Filter instructors based on the IDs of these employees
+        $instructors = Instructor::whereIn('id', $employeeIds)->get();
+
+        // Get all classes
+        $classes = ClassModel::all(); // Assuming you have a Class model
+    } else {
+        // If no employee record is found, return empty collections
+        $instructors = collect();
+        $classes = collect();
+    }
+
+    return view('Chairperson.cp-assign-classes', compact('instructors', 'classes'));
+}
+
+public function assignClasses(Request $request)
+{
+    $validated = $request->validate([
+        'instructor_id' => 'required|exists:instructors,id',
+        'class_id' => 'required|exists:classes,id',
+    ]);
+
+    // Assuming you have a pivot table named class_instructor to assign classes to instructors
+    DB::table('class_faculty')->insert([
+        'instructor_id' => $validated['instructor_id'],
+        'class_id' => $validated['class_id'],
+    ]);
+
+    return redirect()->route('assign-classes.form')->with('success', 'Class assigned to instructor successfully.');
+}
 
 }
 

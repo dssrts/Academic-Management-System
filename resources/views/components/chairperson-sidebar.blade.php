@@ -133,7 +133,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('view-classes') }}"
+                        <a href="{{ route('assign-classes.form') }}"
                             class="sidebar-item flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -143,6 +143,7 @@
                             <span class="ml-4" x-show="isOpen">Teaching Assignment</span>
                         </a>
                     </li>
+
                     <li>
                         <a href="{{ route('view-classes') }}"
                             class="sidebar-item flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">

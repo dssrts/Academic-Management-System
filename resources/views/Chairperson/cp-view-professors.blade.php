@@ -48,9 +48,9 @@
                                     <tr>
                                         <th class="px-4 py-2">Last Name</th>
                                         <th class="px-4 py-2">First Name</th>
-                                        <th class="px-4 py-2">Middle Name</th>
+                                        {{-- <th class="px-4 py-2">Middle Name</th> --}}
                                         <th class="px-4 py-2">Email</th>
-                                        <th class="px-4 py-2">Courses</th>
+                                        <th class="px-4 py-2">Teaching Subjects</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,7 +58,7 @@
                                     <tr>
                                         <td class="border px-4 py-2">{{ $professor->last_name }}</td>
                                         <td class="border px-4 py-2">{{ $professor->first_name }}</td>
-                                        <td class="border px-4 py-2">{{ $professor->middle_name }}</td>
+                                        {{-- <td class="border px-4 py-2">{{ $professor->middle_name }}</td> --}}
                                         <td class="border px-4 py-2">{{ $professor->email_address }}</td>
                                         <td class="border px-4 py-2">
                                             <ul>
