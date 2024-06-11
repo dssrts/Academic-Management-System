@@ -26,7 +26,7 @@
         }
 
         .card-title {
-            font-size: 1.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: #1E3A8A;
         }
