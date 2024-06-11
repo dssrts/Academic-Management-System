@@ -14,8 +14,15 @@
             background-color: white;
             border-radius: 10px;
             padding: 20px;
+            margin-right: 50px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: left;
+            width: 30rem;
+            height: 250px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card-title {
@@ -33,9 +40,14 @@
             background-color: #2C56A6;
             color: white;
             border-radius: 8px;
-            padding: 20px;
+            padding: 10px;
             margin-top: 10px;
             text-align: left;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: left;
         }
 
         .card-body h1 {
@@ -49,10 +61,12 @@
 
         .chart-container {
             border-radius: 10px;
-            padding: 20px;
+            padding: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             background-color: transparent;
             text-align: center;
+            width: 300px;
+            height: 300px;
         }
 
         .legend-box {
@@ -93,7 +107,7 @@
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
             <div class="flex">
-                <div class="grid grid-cols-2 gap-4 w-2/3">
+                <div class="grid grid-cols-2 gap-4">
                     <div class="card">
                         <h2 class="card-title">Enrolled Students</h2>
                         <p class="card-subtitle">1ST SEM - AY 2023-2024</p>
@@ -127,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="chart-container w-1/3 ml-4">
+                <div class="chart-container ml-4">
                     <canvas id="yearLevelChart"></canvas>
                     <div class="legend-box">
                         <div class="legend-title">Legends:</div>
