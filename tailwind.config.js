@@ -21,21 +21,21 @@ export default {
         colors: {
           transparent: 'transparent',
           current: 'currentColor',
-
+        
           'white':{
             10:  "#FFFFFF" ,
             20:  "#F0F0F0" ,
             30:  "#D6D7D8" ,
             100: "#141B29" , 
           },
-
+        
           'black':{
             100:  "#676c72" ,
             200:  "#434343" ,
             300:  "#000000" ,
             400:  "#000000" ,
           },
-
+        
           'gray':{
             100:  "#676c72" ,
             200:  "#434343" ,
@@ -43,15 +43,15 @@ export default {
             400:  "#000000" ,
             500:  "#000000" ,
           },
-
-
+        
+        
           'blue': {
             hover: '#4F74BB',
             DEFAULT: '#2D349A',
             pressed: '#2D6B9A',
             surface: "#EFF0FF", 
           },
-
+        
           'gold': {
             hover: '#D2CB65',
             DEFAULT: '#AB830F ',
@@ -59,11 +59,11 @@ export default {
             surace: '#FFF0E0 ',
             amber: '#D5A106',
           },
-
+        
           'red': {
             DEFAULT: '#E63049 ',
           },
-
+        
           'green': {
             DEFAULT: '#378805 ',
             bright: '#07AA07',

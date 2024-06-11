@@ -15,7 +15,7 @@ use App\Models\User;
 use App\Models\Grade;
 use App\Models\Professor;
 use App\Models\StudentRecord;
-
+use Database\Seeders\StudentClassesSeeder;
 class DatabaseSeeder extends Seeder
 {   
     /**
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         // ClassModel::factory()->count(100)->create();
         $this->call(GradesTableSeeder::class);
         // $this->call(ScheduleSeeder::class);
-
+        $this->call(StudentClassesSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

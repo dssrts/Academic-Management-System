@@ -213,9 +213,9 @@ class SignUpController extends Controller
             $userId = Auth::id(); // Get the authenticated user's ID
             $user = Auth::user();
 
-            if ($user->role_id == 0) {
+            if ($user->role_id == 9) {
                 $student_no = Student::where('user_id', $userId)->first()->student_no;
-                return redirect(route('student-view.get', $student_no))->with(['id' => 'EMAIL FAILED']);
+                return redirect(route('student-view.get', "202303292"))->with(['id' => 'EMAIL FAILED']);
             } else {
                 $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
                 $program = null;
