@@ -17,6 +17,42 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1E3A8A;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: #6B7280;
+        }
+
+        .card-body {
+            background-color: #2C56A6;
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .card-body h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .card-body p {
+            margin: 0;
+        }
+
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -31,32 +67,42 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
-            <div class="grid grid-cols-2 gap-4">
-                <div class="card">
-                    <h2 class="text-2xl font-bold">Enrolled Students</h2>
-                    <p>1ST SEM - AY 2023-2024</p>
-                    <h1 class="text-4xl font-bold">{{ $enrolledStudents }}</h1>
-                    <p>Enrolled Students</p>
+            <div class="flex">
+                <div class="grid grid-cols-2 gap-4 w-2/3">
+                    <div class="card">
+                        <h2 class="card-title">Enrolled Students</h2>
+                        <p class="card-subtitle">1ST SEM - AY 2023-2024</p>
+                        <div class="card-body">
+                            <h1>{{ $enrolledStudents }}</h1>
+                            <p>Enrolled Students</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title">Enlisted Students</h2>
+                        <p class="card-subtitle">1ST SEM - AY 2023-2024</p>
+                        <div class="card-body">
+                            <h1>{{ $enlistedStudents }}</h1>
+                            <p>Enlisted Students</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title">Regular Students</h2>
+                        <p class="card-subtitle">1ST SEM - AY 2023-2024</p>
+                        <div class="card-body">
+                            <h1>{{ $regularStudents }}</h1>
+                            <p>Regular Students</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-title">Irregular Students</h2>
+                        <p class="card-subtitle">1ST SEM - AY 2023-2024</p>
+                        <div class="card-body">
+                            <h1>{{ $irregularStudents }}</h1>
+                            <p>Irregular Students</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h2 class="text-2xl font-bold">Enlisted Students</h2>
-                    <p>1ST SEM - AY 2023-2024</p>
-                    <h1 class="text-4xl font-bold">{{ $enlistedStudents }}</h1>
-                    <p>Enlisted Students</p>
-                </div>
-                <div class="card">
-                    <h2 class="text-2xl font-bold">Regular Students</h2>
-                    <p>1ST SEM - AY 2023-2024</p>
-                    <h1 class="text-4xl font-bold">{{ $regularStudents }}</h1>
-                    <p>Regular Students</p>
-                </div>
-                <div class="card">
-                    <h2 class="text-2xl font-bold">Irregular Students</h2>
-                    <p>1ST SEM - AY 2023-2024</p>
-                    <h1 class="text-4xl font-bold">{{ $irregularStudents }}</h1>
-                    <p>Irregular Students</p>
-                </div>
-                <div class="w-full p-4">
+                <div class="chart-container w-1/3 ml-4">
                     <canvas id="yearLevelChart"></canvas>
                 </div>
             </div>
