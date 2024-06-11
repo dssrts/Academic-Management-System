@@ -9,6 +9,61 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Katibeh:wght@400;700&display=swap');
+
+        .modal {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 5rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .modal-header button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .modal-footer button {
+            background-color: #1E3A8A;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-footer button:hover {
+            background-color: #274494;
+        }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     @vite('resources/css/app.css')
@@ -22,30 +77,41 @@
 
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
-            <h2 class="text-2xl font-bold mb-4">Assign Classes to Instructors</h2>
-            <form method="POST" action="{{ route('assign-classes.store') }}">
-                @csrf
-                <div class="mb-4">
-                    <label for="instructor" class="block text-sm font-medium text-gray-700">Instructor</label>
-                    <select id="instructor" name="instructor_id" class="mt-1 block w-full" required>
-                        @foreach($instructors as $instructor)
-                        <option value="{{ $instructor->id }}">{{ $instructor->last_name }}, {{ $instructor->first_name
-                            }}</option>
-                        @endforeach
-                    </select>
+            <div class="modal">
+                <div class="modal-header">
+                    <h2>Assign Classes to Instructors</h2>
+                    <button>&times;</button>
                 </div>
-                <div class="mb-4">
-                    <label for="class" class="block text-sm font-medium text-gray-700">Class</label>
-                    <select id="class" name="class_id" class="mt-1 block w-full" required>
-                        @foreach($classes as $class)
-                        <option value="{{ $class->id }}">{{ $class->id }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="flex justify-end">
-                    <button type="submit" class="px-4 py-2 bg-blue text-white rounded">Assign Class</button>
-                </div>
-            </form>
+                <form method="POST" action="{{ route('assign-classes.store') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <div>
+                            <label for="class_subject" class="block text-sm font-medium text-gray-700">Class
+                                Subject</label>
+                            <select id="class_subject" name="class_id" class="mt-1 block w-full" required>
+                                @foreach($classes as $class)
+                                <option value="{{ $class->id }}">{{ $class->id }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="instructor" class="block text-sm font-medium text-gray-700">Teaching
+                                Professor</label>
+                            <select id="instructor" name="instructor_id" class="mt-1 block w-full" required>
+                                @foreach($instructors as $instructor)
+                                <option value="{{ $instructor->id }}">{{ $instructor->last_name }}, {{
+                                    $instructor->first_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit">Assign Class to Instructor</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>
