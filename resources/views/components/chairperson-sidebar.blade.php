@@ -145,17 +145,17 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('view-classes') }}"
+                        <a href="{{ route('send-email.form') }}"
                             class="sidebar-item flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                <path d="M4 4h16v16H4z"></path>
+                                <path d="M22 2L2 22"></path>
                             </svg>
-                            <span class="ml-4" x-show="isOpen">Laboratory</span>
+                            <span class="ml-4" x-show="isOpen">Laboratory/Room Report</span>
                         </a>
                     </li>
-
+                    
                     <!-- Add more sidebar options here -->
                 </ul>
             </nav>

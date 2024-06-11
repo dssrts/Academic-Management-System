@@ -61,7 +61,8 @@ Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateCla
 Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class, 'saveRemarks']);
 Route::get('/assign-classes', [ChairpersonController::class, 'showAssignClassesForm'])->name('assign-classes.form');
 Route::post('/assign-classes', [ChairpersonController::class, 'assignClasses'])->name('assign-classes.store');
-
+Route::get('/send-email', [ChairpersonController::class, 'showSendEmailForm'])->name('send-email.form');
+Route::post('/send-email', [ChairpersonController::class, 'sendEmail'])->name('send-email.store');
 
 
 //logout chairperson
