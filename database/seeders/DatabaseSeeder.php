@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ClassesTableSeeder::class);
         // ClassModel::factory()->count(100)->create();
         $this->call(GradesTableSeeder::class);
+        $this->call(ClassSchedulesSeeder::class);
         // $this->call(ScheduleSeeder::class);
 
         // \App\Models\User::factory(10)->create();
