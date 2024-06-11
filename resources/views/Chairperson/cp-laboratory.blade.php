@@ -64,6 +64,20 @@
         .modal-footer button:hover {
             background-color: #274494;
         }
+
+        .alert {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     @vite('resources/css/app.css')
@@ -78,6 +92,7 @@
         <!-- Main Content -->
         <div class="flex-1 p-10 overflow-auto" style="margin-top: 5rem">
             @if(session('success'))
+            <div class="alert" id="alertBox">{{ session('success') }}</div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     var alertBox = document.getElementById('alertBox');
@@ -98,16 +113,20 @@
                     @csrf
                     <div class="modal-body">
                         <div>
-                            <label for="recipient_email" class="block text-sm font-medium text-gray-700">Recipient Email</label>
-                            <input type="email" id="recipient_email" name="recipient_email" class="mt-1 block w-full" required>
+                            <label for="recipient_email" class="block text-sm font-medium text-gray-700">Recipient
+                                Email</label>
+                            <input type="email" id="recipient_email" name="recipient_email" class="mt-1 block w-full"
+                                style="background-color:#dbdbdb" required>
                         </div>
                         <div>
                             <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
-                            <input type="text" id="subject" name="subject" class="mt-1 block w-full" required>
+                            <input type="text" id="subject" name="subject" class="mt-1 block w-full"
+                                style="background-color:#dbdbdb" required>
                         </div>
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                            <textarea id="message" name="message" class="mt-1 block w-full" rows="4" required></textarea>
+                            <textarea id="message" name="message" class="mt-1 block w-full" rows="4"
+                                style="background-color:#dbdbdb" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
