@@ -26,7 +26,7 @@
 
         .card-subtitle {
             font-size: 0.9rem;
-            color: #6B7280;
+            color: #1E3A8A;
         }
 
         .card-body {
