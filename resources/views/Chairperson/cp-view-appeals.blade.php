@@ -22,9 +22,7 @@
             max-width: 800px;
             margin: 10rem;
             background-color: #1a237e;
-            /* dark blue background */
             border-radius: 12px;
-            /* padding: 20px; */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             color: white;
             margin-top: 10rem;
@@ -59,7 +57,6 @@
         .search-bar {
             width: 100%;
             padding: 10px 10px 10px 40px;
-            /* Adjusted padding to make space for icon on the left */
             border: none;
             border-radius: 5px;
             color: black;
@@ -233,11 +230,11 @@
                                     <div class="appeal-header">
                                         <div>
                                             <div class="appeal-subject">{{ $appeal->subject }}</div>
-                                            {{-- <div class="appeal-from">From: {{ $appeal->student->plm_email }}</div>
-                                            --}}
                                         </div>
-                                        <a href="#" class="view-full" data-appeal="{{ $appeal }}">👁️ View Full
-                                            Concern</a>
+                                        <a href="#" class="view-full" data-id="{{ $appeal->id }}"
+                                            data-subject="{{ $appeal->subject }}" data-message="{{ $appeal->message }}"
+                                            data-status="{{ $appeal->remarks }}" data-email="{{ $appeal->email }}"
+                                            data-student-number="{{ $appeal->student_no }}">👁️ View Full Concern</a>
                                     </div>
                                     <div class="appeal-message">{{ $appeal->message }}</div>
                                     <div>
@@ -248,14 +245,11 @@
                                             @method('PUT')
                                             <select name="remarks" class="status-select" onchange="this.form.submit()">
                                                 <option value="pending" @if($appeal->remarks == 'pending') selected
-                                                    @endif>Pending
-                                                </option>
+                                                    @endif>Pending</option>
                                                 <option value="approved" @if($appeal->remarks == 'approved') selected
-                                                    @endif>Approved
-                                                </option>
+                                                    @endif>Approved</option>
                                                 <option value="denied" @if($appeal->remarks == 'denied') selected
-                                                    @endif>Denied
-                                                </option>
+                                                    @endif>Denied</option>
                                             </select>
                                         </form>
                                     </div>
@@ -322,13 +316,19 @@
             document.querySelectorAll('.view-full').forEach(function (element) {
                 element.addEventListener('click', function (event) {
                     event.preventDefault();
-                    const appeal = JSON.parse(this.getAttribute('data-appeal'));
-                    document.getElementById('studentNumber').textContent = appeal.student_no;
-                    document.getElementById('senderEmail').textContent = appeal.email;
-                    document.getElementById('fullSubject').textContent = appeal.subject;
-                    document.getElementById('fullMessage').textContent = appeal.message;
-                    document.getElementById('modalStatusForm').action = '/update-appeal/' + appeal.id;
-                    document.getElementById('modalStatus').value = appeal.remarks;
+                    const id = this.getAttribute('data-id');
+                    const subject = this.getAttribute('data-subject');
+                    const message = this.getAttribute('data-message');
+                    const status = this.getAttribute('data-status');
+                    const email = this.getAttribute('data-email');
+                    const studentNumber = this.getAttribute('data-student-number');
+
+                    document.getElementById('studentNumber').textContent = studentNumber;
+                    document.getElementById('senderEmail').textContent = email;
+                    document.getElementById('fullSubject').textContent = subject;
+                    document.getElementById('fullMessage').textContent = message;
+                    document.getElementById('modalStatusForm').action = '/appeals/' + id;
+                    document.getElementById('modalStatus').value = status;
                     modal.style.display = 'block';
                 });
             });
