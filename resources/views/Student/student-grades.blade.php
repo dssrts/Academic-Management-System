@@ -18,12 +18,7 @@
 <body class="bg-opacity-80" style="background-image: url('images/PLM.png'); background-size: cover; font-family: 'Inter', sans-serif;">
     <div class="flex flex-col h-screen">
         <!-- Header -->
-        <div class="bg-white flex items-center justify-between p-4">
-            <div class="flex items-center">
-                <img src="images/plm-logo.png" alt="PLM AMS" class="h-9 ml-3 mr-2">
-                <h1 class="text-[24px] font-bold ml-2 text-blue">PLM AMS</h1>
-            </div>
-        </div>
+        @include('components.student-header')
 
         <div class="flex flex-1 overflow-hidden">
             <!-- Sidebar Component with activePage -->
@@ -39,9 +34,11 @@
                             <p>Per Semester</p>
                         </div>
                         <div class="flex items-center">
-                            <label for="aysem" class="mr-2 text-blue font-bold">AYSEM (eg.20231):</label>
-                            <input type="text" id="aysem" name="aysem" class="border rounded p-2 mr-2" placeholder="202xx">
-                            <button class="bg-blue text-white px-4 py-2 rounded font-bold">Submit</button>
+                            <form method="GET" action="{{ route('student.grades') }}">
+                                <label for="aysem" class="mr-2 text-blue font-bold">AYSEM   ( <span class="text-gold-amber"> eg.2023 </span> )  :</label>
+                                <input type="text" id="aysem" name="aysem" class="border rounded p-2 mr-2" placeholder="202xx" value="{{ $selectedAysem }}">
+                                <button type="submit" class="bg-blue text-white px-4 py-2 rounded font-bold">Submit</button>
+                            </form>
                         </div>
                     </div>
                     <div class="chart-container">
@@ -59,12 +56,20 @@
             var gwaChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['1st Yr (1st Sem)', '1st Yr (2nd Sem)', '2nd Yr (1st Sem)', '2nd Yr (2nd Sem)', '3rd Yr (1st Sem)'],
+                    labels: @json($labels),
                     datasets: [{
                         label: 'GWA',
-                        data: [1.3, 2.0, 1.5, 2.5, 1.8], // Dummy data
+                        data: @json($gradesData),
                         borderColor: '#D5A106', // Line color
                         borderWidth: 2,
+                        fill: false,
+                        lineTension: 0.1
+                    }, {
+                        label: 'Overall Average GWA',
+                        data: Array(@json($labels).length).fill(@json($overallAverageGwa)),
+                        borderColor: '#2D349A', // Red color for the average line
+                        borderWidth: 2,
+                        borderDash: [10, 5], // Dashed line
                         fill: false,
                         lineTension: 0.1
                     }]

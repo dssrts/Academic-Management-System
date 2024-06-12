@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class StudentEvaluationController extends Controller
 {
@@ -13,9 +14,20 @@ class StudentEvaluationController extends Controller
         $userId = Auth::id(); // Get the authenticated user's ID
         $user = Auth::user();
         
+        // Determine the current academic year and semester
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $currentSemester = ($currentMonth >= 1 && $currentMonth <= 6) ? 1 : 2;
+        $academicYearDisplay = ($currentSemester == 1) ? "$currentYear-" . ($currentYear + 1) : ($currentYear - 1) . "-$currentYear";
+
         // Fetch the SFE records for the student
         $sfeRecords = DB::table('course_sfe_students')
-            ->where('student_no', $userId)
+            ->join('classes', 'course_sfe_students.course_id', '=', 'classes.course_id')
+            ->join('aysems', 'classes.aysem_id', '=', 'aysems.id')
+            ->where('course_sfe_students.student_no', $userId)
+            ->where('aysems.academic_year', $currentYear)
+            ->where('aysems.semester', $currentSemester)
+            ->select('course_sfe_students.*')
             ->get();
 
         // Prepare data for each SFE record
@@ -51,8 +63,16 @@ class StudentEvaluationController extends Controller
             ];
         });
 
+        // Determine if any status is "Incomplete"
+        $hasIncompleteStatus = $sfeData->contains(function ($data) {
+            return $data['status'] === 'Incomplete';
+        });
+
         return view('Student.student-evaluation', [
-            'sfeData' => $sfeData
+            'sfeData' => $sfeData,
+            'hasIncompleteStatus' => $hasIncompleteStatus,
+            'academicYearDisplay' => $academicYearDisplay,
+            'currentSemester' => $currentSemester
         ]);    
     }
 }

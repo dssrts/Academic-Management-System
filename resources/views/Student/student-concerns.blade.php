@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLM AMS</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Ensure the dropdown appears below the input field */
+        select#recipientemail {
+            max-height: 200px; /* Set maximum height */
+            overflow-y: auto;  /* Enable vertical scrolling */
+        }
+    </style>
     @vite('resources/css/app.css')
 </head>
 <body class="bg-opacity-80" style="background-image: url('images/PLM.png'); background-size: cover; font-family: 'Inter', sans-serif;">
     <div class="flex flex-col h-screen">
         <!-- Header -->
-        <div class="bg-white flex items-center justify-between p-4">
-            <div class="flex items-center">
-                <img src="images/plm-logo.png" alt="PLM AMS" class="h-9 ml-3 mr-2">
-                <h1 class="text-[24px] font-bold ml-2 text-blue"> PLM AMS</h1>
-            </div>
-        </div>
+        @include('components.student-header')
 
         <div class="flex flex-1 overflow-hidden">
             <!-- Sidebar Component with activePage -->
@@ -28,13 +30,13 @@
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">SUBMIT CONCERNS</h1>
                     </div>
                     <div class="p-8 font-inter text-[14px]">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('student.concerns.submit') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-4">
                                 <label for="studentnumber" class="block text-sm font-bold text-gray-700">
                                     Student Number
                                 </label>
-                                <input type="text" id="studentnumber" name="studentnumber" {{--value="{{ $students->student_no }}--}}
+                                <input type="text" id="studentnumber" name="studentnumber" value="{{ $student_no }}"
                                     class="pl-2 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 
                                     block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" readonly>
                             </div>
@@ -44,11 +46,6 @@
                                 </label>
                                 <select id="recipientemail" name="recipientemail"
                                     class="pl-1 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
-                                    {{-- @foreach (DB::table('users')->where('department_id', $students->degree_program)->where('account_type', 'Chairperson')->get() as $user)
-                                        <option value={{ $user->email }}>
-                                            {{ $user->email }}
-                                        </option>
-                                    @endforeach --}}
                                 </select>
                             </div>
                             <div class="mb-4">
@@ -58,6 +55,7 @@
                                 <select id="subject" name="subject"
                                     class="pl-1 bg-blue-hover bg-opacity-10 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required>
                                     <option value="Academic Performance Concerns">Academic Performance Concerns</option>
+                                    <option value="Course Grade Concerns">Course Grade Concerns</option>
                                     <option value="Leave of Absence Request (LOA)">Leave of Absence Request (LOA)</option>
                                     <option value="Class Schedule Conflicts">Class Schedule Conflicts</option>
                                     <option value="Scholarship Compliance">Scholarship Compliance</option>
@@ -72,7 +70,7 @@
                                 </select>
                             </div>
                             <div class="mb-4">
-                                <label for="message" class="block text-sm font-bold text-gray-700" required>
+                                <label for="message" class="block text-sm font-bold text-gray-700">
                                     Message
                                 </label>
                                 <textarea id="message" name="message" rows="4" placeholder="Enter Something..."
@@ -130,5 +128,35 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.0/dist/alpine.min.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const subjectSelect = document.getElementById('subject');
+            const recipientEmailSelect = document.getElementById('recipientemail');
+
+            subjectSelect.addEventListener('change', function () {
+                const selectedSubject = this.value;
+
+                fetch("{{ route('fetch.emails') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ subject: selectedSubject })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    recipientEmailSelect.innerHTML = '';
+                    data.forEach(email => {
+                        const option = document.createElement('option');
+                        option.value = email;
+                        option.text = email;
+                        recipientEmailSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching emails:', error));
+            });
+        });
+    </script>
 </body>
 </html>

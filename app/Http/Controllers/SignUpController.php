@@ -212,20 +212,29 @@ class SignUpController extends Controller
             
             $userId = Auth::id(); // Get the authenticated user's ID
             $user = Auth::user();
-
             if ($user->usertype == "student") {
                 $student = Student::where('student_no', $userId)->first();
                 $studentTerms = DB::table('student_terms')->where('student_no', $student->student_no)->first();
                 $program = DB::table('programs')->where('id', $studentTerms->program_id)->first();
                 $college = DB::table('colleges')->where('id', $program->college_id)->first();
-
+            
+                // Fetch all grades for the student
+                $grades = DB::table('grades')->where('student_no', $student->student_no)->pluck('grade');
+            
+                // Calculate the General Weighted Average (GWA)
+                $totalGrades = $grades->sum();
+                $numGrades = $grades->count();
+                $gwa = $numGrades ? round($totalGrades / $numGrades, 3) : 0;
                 return view('Student.student-information', [
                     'student' => $student,
                     'studentTerms' => $studentTerms,
                     'program' => $program,
-                    'college' => $college
+                    'college' => $college,
+                    'grades' => $grades,
+                    'gwa' => $gwa
                 ]);
-            }                   
+            }
+                        
             else {
                 $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
                 $program = null;

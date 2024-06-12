@@ -15,7 +15,7 @@ class AysemsTableSeeder extends Seeder
      */
     public function run()
     {
-        $academicYears = [2023, 2024, 2025];
+        $academicYears = [2023, 2024, 2024];
         $entryCount = 0;
 
         foreach ($academicYears as $year) {

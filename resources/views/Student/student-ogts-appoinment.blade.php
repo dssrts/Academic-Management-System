@@ -16,13 +16,7 @@
 <body class="bg-opacity-80" style="background-image: url('images/PLM.png'); background-size: cover; font-family: 'Inter', sans-serif;">
     <div class="flex flex-col h-screen">
         <!-- Header -->
-        <div class="bg-white flex items-center justify-between p-4">
-            <div class="flex items-center">
-                <img src="images/plm-logo.png" alt="PLM AMS" class="h-9 ml-3 mr-2">
-                <h1 class="text-[20px] font-bold ml-2 text-blue"> PLM AMS</h1>
-            </div>
-        </div>
-
+        @include('components.student-header')
         <div class="flex flex-1 overflow-hidden">
             <!-- Sidebar Component with activePage -->
             @include('components.student-sidebar', ['activePage' => 'Student Services'])

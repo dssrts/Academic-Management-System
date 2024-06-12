@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SignUpController;
 use vendor\filament\filament\resources\views\pages;
 use App\Http\Controllers\ChairpersonController;
+use App\Http\Controllers\StudentBookController;
+use App\Http\Controllers\StudentConcernController;
 use App\Http\Controllers\StudentEvaluationController;
 use App\Http\Controllers\StudentGradesController;
 use App\Http\Controllers\StudentInboxController;
@@ -66,12 +68,15 @@ Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class,
 
 Route::get('/student-concerns', function () { return view('Student.student-concerns'); });
 Route::get('/student-evaluation',[StudentEvaluationController::class, 'get']);
-Route::get('/student-grades',[StudentGradesController::class, 'get']);
+Route::get('/student-grades', [StudentGradesController::class, 'get'])->name('student.grades');
 Route::get('/student-inbox',[StudentInboxController::class, 'get']);
 Route::get('/student-information',[StudentInformationController::class, 'get']);
 Route::get('/student-schedules',[StudentSchedulesController::class, 'get']);
 Route::get('/student-services',[StudentServicesController::class, 'get']);
-Route::get('/student-ogts-appoinment',[StudentServicesController::class, 'get']);
+Route::get('/student-ogts-appoinment',[StudentBookController::class, 'get']);
+Route::post('/student-concerns/submit', [StudentConcernController::class, 'submit'])->name('student.concerns.submit');
+Route::get('/student-concerns', [StudentConcernController::class, 'get'])->name('student.concerns.get');
+Route::post('/fetch-emails', [StudentConcernController::class, 'fetchEmails'])->name('fetch.emails');
 
 
 

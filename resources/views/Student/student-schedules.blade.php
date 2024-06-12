@@ -10,12 +10,7 @@
 <body class="bg-opacity-80" style="background-image: url('images/PLM.png'); background-size: cover; font-family: 'Inter', sans-serif;">
     <div class="flex flex-col h-screen">
         <!-- Header -->
-        <div class="bg-white flex items-center justify-between p-4">
-            <div class="flex items-center">
-                <img src="images/plm-logo.png" alt="PLM AMS" class="h-9 ml-3 mr-2">
-                <h1 class="text-[24px] font-bold ml-2 text-blue"> PLM AMS</h1>
-            </div>
-        </div>
+        @include('components.student-header')
 
         <div class="flex flex-1 overflow-hidden">
             <!-- Sidebar Component with activePage -->
@@ -40,25 +35,27 @@
                     <div class="flex items-center justify-center bg-blue text-white p-4 rounded-t-lg">
                         <h2 class="font-bold text-[20px] italic">Class Schedule</h2>
                     </div>
-                    <div class="p-4 overflow-x-auto ">
-                        <table class=" text-[14px] min-w-full bg-white border border-gray-200">
+                    <div class="p-4 overflow-y-auto max-h-[500px] w-full">
+                        <table class="text-[14px] min-w-full bg-white border border-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="py-2 px-4 border-b">Course Subject</th>
-                                    <th class="py-2 px-4 border-b">Course ID</th>
-                                    <th class="py-2 px-4 border-b">Professor</th>
-                                    <th class="py-2 px-4 border-b">Building</th>
-                                    <th class="py-2 px-4 border-b">Time</th>
+                                    <th class="py-2 px-4 border-b text-left">Course Subject</th>
+                                    <th class="py-2 px-4 border-b text-left">Course ID</th>
+                                    <th class="py-2 px-4 border-b text-left">Professor</th>
+                                    <th class="py-2 px-4 border-b text-left">Building</th>
+                                    <th class="py-2 px-4 border-b text-left">Time</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($schedules as $schedule)
                                 <tr>
-                                    <td class="py-2 px-4 border-b"></td>
-                                    <td class="py-2 px-4 border-b"></td>
-                                    <td class="py-2 px-4 border-b"></td>
-                                    <td class="py-2 px-4 border-b"></td>
-                                    <td class="py-2 px-4 border-b"></td>
+                                    <td class="py-2 px-4 border-b text-left">{{ $schedule->subject_title }}</td>
+                                    <td class="py-2 px-4 border-b text-left">{{ $schedule->subject_code }}</td>
+                                    <td class="py-2 px-4 border-b text-left">{{ $schedule->professor_name }}</td>
+                                    <td class="py-2 px-4 border-b text-left">{{ $schedule->building }}</td>
+                                    <td class="py-2 px-4 border-b text-left">{{ $schedule->time }}</td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

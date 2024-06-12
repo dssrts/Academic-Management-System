@@ -28,10 +28,13 @@ class DatabaseSeeder extends Seeder
        
         $this->call(ClassesTableSeeder::class);
         // ClassModel::factory()->count(100)->create();
-        $this->call(GradesTableSeeder::class);
-        $this->call(ClassSchedulesSeeder::class);
         // $this->call(ScheduleSeeder::class);
         $this->call(StudentClassesSeeder::class);
+        $this->call(ClassFacultySeeder::class);
+        $this->call(GradesTableSeeder::class);
+        $this->call(BuildingsTableSeeder::class);
+        $this->call(RoomsTableSeeder::class);
+        $this->call(ClassSchedulesSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

@@ -17,14 +17,13 @@ class GradesTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Fetch all student numbers from the students table
-        $studentNumbers = DB::table('students')->pluck('student_no')->toArray();
-        $classIds = DB::table('classes')->pluck('id')->toArray();
+        // Fetch all combinations of student_no and class_id from student_classes table
+        $studentClasses = DB::table('student_classes')->get(['class_id', 'student_no']);
 
         // Possible grades
         $grades = [1, 1.25, 1.75, 2, 2.25, 2.5, 2.75, 3, 5];
 
-        foreach (range(1, 50) as $index) {
+        foreach ($studentClasses as $studentClass) {
             $grade = $faker->randomElement($grades);
             $remarks = ($grade <= 3) ? 'passed' : 'failed';
 
@@ -36,8 +35,8 @@ class GradesTableSeeder extends Seeder
                 'finalization_date' => $faker->optional()->date(),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'class_id' => $faker->randomElement($classIds), // Assuming you have classes
-                'student_no' => $faker->randomElement($studentNumbers), // Get a random student_no from the students table
+                'class_id' => $studentClass->class_id,
+                'student_no' => $studentClass->student_no,
             ]);
         }
     }

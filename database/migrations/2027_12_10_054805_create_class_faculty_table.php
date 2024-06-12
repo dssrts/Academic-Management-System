@@ -27,13 +27,6 @@ return new class extends Migration
             $table->foreignId('instructor_id')->onDelete('cascade');
         });
 
-        DB::table('class_faculty')->insert([
-            ['id' => 1, 'class_id' => 1, 'instructor_id' => 2, 'created_at' => null, 'updated_at' => null],
-            ['id' => 2, 'class_id' => 2, 'instructor_id' => 3, 'created_at' => null, 'updated_at' => null],
-            ['id' => 3, 'class_id' => 3, 'instructor_id' => 3, 'created_at' => null, 'updated_at' => null],
-            ['id' => 4, 'class_id' => 4, 'instructor_id' => 4, 'created_at' => null, 'updated_at' => null],
-            ['id' => 5, 'class_id' => 5, 'instructor_id' => 4, 'created_at' => null, 'updated_at' => null],
-        ]);
     }
 
     /**
