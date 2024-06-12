@@ -22,12 +22,16 @@
                     <div class="text-[20px] font-bold text-blue">
                     </div>
                     <div class="flex space-x-5 text-[14px]">
-                        <button class="bg-blue hover:bg-blue-hover text-white font-bold py-2 px-4 rounded">
-                            Academic Calendar
-                        </button>
-                        <button class="bg-blue hover:bg-blue-hover text-white font-bold py-2 px-4 rounded text-[14px]">
-                            Go to Classroom
-                        </button>
+                        <a href="{{ asset('images/academic-calendar-2024.jpg') }}" download>
+                            <button class="bg-blue hover:bg-blue-hover text-white font-bold py-2 px-4 rounded">
+                                Academic Calendar
+                            </button>
+                        </a>                        
+                        <a href="https://www.microsoft.com/en-us/microsoft-teams/log-in" target="_blank">
+                            <button class="bg-blue hover:bg-blue-hover text-white font-bold py-2 px-4 rounded text-[14px]">
+                                Go to Classroom
+                            </button>
+                        </a>                        
                     </div>
                 </div>
                 <!-- Status Table -->

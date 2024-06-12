@@ -77,6 +77,7 @@ Route::get('/student-ogts-appoinment',[StudentBookController::class, 'get']);
 Route::post('/student-concerns/submit', [StudentConcernController::class, 'submit'])->name('student.concerns.submit');
 Route::get('/student-concerns', [StudentConcernController::class, 'get'])->name('student.concerns.get');
 Route::post('/fetch-emails', [StudentConcernController::class, 'fetchEmails'])->name('fetch.emails');
+Route::post('/student-ogts-appoinment', [StudentBookController::class, 'submit'])->name('ogts.booking.submit');
 
 
 

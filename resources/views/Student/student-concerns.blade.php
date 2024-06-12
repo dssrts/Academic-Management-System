@@ -83,7 +83,7 @@
                                 <input type="submit"
                                     class="bg-blue px-3 w-1/5 text-center rounded-2xl text-[13px] font-inter font-semibold text-white-10 h-5 mt-1 pb-1 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95"
                                     value="Submit">
-                                @if (isset($send) && $send === 'success')
+                                    @if (session('send') === 'success')
                                     <svg height="20px" class="ml-4 mr-2 mt-[3px]" version="1.1"
                                         viewBox="0 0 20 20" width="20px" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
@@ -107,7 +107,7 @@
                                     <p class="font-inter mt-1 text-[12px] text-green font-semibold" id="file_input_help">
                                         Sent
                                     </p>
-                                @elseif (isset($send) && $send === 'error')
+                                @elseif (session('send') === 'error')
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         class="ml-4 mr-2 mt-[3px]" fill="#E63049" class="bi bi-x-circle"
                                         viewBox="0 0 16 16">
@@ -119,6 +119,7 @@
                                         Request Error
                                     </p>
                                 @endif
+                                
                             </div>
                         </form>
                     </div>

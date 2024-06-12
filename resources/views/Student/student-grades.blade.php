@@ -25,12 +25,12 @@
             @include('components.student-sidebar', ['activePage' => 'Grades'])
 
             <!-- Main content -->
-            <div class="flex-1 p-10 overflow-hidden">
+            <div class="flex-1 flex items-center justify-center p-10 overflow-hidden">
                 <!-- GWA Graph Section -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
                     <div class="flex justify-between items-center mb-4">
                         <div>
-                            <h2 class="text-2xl font-bold text-blue">Graph of Overall GWA</h2>
+                            <h2 class="text-2xl mr-24 font-bold text-blue">Graph of Overall GWA</h2>
                             <p>Per Semester</p>
                         </div>
                         <div class="flex items-center">

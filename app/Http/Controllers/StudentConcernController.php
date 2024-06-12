@@ -32,17 +32,18 @@ class StudentConcernController extends Controller
         return response()->json($emails);
     }
 
-    public function submit(Request $request)
-    {
-        // Validate the form data
-        $request->validate([
-            'studentnumber' => 'required|string',
-            'recipientemail' => 'required|string|email',
-            'subject' => 'required|string',
-            'message' => 'required|string',
-            'pdf_file' => 'nullable|mimes:pdf|max:2048'
-        ]);
+public function submit(Request $request)
+{
+    // Validate the form data
+    $request->validate([
+        'studentnumber' => 'required|string',
+        'recipientemail' => 'required|string|email',
+        'subject' => 'required|string',
+        'message' => 'required|string',
+        'pdf_file' => 'nullable|mimes:pdf|max:2048'
+    ]);
 
+    try {
         // Get the form data
         $student_no = $request->input('studentnumber');
         $recipient_email = $request->input('recipientemail');
@@ -77,6 +78,12 @@ class StudentConcernController extends Controller
 
         // Return a response or redirect
         return redirect()->back()->with('send', 'success');
+
+    } catch (\Exception $e) {
+        // Handle the error
+        return redirect()->back()->with('send', 'error');
     }
+}
+
 }
 

@@ -12,15 +12,25 @@ class StudentGradesController extends Controller
     {
         $userId = Auth::id(); // Get the authenticated user's ID
 
-        // Get the 'aysem' value from the request or default to the current year
-        $aysem = $request->input('aysem', Carbon::now()->year);
+        // Get the 'aysem' value from the request or default to the current year and semester 1
+        $aysem = $request->input('aysem', Carbon::now()->year . '1');
+
+        // Parse the aysem input to get the year and semester
+        $academicYear = substr($aysem, 0, 4);
+        $semester = substr($aysem, 4, 1);
 
         // Fetch grades data based on the aysem filter
         $gradesData = DB::table('grades')
             ->join('classes', 'grades.class_id', '=', 'classes.id')
             ->join('aysems', 'classes.aysem_id', '=', 'aysems.id')
             ->where('grades.student_no', $userId)
-            ->where('aysems.academic_year', '<=', $aysem)
+            ->where(function ($query) use ($academicYear, $semester) {
+                $query->where('aysems.academic_year', '>', $academicYear)
+                    ->orWhere(function ($query) use ($academicYear, $semester) {
+                        $query->where('aysems.academic_year', '=', $academicYear)
+                            ->where('aysems.semester', '>=', $semester);
+                    });
+            })
             ->select(
                 'aysems.academic_year', 
                 'aysems.semester', 

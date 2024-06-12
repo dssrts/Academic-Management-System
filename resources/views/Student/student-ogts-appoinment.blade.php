@@ -42,11 +42,22 @@
 
                 <!-- Main content -->
                 <div class="flex-1 p-4 overflow-hidden w-full max-w-[750px]">
+                    @if (session('success'))
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                            <strong class="font-bold">Success!</strong>
+                            <span class="block sm:inline">{{ session('success') }}</span>
+                            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                                <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M14.348 14.849l-3.849-3.849-3.849 3.849-1.402-1.402 3.849-3.849-3.849-3.849 1.402-1.402 3.849 3.849 3.849-3.849 1.402 1.402-3.849 3.849 3.849 3.849z"/>
+                                </svg>
+                            </span>
+                        </div>
+                    @endif
                     <div class="h-16 bg-blue rounded-tr-lg rounded-tl-lg flex justify-center items-center">
                         <h1 class="font-bold font-inter text-[20px] text-white-10 italic">BOOK AN APPOINMENT WITH OGTS</h1>
                     </div>
                     <div class="pr-8 pl-8 pb-8 pt-4 font-inter text-[14px] bg-white-10">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('ogts.booking.submit') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="plmemail" class="block text-[12px] font-bold text-black-300">
@@ -85,12 +96,13 @@
                                     required></textarea>
                             </div>
                             <div class="flex justify-center mt-4">
-                                <button type="button"
+                                <button type="submit"
                                     class="bg-blue px-4 py-2 w-36 h-9 text-center rounded-xl text-[13px] font-inter font-semibold text-white-10 transition duration-150 ease-in-out hover:bg-blue-hover hover:drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] hover:opacity-95">
                                     Book
                                 </button>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
                 <div class="flex space-x-2 mt-2">
