@@ -61,7 +61,6 @@
 
     .chart-container {
         width: 250px;
-
     }
 
     .legend-box {
@@ -115,8 +114,8 @@
                 <div id="info">
                     <span class="font-bold mb-3">SFE statistics:</span>
                     <div id="info-text">
-                        <p class="font-bold">70%</p>
-                        <p style="font-size:1rem">1,560 students answered</p>
+                        <p class="font-bold">{{ round($sfePercentage, 2) }}%</p>
+                        <p style="font-size:1rem">{{ $sfeCount }} students answered</p>
                     </div>
                 </div>
             </div>

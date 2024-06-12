@@ -134,7 +134,7 @@
                             <select id="class_subject" name="class_id" class="mt-1 block w-full"
                                 style="background-color:#d9dadb;">
                                 @foreach($classes as $class)
-                                <option value="{{ $class->id }}">{{ $class->id }}</option>
+                                <option value="{{ $class->id }}">{{ $class->course->subject_code }}</option>
                                 @endforeach
                             </select>
                         </div>
