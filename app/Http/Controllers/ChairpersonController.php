@@ -140,50 +140,28 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
         return view('Chairperson.cp-view-student-info', compact('student', 'studentRecords', 'classes', 'user'));
     }
     public function viewAppeals(Request $request)
-    {
-        $userId = Auth::id();
+{
+    $userId= Auth::user()->id;
+    // Load all appeals from the database
+    $appeals = Appeal::where('user_id', $userId)->paginate(20);
+
+    $btns = [
+        'dashboard' => false,
+        'information' => false,
+        'grades' => false,
+        'process' => false,
+        'inbox' => false,
+        'classroom' => false,
+        'appeals' => true,
+        'professors' => true,
+    ];
+
+    $user = Auth::user();
+    return view('Chairperson.cp-view-appeals', compact('appeals', 'btns', 'user'));
+}
+
     
-        // Validate the request inputs
-        $request->validate([
-            'start_date' => 'nullable|date_format:Y-m-d',
-            'remarks' => 'nullable|in:remarked,not_done',
-        ]);
-    
-        // Apply filters if present
-        $appealsQuery = Appeal::where('user_id', $userId);
-    
-        if ($request->has('start_date') && $request->start_date) {
-            // Convert start_date to a Carbon instance for better compatibility
-            $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', $request->start_date)->startOfDay();
-            $appealsQuery->where('created_at', '>=', $startDate);
-        }
-    
-        if ($request->has('remarks') && $request->remarks) {
-            if ($request->remarks == 'remarked') {
-                $appealsQuery->whereNotNull('remarks');
-            } elseif ($request->remarks == 'not_done') {
-                $appealsQuery->whereNull('remarks');
-            }
-        }
-    
-        $appeals = $appealsQuery->with(['student' => function($query) {
-            $query->select('id', 'plm_email');
-        }])->paginate(20);
-    
-        $btns = [
-            'dashboard' => false,
-            'information' => false,
-            'grades' => false,
-            'process' => false,
-            'inbox' => false,
-            'classroom' => false,
-            'appeals' => true,
-            'professors' => true,
-        ];
-    
-        $user = Auth::user();
-        return view('Chairperson.cp-view-appeals', compact('appeals', 'btns', 'user'));
-    }
+
 
     public function saveRemarks(Request $request)
 {

@@ -127,7 +127,7 @@
     <title>Appeals Inbox</title>
 </head>
 
-<body x-data="{ appeals: {{ json_encode($appeals) }}, search: '' }">
+<body>
     <div class="w-screen h-screen flex flex-row">
         <!-- Sidebar -->
         <x-chairperson-sidebar />
@@ -150,7 +150,7 @@
                         <td>
                             <div class="search-bar-container">
                                 <input type="text" class="search-bar" placeholder="Search by Subject..."
-                                    x-model="search">
+                                    id="searchInput">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" class="search-bar-icon" width="24" height="24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -161,36 +161,64 @@
                     </tr>
                     <tr>
                         <td>
-                            <template
-                                x-for="appeal in appeals.filter(a => a.subject.toLowerCase().includes(search.toLowerCase()))">
-                                <div class="appeal-item">
+                            <div id="appealsContainer">
+                                @foreach($appeals as $appeal)
+                                <div class="appeal-item" data-subject="{{ $appeal->subject }}">
                                     <div class="appeal-header">
                                         <div>
-                                            <div class="appeal-subject" x-text="appeal.subject"></div>
-                                            <div class="appeal-from" x-text="'From: ' + appeal.student.plm_email"></div>
+                                            <div class="appeal-subject">{{ $appeal->subject }}</div>
+                                            {{-- <div class="appeal-from">From: {{ $appeal->student->plm_email }}</div>
+                                            --}}
                                         </div>
                                         <a href="#" class="view-full">👁️ View Full Concern</a>
                                     </div>
-                                    <div class="appeal-message" x-text="appeal.message"></div>
+                                    <div class="appeal-message">{{ $appeal->message }}</div>
                                     <div>
                                         <label for="status" class="block text-sm font-medium">Select Status:</label>
                                         <select name="status" class="status-select">
-                                            <option value="pending" :selected="appeal.remarks == 'pending'">Pending
+                                            <option value="pending" @if($appeal->remarks == 'pending') selected
+                                                @endif>Pending
                                             </option>
-                                            <option value="approved" :selected="appeal.remarks == 'approved'">Approved
+                                            <option value="approved" @if($appeal->remarks == 'approved') selected
+                                                @endif>Approved
                                             </option>
-                                            <option value="denied" :selected="appeal.remarks == 'denied'">Denied
+                                            <option value="denied" @if($appeal->remarks == 'denied') selected
+                                                @endif>Denied
                                             </option>
                                         </select>
                                     </div>
                                 </div>
-                            </template>
+                                @endforeach
+                            </div>
                         </td>
                     </tr>
                 </table>
+                <div class="mt-4">
+                    {{ $appeals->links() }}
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const appealsContainer = document.getElementById('appealsContainer');
+            const appeals = Array.from(appealsContainer.getElementsByClassName('appeal-item'));
+
+            searchInput.addEventListener('input', function () {
+                const searchValue = this.value.toLowerCase();
+                appeals.forEach(appeal => {
+                    const subject = appeal.getAttribute('data-subject').toLowerCase();
+                    if (subject.includes(searchValue)) {
+                        appeal.style.display = '';
+                    } else {
+                        appeal.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
