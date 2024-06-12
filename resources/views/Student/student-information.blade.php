@@ -38,8 +38,13 @@
                 <div class="w-full">
                     <div class="flex justify-between mb-4">
                         <div class="flex-1"></div>
-                        <button class="bg-blue text-white px-3 py-2 rounded font-bold">Student Portal</button>
-                    </div>
+                        <div class="flex items-center bg-blue text-white px-3 py-2 rounded font-bold space-x-2">
+                            <svg  class = "mr-2 "width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.792 13.896L11.792 18.896L7.79203 7.896L18.792 11.896L13.792 13.896ZM13.792 13.896L18.792 18.896M5.98027 1.13452L6.75672 4.0323M3.92826 6.86072L1.03049 6.08426M12.7417 2.94629L10.6204 5.06761M4.96367 10.7244L2.84234 12.8457" stroke="#EFF0FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Student Portal
+                        </div>
+                    </div>                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 max-w-4xl mx-auto">
                         <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between h-48">
                             <div class="mb-2">
@@ -47,7 +52,7 @@
                                 <p class="text-gray-700 text-xs">1ST SEM - AY 2023-2024</p>
                             </div>
                             <div class="progress-bar mt-1">
-                                <div class="progress-bar-fill" style="width: 50%;">50%</div>
+                                <div class="progress-bar-fill" style="width: {{ $semProgress }}%;">{{ $semProgress }}%</div>
                             </div>
                         </div>
 

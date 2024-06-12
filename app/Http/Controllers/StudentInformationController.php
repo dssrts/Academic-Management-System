@@ -37,14 +37,24 @@ class StudentInformationController extends Controller
         // Calculate the General Weighted Average (GWA)
         $totalGrades = $grades->sum();
         $numGrades = $grades->count();
-        $gwa = $numGrades ? round($totalGrades / $numGrades, 3) : 0;
+        $gwa = $numGrades? round($totalGrades / $numGrades, 3) : 0;
+    
+        // Determine the current semester and calculate progress
+        $currentDate = Carbon::now();
+        $semesterStart = $currentDate->month <= 6? Carbon::createFromDate($currentDate->year, 1, 1) : Carbon::createFromDate($currentDate->year, 7, 1);
+        $semesterEnd = $currentDate->month <= 6? Carbon::createFromDate($currentDate->year, 6, 30) : Carbon::createFromDate($currentDate->year, 12, 31);
+        $daysInSemester = $semesterEnd->diffInDays($semesterStart);
+        $elapsedDays = $currentDate->diffInDays($semesterStart);
+        $progressPercentage = ($elapsedDays / $daysInSemester) * 100;
+    
         return view('Student.student-information', [
             'student' => $student,
             'studentTerms' => $studentTerms,
             'program' => $program,
             'college' => $college,
             'grades' => $grades,
-            'gwa' => $gwa
+            'gwa' => $gwa,
+            'semProgress' => round($progressPercentage, 2) // Return the semester progress as a rounded percentage
         ]);
     }
 }

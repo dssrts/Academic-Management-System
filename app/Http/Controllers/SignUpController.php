@@ -208,8 +208,7 @@ class SignUpController extends Controller
         $user_id = $request->user_id;
         $password = $request->password;
 
-        if (Auth::attempt(['id' => $user_id, 'password' => $password])) {
-            
+        if (Auth::attempt(['id' => $user_id, 'password' => $password])) {    
             $userId = Auth::id(); // Get the authenticated user's ID
             $user = Auth::user();
             if ($user->usertype == "student") {
@@ -224,17 +223,26 @@ class SignUpController extends Controller
                 // Calculate the General Weighted Average (GWA)
                 $totalGrades = $grades->sum();
                 $numGrades = $grades->count();
-                $gwa = $numGrades ? round($totalGrades / $numGrades, 3) : 0;
+                $gwa = $numGrades? round($totalGrades / $numGrades, 3) : 0;
+            
+                // Determine the current semester and calculate progress
+                $currentDate = Carbon::now();
+                $semesterStart = $currentDate->month <= 6? Carbon::createFromDate($currentDate->year, 1, 1) : Carbon::createFromDate($currentDate->year, 7, 1);
+                $semesterEnd = $currentDate->month <= 6? Carbon::createFromDate($currentDate->year, 6, 30) : Carbon::createFromDate($currentDate->year, 12, 31);
+                $daysInSemester = $semesterEnd->diffInDays($semesterStart);
+                $elapsedDays = $currentDate->diffInDays($semesterStart);
+                $progressPercentage = ($elapsedDays / $daysInSemester) * 100;
+            
                 return view('Student.student-information', [
                     'student' => $student,
                     'studentTerms' => $studentTerms,
                     'program' => $program,
                     'college' => $college,
                     'grades' => $grades,
-                    'gwa' => $gwa
+                    'gwa' => $gwa,
+                    'semProgress' => round($progressPercentage, 2) // Return the semester progress as a rounded percentage
                 ]);
-            }
-                        
+            }  
             else {
                 $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
                 $program = null;
