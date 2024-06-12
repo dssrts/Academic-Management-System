@@ -79,6 +79,8 @@
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 10px;
+            margin-left: 1rem;
+            margin-right: 1rem;
         }
 
         .appeal-header {
