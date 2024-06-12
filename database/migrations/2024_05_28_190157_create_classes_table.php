@@ -28,7 +28,7 @@ return new class extends Migration
             $table->date('effectivity_dateSL')->nullable();
             $table->timestamps();
             $table->foreignId('course_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('aysem_id');
+            $table->foreignId('aysem_id')->constrained('aysems'); // Add the aysem_id column and foreign key constraint
             $table->integer('block_id');
         });
     }

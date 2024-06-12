@@ -24,7 +24,6 @@ export default {
 
           'white':{
             10:  "#FFFFFF" ,
-            20:  "#F0F0F0" ,
             30:  "#D6D7D8" ,
             100: "#141B29" , 
           },

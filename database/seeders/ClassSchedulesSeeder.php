@@ -16,9 +16,11 @@ class ClassSchedulesSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        $classIds = DB::table('classes')->pluck('id')->toArray();
         
-
+        // Fetch all class IDs and room IDs
+        $classIds = DB::table('classes')->pluck('id')->toArray();
+        $roomIds = DB::table('rooms')->pluck('id')->toArray();
+        
         foreach ($classIds as $classId) {
             foreach (range(1, 5) as $index) {
                 DB::table('class_schedules')->insert([
@@ -30,7 +32,7 @@ class ClassSchedulesSeeder extends Seeder
                     'updated_at' => now(),
                     'class_id' => $classId,
                     'class_mode_id' => $faker->randomElement([1, 2]),
-                    'room_id' => $faker->randomElement([100,200,300,400]),
+                    'room_id' => $faker->randomElement($roomIds), // Pick random room_id from the rooms table
                 ]);
             }
         }
