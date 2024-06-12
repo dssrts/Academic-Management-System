@@ -176,6 +176,9 @@
 
         .modal-body p {
             margin: 5px 0;
+            padding: 1rem;
+            background-color: #b4b4b4;
+            border-radius: 4px;
         }
 
         .modal-body label {
@@ -236,6 +239,7 @@
                                             data-status="{{ $appeal->remarks }}" data-email="{{ $appeal->email }}"
                                             data-student-number="{{ $appeal->student_no }}">👁️ View Full Concern</a>
                                     </div>
+                                    <div class="appeal-from">From: {{ $appeal->student_no }}</div>
                                     <div class="appeal-message">{{ $appeal->message }}</div>
                                     <div>
                                         <label for="status" class="block text-sm font-medium">Select Status:</label>
@@ -274,10 +278,13 @@
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
-                <p><strong>Student Number:</strong> <span id="studentNumber"></span></p>
-                <p><strong>Sender Email:</strong> <span id="senderEmail"></span></p>
-                <p><strong>Subject:</strong> <span id="fullSubject"></span></p>
-                <p><strong>Message:</strong></p>
+                <label for="studentNumber"><strong>Student Number:</strong></label>
+                <p id="studentNumber"></p>
+                {{-- <label for="senderEmail"><strong>Sender Email:</strong></label>
+                <p id="senderEmail"></p> --}}
+                <label for="fullSubject"><strong>Subject:</strong></label>
+                <p id="fullSubject"></p>
+                <label for="fullMessage"><strong>Message:</strong></label>
                 <p id="fullMessage"></p>
                 <label for="modalStatus" class="block text-sm font-medium">Select Status:</label>
                 <form method="POST" id="modalStatusForm">
@@ -324,7 +331,7 @@
                     const studentNumber = this.getAttribute('data-student-number');
 
                     document.getElementById('studentNumber').textContent = studentNumber;
-                    document.getElementById('senderEmail').textContent = email;
+                    // document.getElementById('senderEmail').textContent = email;
                     document.getElementById('fullSubject').textContent = subject;
                     document.getElementById('fullMessage').textContent = message;
                     document.getElementById('modalStatusForm').action = '/appeals/' + id;
