@@ -177,17 +177,22 @@
                                     <div class="appeal-message">{{ $appeal->message }}</div>
                                     <div>
                                         <label for="status" class="block text-sm font-medium">Select Status:</label>
-                                        <select name="status" class="status-select">
-                                            <option value="pending" @if($appeal->remarks == 'pending') selected
-                                                @endif>Pending
-                                            </option>
-                                            <option value="approved" @if($appeal->remarks == 'approved') selected
-                                                @endif>Approved
-                                            </option>
-                                            <option value="denied" @if($appeal->remarks == 'denied') selected
-                                                @endif>Denied
-                                            </option>
-                                        </select>
+                                        <form method="POST" action="{{ route('update-appeal', $appeal->id) }}"
+                                            class="status-form">
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="remarks" class="status-select" onchange="this.form.submit()">
+                                                <option value="pending" @if($appeal->remarks == 'pending') selected
+                                                    @endif>Pending
+                                                </option>
+                                                <option value="approved" @if($appeal->remarks == 'approved') selected
+                                                    @endif>Approved
+                                                </option>
+                                                <option value="denied" @if($appeal->remarks == 'denied') selected
+                                                    @endif>Denied
+                                                </option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </div>
                                 @endforeach
