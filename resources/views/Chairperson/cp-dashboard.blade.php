@@ -214,7 +214,7 @@
                             anchor: 'end',
                             align: 'start',
                             formatter: (value) => {
-                                return value;
+                                return (Math.round(value * 100) / 100).toFixed(2);
                             },
                             color: 'white',
                             font: {
