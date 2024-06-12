@@ -66,6 +66,7 @@ Route::get('/classes/{class}/edit', [ChairpersonController::class, 'editClass'])
 Route::post('/classes/{class}/update', [ChairpersonController::class, 'updateClass'])->name('update-class');
 Route::post('/save-remarks', [App\Http\Controllers\ChairpersonController::class, 'saveRemarks']);
 
+
 Route::get('/student-concerns', function () { return view('Student.student-concerns'); });
 Route::get('/student-evaluation',[StudentEvaluationController::class, 'get']);
 Route::get('/student-grades', [StudentGradesController::class, 'get'])->name('student.grades');
@@ -79,7 +80,11 @@ Route::get('/student-concerns', [StudentConcernController::class, 'get'])->name(
 Route::post('/fetch-emails', [StudentConcernController::class, 'fetchEmails'])->name('fetch.emails');
 Route::post('/student-ogts-appoinment', [StudentBookController::class, 'submit'])->name('ogts.booking.submit');
 
-
+Route::get('/assign-classes', [ChairpersonController::class, 'showAssignClassesForm'])->name('assign-classes.form');
+Route::post('/assign-classes', [ChairpersonController::class, 'assignClasses'])->name('assign-classes.store');
+Route::get('/send-email', [ChairpersonController::class, 'showSendEmailForm'])->name('send-email.form');
+Route::post('/send-email', [ChairpersonController::class, 'sendEmail'])->name('send-email.store');
+Route::put('/appeals/{id}', [ChairpersonController::class, 'updateAppeal'])->name('update-appeal');
 
 
 //logout chairperson

@@ -15,6 +15,7 @@ use App\Models\StudentRecord;
 use App\Models\StudentTerm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ChairpersonController extends Controller
 {
@@ -89,30 +90,46 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
     }
     
 
-    public function viewStudents(Request $request)
-    {
-        // Fetch students with pagination (20 per page)
-        $query = Student::query();
+    public function viewStudents()
+{
+    $user = Auth::user();
+    $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
+    $program = "test";
 
-        if ($request->filled('student_no')) {
-            $query->where('student_no', 'like', '%' . $request->input('student_no') . '%');
+    if ($employee) {
+        // Decode the JSON-encoded department_id
+        $departmentIds = json_decode($employee->department_id, true);
+        // Assuming you need the first department ID
+        $departmentId = $departmentIds[0] ?? null;
+
+        if ($departmentId) {
+            $program = \App\Models\Program::where('id', $departmentId)->first();
         }
-
-        // Fetch students with pagination (20 per page)
-        $students = $query->paginate(15);
-        
-        $btns = [
-            'dashboard' => false,
-            'information' => true,
-            'grades' => false,
-            'process' => false,
-            'inbox' => false,
-            'classroom' => false,
-            'professors' => true,
-        ];
-        $user = Auth::user();
-        return view('Chairperson.cp-view-students', compact('students', 'btns', 'user'));
     }
+    if ($employee) {
+        $departmentIds = json_decode($employee->department_id, true);
+        // Assuming you need the first department ID
+        $departmentId = $departmentIds[0] ?? null;
+
+        // Fetch student terms that belong to the same department
+        $studentTerms = \App\Models\StudentTerm::where('program_id', $departmentId)->get();
+    } else {
+        $studentTerms = collect(); // Empty collection if no employee found
+    }
+
+    $enrolledStudents = $studentTerms->where('enrolled', 1)->count();
+    $enlistedStudents = $studentTerms->where('enrolled', 0)->count();
+    $regularStudents = $studentTerms->where('registration_status_id', 1)->count();
+    $irregularStudents = $studentTerms->where('registration_status_id', 2)->count();
+
+    $studentsPerYearLevel = $studentTerms->groupBy('year_level')->map(function ($group) {
+        return $group->count();
+    })->toArray();
+
+    return view('Chairperson.cp-view-students', compact('enrolledStudents', 'enlistedStudents', 'regularStudents', 'irregularStudents', 'studentsPerYearLevel'));
+}
+
+
     public function viewStudent(Student $student)
     {
         $user = Auth::user();
@@ -124,7 +141,7 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
     }
     public function viewAppeals(Request $request)
     {
-        $userId = Auth::id();
+        $userId = Auth::user()->id;
     
         // Validate the request inputs
         $request->validate([
@@ -167,6 +184,19 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
         $user = Auth::user();
         return view('Chairperson.cp-view-appeals', compact('appeals', 'btns', 'user'));
     }
+
+    public function updateAppeal(Request $request, $id)
+{
+    $request->validate([
+        'remarks' => 'required|string|in:pending,approved,denied',
+    ]);
+
+    $appeal = Appeal::findOrFail($id);
+    $appeal->remarks = $request->input('remarks');
+    $appeal->save();
+
+    return redirect()->route('view-appeals')->with('success', 'Appeal status updated successfully.');
+}
 
     public function saveRemarks(Request $request)
 {
@@ -468,6 +498,27 @@ public function assignClasses(Request $request)
     ]);
 
     return redirect()->route('assign-classes.form')->with('success', 'Class assigned to instructor successfully.');
+}
+public function showSendEmailForm()
+{
+    return view('Chairperson.cp-laboratory');
+}
+
+public function sendEmail(Request $request)
+{
+    $validated = $request->validate([
+        'recipient_email' => 'required|email',
+        'subject' => 'required|string|max:255',
+        'message' => 'required|string',
+    ]);
+    
+    // Send the email
+    Mail::raw($validated['message'], function ($message) use ($validated) {
+        $message->to($validated['recipient_email'])
+                ->subject($validated['subject']);
+    });
+
+    return redirect()->route('send-email.form')->with('success', 'Email sent successfully.');
 }
 
 }
