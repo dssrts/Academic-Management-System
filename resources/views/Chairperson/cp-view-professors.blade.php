@@ -125,9 +125,9 @@
                     const ctx = chart.ctx;
                     const legend = chart.legend;
                     const legendBoxWidth = legend.width + 10;
-                    const legendBoxHeight = legend.height + 50;
+                    const legendBoxHeight = legend.height + 100;
                     const legendBoxX = (chart.width - legendBoxWidth) / 2;
-                    const legendBoxY = legend.top;
+                    const legendBoxY = legend.top+10;
 
                     ctx.save();
                     ctx.fillStyle = options.color || 'white';

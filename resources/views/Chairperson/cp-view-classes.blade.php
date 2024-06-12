@@ -150,10 +150,10 @@
                     datasets: [{
                         data: {!! json_encode(array_values($totalUnitsPerYear)) !!},
                         backgroundColor: [
-                            'rgba(173, 216, 230, 0.5)', // light blue
-                            'rgba(135, 206, 235, 0.5)', // sky blue
-                            'rgba(0, 191, 255, 0.5)',   // deep sky blue
-                            'rgba(30, 144, 255, 0.5)'   // dodger blue
+                            'rgba(173, 216, 230)', // light blue
+                            'rgba(135, 206, 235)', // sky blue
+                            'rgba(0, 191, 255)',   // deep sky blue
+                            'rgba(30, 144, 255)'   // dodger blue
                         ],
                         borderColor: [
                             'rgba(173, 216, 230, 1)',
