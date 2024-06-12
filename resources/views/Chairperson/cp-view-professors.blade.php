@@ -32,7 +32,6 @@
                 <div class="flex-1">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-3xl font-bold">List of Professors in your Department</h2>
-
                     </div>
                     <form method="GET" action="{{ route('view-professors') }}">
                         <input type="text" name="search" placeholder="Search by name or email..."
@@ -44,13 +43,16 @@
                         @else
                         <div class="overflow-x-auto">
                             <table class="w-full table-auto">
-                                <thead class="bg-blue" style="color:white">
-                                    <tr>
-                                        <th class="px-4 py-2">Last Name</th>
-                                        <th class="px-4 py-2">First Name</th>
+                                <thead class="border px-4 py-2">
+                                    <tr class="bg-blue" style="color:white">
+                                        <th colspan="4" class="text-center px-4 py-2">Faculty Information</th>
+                                    </tr>
+                                    <tr class="border px-4 py-2">
+                                        <th class="px-4 py-2 border">Last Name</th>
+                                        <th class="px-4 py-2 border">First Name</th>
                                         {{-- <th class="px-4 py-2">Middle Name</th> --}}
-                                        <th class="px-4 py-2">Email</th>
-                                        <th class="px-4 py-2">Teaching Subjects</th>
+                                        <th class="px-4 py-2 border">Email</th>
+                                        <th class="px-4 py-2 border">Teaching Subjects</th>
                                     </tr>
                                 </thead>
                                 <tbody>
