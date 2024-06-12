@@ -165,6 +165,8 @@
                             Students</p>
                         <p><span class="legend-color" style="background-color: rgba(79, 116, 187);"></span>4th Year
                             Students</p>
+                        <p><span class="legend-color" style="background-color: rgba(79, 116, 187);"></span>5th Year
+                            Students</p>
                         <p class="font-bold mt-2" style="color: #2D349A">Average GWA of Students Per Year Level</p>
                     </div>
                 </div>

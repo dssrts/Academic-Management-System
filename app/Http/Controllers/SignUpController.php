@@ -283,13 +283,25 @@ class SignUpController extends Controller
                     // Preparing data for Chart.js
                     $yearLevels = $grades->pluck('year_level')->toArray();
                     $averageGrades = $grades->pluck('average_grade')->toArray();
+
+                    $sfeCount = DB::table('course_sfe_students')
+                ->whereIn('student_no', $studentNos)
+                ->where('status', true)
+                ->distinct('student_no')
+                ->count();
+    
+                    $totalStudents = count($studentNos);
+                    $sfePercentage = ($totalStudents > 0) ? ($sfeCount / $totalStudents) * 100 : 0;
                     } else {
-                        $students = collect(); // Empty collection if no employee found
+                        $students = collect();
                         $yearLevels = [];
-                    $averageGrades = [];
+                        $averageGrades = [];
+                        $sfeCount = 0;
+                        $sfePercentage = 0;
                     }
                 
-                    return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students', 'yearLevels', 'averageGrades'));
+                    return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students', 'yearLevels', 'averageGrades', 'sfeCount', 'sfePercentage'));
+
             
                 // return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students'));
                 // return view('Chairperson.cp-dashboard', compact('btns', 'program'));
