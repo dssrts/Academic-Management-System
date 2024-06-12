@@ -117,10 +117,74 @@
             color: black;
             text-decoration: none;
             font-size: 0.9em;
+            cursor: pointer;
         }
 
         .view-full i {
             margin-left: 0px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-top: 10px;
+        }
+
+        .modal-body p {
+            margin: 5px 0;
+        }
+
+        .modal-body label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
         }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
@@ -172,7 +236,8 @@
                                             {{-- <div class="appeal-from">From: {{ $appeal->student->plm_email }}</div>
                                             --}}
                                         </div>
-                                        <a href="#" class="view-full">👁️ View Full Concern</a>
+                                        <a href="#" class="view-full" data-appeal="{{ $appeal }}">👁️ View Full
+                                            Concern</a>
                                     </div>
                                     <div class="appeal-message">{{ $appeal->message }}</div>
                                     <div>
@@ -207,11 +272,40 @@
         </div>
     </div>
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Full Concern Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Student Number:</strong> <span id="studentNumber"></span></p>
+                <p><strong>Sender Email:</strong> <span id="senderEmail"></span></p>
+                <p><strong>Subject:</strong> <span id="fullSubject"></span></p>
+                <p><strong>Message:</strong></p>
+                <p id="fullMessage"></p>
+                <label for="modalStatus" class="block text-sm font-medium">Select Status:</label>
+                <form method="POST" id="modalStatusForm">
+                    @csrf
+                    @method('PUT')
+                    <select name="remarks" id="modalStatus" class="status-select">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="denied">Denied</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.getElementById('searchInput');
             const appealsContainer = document.getElementById('appealsContainer');
             const appeals = Array.from(appealsContainer.getElementsByClassName('appeal-item'));
+            const modal = document.getElementById('myModal');
+            const span = document.getElementsByClassName('close')[0];
 
             searchInput.addEventListener('input', function () {
                 const searchValue = this.value.toLowerCase();
@@ -223,6 +317,34 @@
                         appeal.style.display = 'none';
                     }
                 });
+            });
+
+            document.querySelectorAll('.view-full').forEach(function (element) {
+                element.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const appeal = JSON.parse(this.getAttribute('data-appeal'));
+                    document.getElementById('studentNumber').textContent = appeal.student_no;
+                    document.getElementById('senderEmail').textContent = appeal.email;
+                    document.getElementById('fullSubject').textContent = appeal.subject;
+                    document.getElementById('fullMessage').textContent = appeal.message;
+                    document.getElementById('modalStatusForm').action = '/update-appeal/' + appeal.id;
+                    document.getElementById('modalStatus').value = appeal.remarks;
+                    modal.style.display = 'block';
+                });
+            });
+
+            span.onclick = function () {
+                modal.style.display = 'none';
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            document.getElementById('modalStatus').addEventListener('change', function () {
+                document.getElementById('modalStatusForm').submit();
             });
         });
     </script>
