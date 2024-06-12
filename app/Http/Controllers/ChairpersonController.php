@@ -141,7 +141,7 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
     }
     public function viewAppeals(Request $request)
     {
-        $userId = Auth::id();
+        $userId = Auth::user()->id;
     
         // Validate the request inputs
         $request->validate([
@@ -184,6 +184,19 @@ $averageGrades = $grades->pluck('average_grade')->toArray();
         $user = Auth::user();
         return view('Chairperson.cp-view-appeals', compact('appeals', 'btns', 'user'));
     }
+
+    public function updateAppeal(Request $request, $id)
+{
+    $request->validate([
+        'remarks' => 'required|string|in:pending,approved,denied',
+    ]);
+
+    $appeal = Appeal::findOrFail($id);
+    $appeal->remarks = $request->input('remarks');
+    $appeal->save();
+
+    return redirect()->route('view-appeals')->with('success', 'Appeal status updated successfully.');
+}
 
     public function saveRemarks(Request $request)
 {

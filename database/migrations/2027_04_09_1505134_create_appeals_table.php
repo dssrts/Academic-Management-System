@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('appeals', function (Blueprint $table) {
             $table->id();
             // $table->integer('student_no'); 
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->string('subject');
             $table->text('message');
             $table->string('filepath')->nullable(); // Use string for file paths
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('viewed')->nullable();
             $table->timestamps();
             $table->foreignId('student_no')->references('student_no')->on('students')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('login_users')->onDelete('cascade');
         });
     }
 

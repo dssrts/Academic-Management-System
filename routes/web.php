@@ -63,7 +63,7 @@ Route::get('/assign-classes', [ChairpersonController::class, 'showAssignClassesF
 Route::post('/assign-classes', [ChairpersonController::class, 'assignClasses'])->name('assign-classes.store');
 Route::get('/send-email', [ChairpersonController::class, 'showSendEmailForm'])->name('send-email.form');
 Route::post('/send-email', [ChairpersonController::class, 'sendEmail'])->name('send-email.store');
-
+Route::put('/appeals/{id}', [ChairpersonController::class, 'updateAppeal'])->name('update-appeal');
 
 //logout chairperson
 Route::post('/logout', function () {

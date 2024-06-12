@@ -22,9 +22,7 @@
             max-width: 800px;
             margin: 10rem;
             background-color: #1a237e;
-            /* dark blue background */
             border-radius: 12px;
-            /* padding: 20px; */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             color: white;
             margin-top: 10rem;
@@ -59,7 +57,6 @@
         .search-bar {
             width: 100%;
             padding: 10px 10px 10px 40px;
-            /* Adjusted padding to make space for icon on the left */
             border: none;
             border-radius: 5px;
             color: black;
@@ -79,6 +76,8 @@
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 10px;
+            margin-left: 1rem;
+            margin-right: 1rem;
         }
 
         .appeal-header {
@@ -115,10 +114,74 @@
             color: black;
             text-decoration: none;
             font-size: 0.9em;
+            cursor: pointer;
         }
 
         .view-full i {
             margin-left: 0px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-top: 10px;
+        }
+
+        .modal-body p {
+            margin: 5px 0;
+        }
+
+        .modal-body label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
         }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
@@ -127,7 +190,7 @@
     <title>Appeals Inbox</title>
 </head>
 
-<body x-data="{ appeals: {{ json_encode($appeals) }}, search: '' }">
+<body>
     <div class="w-screen h-screen flex flex-row">
         <!-- Sidebar -->
         <x-chairperson-sidebar />
@@ -150,7 +213,7 @@
                         <td>
                             <div class="search-bar-container">
                                 <input type="text" class="search-bar" placeholder="Search by Subject..."
-                                    x-model="search">
+                                    id="searchInput">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" class="search-bar-icon" width="24" height="24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -161,36 +224,130 @@
                     </tr>
                     <tr>
                         <td>
-                            <template
-                                x-for="appeal in appeals.filter(a => a.subject.toLowerCase().includes(search.toLowerCase()))">
-                                <div class="appeal-item">
+                            <div id="appealsContainer">
+                                @foreach($appeals as $appeal)
+                                <div class="appeal-item" data-subject="{{ $appeal->subject }}">
                                     <div class="appeal-header">
                                         <div>
-                                            <div class="appeal-subject" x-text="appeal.subject"></div>
-                                            <div class="appeal-from" x-text="'From: ' + appeal.student.plm_email"></div>
+                                            <div class="appeal-subject">{{ $appeal->subject }}</div>
                                         </div>
-                                        <a href="#" class="view-full">👁️ View Full Concern</a>
+                                        <a href="#" class="view-full" data-id="{{ $appeal->id }}"
+                                            data-subject="{{ $appeal->subject }}" data-message="{{ $appeal->message }}"
+                                            data-status="{{ $appeal->remarks }}" data-email="{{ $appeal->email }}"
+                                            data-student-number="{{ $appeal->student_no }}">👁️ View Full Concern</a>
                                     </div>
-                                    <div class="appeal-message" x-text="appeal.message"></div>
+                                    <div class="appeal-message">{{ $appeal->message }}</div>
                                     <div>
                                         <label for="status" class="block text-sm font-medium">Select Status:</label>
-                                        <select name="status" class="status-select">
-                                            <option value="pending" :selected="appeal.remarks == 'pending'">Pending
-                                            </option>
-                                            <option value="approved" :selected="appeal.remarks == 'approved'">Approved
-                                            </option>
-                                            <option value="denied" :selected="appeal.remarks == 'denied'">Denied
-                                            </option>
-                                        </select>
+                                        <form method="POST" action="{{ route('update-appeal', $appeal->id) }}"
+                                            class="status-form">
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="remarks" class="status-select" onchange="this.form.submit()">
+                                                <option value="pending" @if($appeal->remarks == 'pending') selected
+                                                    @endif>Pending</option>
+                                                <option value="approved" @if($appeal->remarks == 'approved') selected
+                                                    @endif>Approved</option>
+                                                <option value="denied" @if($appeal->remarks == 'denied') selected
+                                                    @endif>Denied</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </div>
-                            </template>
+                                @endforeach
+                            </div>
                         </td>
                     </tr>
                 </table>
+                <div class="mt-4">
+                    {{ $appeals->links() }}
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Full Concern Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p><strong>Student Number:</strong> <span id="studentNumber"></span></p>
+                <p><strong>Sender Email:</strong> <span id="senderEmail"></span></p>
+                <p><strong>Subject:</strong> <span id="fullSubject"></span></p>
+                <p><strong>Message:</strong></p>
+                <p id="fullMessage"></p>
+                <label for="modalStatus" class="block text-sm font-medium">Select Status:</label>
+                <form method="POST" id="modalStatusForm">
+                    @csrf
+                    @method('PUT')
+                    <select name="remarks" id="modalStatus" class="status-select">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="denied">Denied</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const appealsContainer = document.getElementById('appealsContainer');
+            const appeals = Array.from(appealsContainer.getElementsByClassName('appeal-item'));
+            const modal = document.getElementById('myModal');
+            const span = document.getElementsByClassName('close')[0];
+
+            searchInput.addEventListener('input', function () {
+                const searchValue = this.value.toLowerCase();
+                appeals.forEach(appeal => {
+                    const subject = appeal.getAttribute('data-subject').toLowerCase();
+                    if (subject.includes(searchValue)) {
+                        appeal.style.display = '';
+                    } else {
+                        appeal.style.display = 'none';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.view-full').forEach(function (element) {
+                element.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const id = this.getAttribute('data-id');
+                    const subject = this.getAttribute('data-subject');
+                    const message = this.getAttribute('data-message');
+                    const status = this.getAttribute('data-status');
+                    const email = this.getAttribute('data-email');
+                    const studentNumber = this.getAttribute('data-student-number');
+
+                    document.getElementById('studentNumber').textContent = studentNumber;
+                    document.getElementById('senderEmail').textContent = email;
+                    document.getElementById('fullSubject').textContent = subject;
+                    document.getElementById('fullMessage').textContent = message;
+                    document.getElementById('modalStatusForm').action = '/appeals/' + id;
+                    document.getElementById('modalStatus').value = status;
+                    modal.style.display = 'block';
+                });
+            });
+
+            span.onclick = function () {
+                modal.style.display = 'none';
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            document.getElementById('modalStatus').addEventListener('change', function () {
+                document.getElementById('modalStatusForm').submit();
+            });
+        });
+    </script>
 </body>
 
 </html>
