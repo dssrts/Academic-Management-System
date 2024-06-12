@@ -36,58 +36,54 @@ class ChairpersonController extends Controller
         ];
     
         $user = Auth::user();
-        // echo "user: ". $user;
         $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
         $program = "test";
     
         if ($employee) {
-            // Decode the JSON-encoded department_id
             $departmentIds = json_decode($employee->department_id, true);
-            // Assuming you need the first department ID
             $departmentId = $departmentIds[0] ?? null;
     
             if ($departmentId) {
                 $program = \App\Models\Program::where('id', $departmentId)->first();
             }
-        }
-        if ($employee) {
-            $departmentIds = json_decode($employee->department_id, true);
-            // Assuming you need the first department ID
-            $departmentId = $departmentIds[0] ?? null;
-            
-            // Fetch student terms that belong to the same department
+    
             $studentTerms = \App\Models\StudentTerm::where('program_id', $departmentId)->get();
-            
-            // Get student numbers from student terms
             $studentNos = $studentTerms->pluck('student_no')->toArray();
-            
-            // Fetch students with the same student numbers
             $students = \App\Models\Student::whereIn('student_no', $studentNos)->paginate(15);
-
-            // Fetch grades for these students and group by year level
-        $grades = Grade::whereIn('grades.student_no', $studentNos)
-        ->join('student_terms', 'grades.student_no', '=', 'student_terms.student_no')
-        ->select('student_terms.year_level', DB::raw('AVG(grades.grade) as average_grade'))
-        ->groupBy('student_terms.year_level')
-        ->get();
-
-// Preparing data for Chart.js
-$yearLevels = $grades->pluck('year_level')->toArray();
-$averageGrades = $grades->pluck('average_grade')->toArray();
-
-        // Preparing data for Chart.js
-        $yearLevels = $grades->pluck('year_level')->toArray();
-        $averageGrades = $grades->pluck('average_grade')->toArray();
+    
+            $grades = Grade::whereIn('grades.student_no', $studentNos)
+                ->join('student_terms', 'grades.student_no', '=', 'student_terms.student_no')
+                ->select('student_terms.year_level', DB::raw('AVG(grades.grade) as average_grade'))
+                ->groupBy('student_terms.year_level')
+                ->get();
+    
+            $yearLevels = $grades->pluck('year_level')->toArray();
+            $averageGrades = $grades->pluck('average_grade')->toArray();
+    
+            // Fetching SFE data for students in the user's department
+            $sfeCount = DB::table('course_sfe_students')
+                ->whereIn('student_no', $studentNos)
+                ->where('status', true)
+                ->distinct('student_no')
+                ->count();
+    
+            $totalStudents = count($studentNos);
+            $sfePercentage = ($totalStudents > 0) ? ($sfeCount / $totalStudents) * 100 : 0;
+    
         } else {
-            $students = collect(); // Empty collection if no employee found
+            $students = collect();
             $yearLevels = [];
-        $averageGrades = [];
+            $averageGrades = [];
+            $sfeCount = 0;
+            $sfePercentage = 0;
         }
     
-        return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students', 'yearLevels', 'averageGrades'));
-    
-        // return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program'));
+        return view('Chairperson.cp-dashboard', compact('btns', 'user', 'employee', 'program', 'students', 'yearLevels', 'averageGrades', 'sfeCount', 'sfePercentage'));
     }
+    
+
+
+
     
 
     public function viewStudents()
