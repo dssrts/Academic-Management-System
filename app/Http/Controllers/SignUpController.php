@@ -208,15 +208,42 @@ class SignUpController extends Controller
         $user_id = $request->user_id;
         $password = $request->password;
 
-        if (Auth::attempt(['id' => $user_id, 'password' => $password])) {
-            
+        if (Auth::attempt(['id' => $user_id, 'password' => $password])) {    
             $userId = Auth::id(); // Get the authenticated user's ID
             $user = Auth::user();
-
-            if ($user->role_id == 0) {
-                $student_no = Student::where('user_id', $userId)->first()->student_no;
-                return redirect(route('student-view.get', $student_no))->with(['id' => 'EMAIL FAILED']);
-            } else {
+            if ($user->usertype == "student") {
+                $student = Student::where('student_no', $userId)->first();
+                $studentTerms = DB::table('student_terms')->where('student_no', $student->student_no)->first();
+                $program = DB::table('programs')->where('id', $studentTerms->program_id)->first();
+                $college = DB::table('colleges')->where('id', $program->college_id)->first();
+            
+                // Fetch all grades for the student
+                $grades = DB::table('grades')->where('student_no', $student->student_no)->pluck('grade');
+            
+                // Calculate the General Weighted Average (GWA)
+                $totalGrades = $grades->sum();
+                $numGrades = $grades->count();
+                $gwa = $numGrades? round($totalGrades / $numGrades, 3) : 0;
+            
+                // Determine the current semester and calculate progress
+                $currentDate = Carbon::now();
+                $semesterStart = $currentDate->month <= 6? Carbon::createFromDate($currentDate->year, 1, 1) : Carbon::createFromDate($currentDate->year, 7, 1);
+                $semesterEnd = $currentDate->month <= 6? Carbon::createFromDate($currentDate->year, 6, 30) : Carbon::createFromDate($currentDate->year, 12, 31);
+                $daysInSemester = $semesterEnd->diffInDays($semesterStart);
+                $elapsedDays = $currentDate->diffInDays($semesterStart);
+                $progressPercentage = ($elapsedDays / $daysInSemester) * 100;
+            
+                return view('Student.student-information', [
+                    'student' => $student,
+                    'studentTerms' => $studentTerms,
+                    'program' => $program,
+                    'college' => $college,
+                    'grades' => $grades,
+                    'gwa' => $gwa,
+                    'semProgress' => round($progressPercentage, 2) // Return the semester progress as a rounded percentage
+                ]);
+            }  
+            else {
                 $employee = \App\Models\Employee::where('employee_id', $user->id)->first();
                 $program = null;
             

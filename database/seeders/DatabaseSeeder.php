@@ -2,19 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ClassModel;
-use Database\Seeders\CollegeSeeder;
-use Database\Seeders\DepartmentSeeder;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use App\Models\Faculty;
-use App\Models\Student;
-use App\Models\Subject;
-use App\Models\User;
-use App\Models\Grade;
-use App\Models\Professor;
-use App\Models\StudentRecord;
 
 class DatabaseSeeder extends Seeder
 {   
@@ -28,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LoginUsersSeeder::class);
         $this->call(InstructorsTableSeeder::class);
         $this->call(EmployeesTableSeeder::class);
+        $this->call(AysemsTableSeeder::class);
         // Faculty::factory(100)->create();
         
         // Professor::factory()->count(300)->create();
@@ -39,9 +28,13 @@ class DatabaseSeeder extends Seeder
        
         $this->call(ClassesTableSeeder::class);
         // ClassModel::factory()->count(100)->create();
-        $this->call(GradesTableSeeder::class);
-        $this->call(ClassSchedulesSeeder::class);
         // $this->call(ScheduleSeeder::class);
+        $this->call(StudentClassesSeeder::class);
+        $this->call(ClassFacultySeeder::class);
+        $this->call(GradesTableSeeder::class);
+        $this->call(BuildingsTableSeeder::class);
+        $this->call(RoomsTableSeeder::class);
+        $this->call(ClassSchedulesSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 
