@@ -24,6 +24,10 @@
             display: none;
         }
 
+        .alert-error {
+            background-color: #e53e3e;
+        }
+
         .modal {
             background-color: white;
             border-radius: 10px;
@@ -86,6 +90,7 @@
 
 <body style="background-image: url('/images/PLM.png'); background-repeat: no-repeat; background-size: cover">
     <div class="alert" id="alertBox">{{ session('success') }}</div>
+    <div class="alert alert-error" id="errorBox">{{ session('error') }}</div>
     <div class="w-screen h-screen flex flex-row">
         <!-- Sidebar -->
         <x-chairperson-sidebar />
@@ -104,10 +109,21 @@
             </script>
             @endif
 
+            @if(session('error'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var errorBox = document.getElementById('errorBox');
+                    errorBox.style.display = 'block';
+                    setTimeout(function() {
+                        errorBox.style.display = 'none';
+                    }, 5000);
+                });
+            </script>
+            @endif
+
             <div class="modal">
                 <div class="modal-header">
                     <h2>Assign Classes to Instructors</h2>
-
                 </div>
                 <form method="POST" action="{{ route('assign-classes.store') }}">
                     @csrf

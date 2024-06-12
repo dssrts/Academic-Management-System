@@ -491,7 +491,17 @@ public function assignClasses(Request $request)
         'class_id' => 'required|exists:classes,id',
     ]);
 
-    // Assuming you have a pivot table named class_instructor to assign classes to instructors
+    // Check if the class is already assigned to the instructor
+    $exists = DB::table('class_faculty')
+        ->where('instructor_id', $validated['instructor_id'])
+        ->where('class_id', $validated['class_id'])
+        ->exists();
+
+    if ($exists) {
+        return redirect()->route('assign-classes.form')->with('error', 'This class is already assigned to the instructor.');
+    }
+
+    // Insert the new assignment if it does not already exist
     DB::table('class_faculty')->insert([
         'instructor_id' => $validated['instructor_id'],
         'class_id' => $validated['class_id'],
