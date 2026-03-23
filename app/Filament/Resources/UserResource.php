@@ -41,6 +41,16 @@ class UserResource extends Resource
                     ->live()
                     ->preload()
                     ->required(),
+                    Forms\Components\Select::make('department_id')
+                    //->relationship(name:'city', titleAttribute:'name')
+                    ->options(fn(Get $get): Collection => Department::query()
+                        ->where('college_id', $get('college_id'))
+                        ->pluck('title', 'id'))
+                        ->searchable() 
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    ->required(),
                     
                 TextInput::make('name')
                     ->required()
@@ -60,7 +70,7 @@ class UserResource extends Resource
                 Select::make('role')
                     ->relationship('roles', 'name'),
                 Select::make('account_type')
-                    ->options(['Dean'=>'Dean', 'Student'=>'Student', 'Admin'=>'Admin']),
+                    ->options(['Chairperson'=>'Chairperson', 'Student'=>'Student', 'Admin'=>'Admin']),
                 TextInput::make('user_code')
                 ->required(),
                 
@@ -74,6 +84,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                
+                TextColumn::make('id'),
                 TextColumn::make('user_code'),
                 TextColumn::make('name')
                     ->searchable(),
@@ -83,6 +95,7 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make('account_type'),
                 TextColumn::make('college.Title'),
+                TextColumn::make('department.title'),
                 // Tables\Columns\TextColumn::make('email_verified_at')
                 //     ->dateTime()
                 //     ->sortable(),
@@ -135,5 +148,10 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
     }
 }

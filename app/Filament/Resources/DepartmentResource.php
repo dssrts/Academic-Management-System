@@ -18,7 +18,7 @@ class DepartmentResource extends Resource
     protected static ?string $model = Department::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Dean Controls';
+    protected static ?string $navigationGroup = 'Admin Controls';
 
     public static function form(Form $form): Form
     {
@@ -97,5 +97,18 @@ class DepartmentResource extends Resource
             return parent::getEloquentQuery()->where('college_id', auth()->user()->college_id);
         }
 
+    }
+    public static function canCreate(): bool
+    {
+        if(auth()->user()->hasRole('admin'))
+        {
+            return true;
+        }
+       return false;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
     }
 }

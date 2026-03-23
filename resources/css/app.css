@@ -5,3 +5,36 @@
 [x-cloak] {
     display: none;
 }
+
+.body-css{
+    animation: change 15s infinite ease-in-out;
+}
+
+@keyframes change {
+    0% { 
+        background-position: 0% 0%; /* Start position */
+        background-size: 100%;
+    }
+    25% {
+        background-position-x: 5%;
+        background-position-y: 5%;
+        background-size: 101%;
+    }
+    50% { 
+        background-position-x: 0%;
+        background-position-y: 10%;
+        background-size: 104%;
+        background-image: url(PLM-2.png);
+
+    }
+    75% {
+        background-position-x: -5%;
+        background-position-y: 5%;
+        background-size: 103%;
+
+    }
+    100% { 
+        background-position: 0% 0%; /* End position */
+        background-size: 100%;
+    }
+}

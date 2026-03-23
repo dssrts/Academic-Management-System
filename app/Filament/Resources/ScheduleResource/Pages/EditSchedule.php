@@ -10,17 +10,14 @@ class EditSchedule extends EditRecord
 {
     protected static string $resource = ScheduleResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        if(auth()->user()->hasRole('admin'))
-            {
-                return Actions\DeleteAction::make();
-            }
-        return [
-            
-            
-        ];
-    }
+    // protected function getHeaderActions(): array
+    // {
+    //     if(auth()->user()->hasRole('admin'))
+    //         {
+    //             return [Actions\DeleteAction::make()];
+    //         }
+        
+    // }
 
     protected function mutateFormDataBeforeFill(array $data): array
     {

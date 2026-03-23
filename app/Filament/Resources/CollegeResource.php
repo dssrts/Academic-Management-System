@@ -18,7 +18,7 @@ class CollegeResource extends Resource
     protected static ?string $model = College::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Dean Controls';
+    protected static ?string $navigationGroup = 'Admin Controls';
 
     public static function form(Form $form): Form
     {
@@ -80,5 +80,18 @@ class CollegeResource extends Resource
             'create' => Pages\CreateCollege::route('/create'),
             'edit' => Pages\EditCollege::route('/{record}/edit'),
         ];
+    }
+    public static function canCreate(): bool
+    {
+        if(auth()->user()->hasRole('admin'))
+        {
+            return true;
+        }
+       return false;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
     }
 }

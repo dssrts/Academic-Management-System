@@ -37,7 +37,6 @@ class DepartmentPolicy
      */
     public function create(User $user): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;
@@ -50,7 +49,6 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;
@@ -63,7 +61,6 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;
@@ -76,7 +73,6 @@ class DepartmentPolicy
      */
     public function restore(User $user, Department $department): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;
@@ -89,7 +85,6 @@ class DepartmentPolicy
      */
     public function forceDelete(User $user, Department $department): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;

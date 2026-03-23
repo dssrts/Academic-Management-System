@@ -19,6 +19,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Filters\SelectFilter;
@@ -28,8 +29,8 @@ use Filament\Forms\Components\CheckboxList;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UndergradStudentResource\Pages;
 use App\Filament\Resources\UndergradStudentResource\RelationManagers;
+use App\Filament\Resources\UndergradStudentResource\Pages\ViewInformation;
 use App\Filament\Resources\UndergradStudentResource\RelationManagers\SubjectsRelationManager;
-use Filament\Tables\Columns\TextColumn;
 
 class UndergradStudentResource extends Resource
 {
@@ -56,7 +57,7 @@ class UndergradStudentResource extends Resource
                 // ->relationship('user', 'name')
                 ->options(fn(Get $get): Collection => User::query()
                     ->where('account_type', 'Student')
-                    ->pluck('name')) 
+                    ->pluck('name'))
                 ->searchable()
                     ->dehydrated(fn ($state) => filled($state))
                     ->required(fn (Page $livewire) => ($livewire instanceof CreateRecord))
@@ -129,6 +130,9 @@ class UndergradStudentResource extends Resource
                 // Tables\Columns\TextColumn::make('user.user_code')
                 //     ->label('Student Number')
                 //     ->sortable(),
+                Tables\Columns\TextColumn::make('user_id')
+                    
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('student_number')
                     ->label('Student Number')
                     ->sortable(),
@@ -216,7 +220,8 @@ class UndergradStudentResource extends Resource
             'create' => Pages\CreateUndergradStudent::route('/create'),
             'edit' => Pages\EditUndergradStudent::route('/{record}/edit'),
             'view_blocks'=>Pages\FilterBlocks::route('/blocks'),
-            'view_year'=>Pages\FilterYear::route('/year'),
+            'view-information'=>Pages\ViewInformation::route('/view-information')
+            
         ];
     }
 

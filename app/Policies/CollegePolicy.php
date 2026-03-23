@@ -49,7 +49,6 @@ class CollegePolicy
      */
     public function update(User $user, College $college): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;
@@ -62,7 +61,6 @@ class CollegePolicy
      */
     public function delete(User $user, College $college): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;
@@ -75,7 +73,6 @@ class CollegePolicy
      */
     public function restore(User $user, College $college): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;
@@ -88,7 +85,6 @@ class CollegePolicy
      */
     public function forceDelete(User $user, College $college): bool
     {
-        //
         if ($user->hasRole('admin')) 
         {
             return true;

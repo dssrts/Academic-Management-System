@@ -11,6 +11,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -28,6 +30,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'login_users';
     protected $fillable = [
         'name',
         'email',
@@ -35,6 +39,7 @@ class User extends Authenticatable
         'user_code',
         'account_type',
         'college_id',
+        'department_id'
         
     ];
 
@@ -71,9 +76,15 @@ class User extends Authenticatable
     public function college(){
         return $this->belongsTo(College::class);
     }
-
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'department_id');
+    }
     public function is_admin(){
         return $this->hasRole('admin');
+    }
+    public function is_cp(){
+        return $this->hasRole('Chairperson');
     }
 
     public function is_dean_crs(){
@@ -84,4 +95,13 @@ class User extends Authenticatable
         return $this->hasRole('dean_gsp');
     }
     
+    public function student():HasOne
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    public function appeal():HasMany
+    {
+        return $this->hasMany(Appeal::class);
+    }
 }
